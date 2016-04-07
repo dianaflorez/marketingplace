@@ -15,11 +15,12 @@ use Yii;
  * @property integer $idtide
  * @property string $identificacion
  * @property string $login
+ * @property string $email
  * @property string $clave
  * @property string $authkey
  * @property string $accesstoken
  * @property integer $role
- * @property integer $activo
+ * @property integer $activate
  * @property string $estado
  * @property integer $idemp
  * @property string $feccre
@@ -51,6 +52,10 @@ class Usuario extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+    public $clave_repeat;
+    
+
     public static function tableName()
     {
         return 'usuario';
@@ -62,12 +67,18 @@ class Usuario extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idtide', 'role', 'activo', 'idemp', 'usumod'], 'integer'],
-            [['identificacion', 'login', 'clave', 'authkey', 'accesstoken', 'idemp'], 'required'],
+            [['idtide', 'role', 'activate', 'idemp', 'usumod'], 'integer'],
+            [['nombre1','apellido1','identificacion', 'login', 'email', 'clave', 'idemp'], 'required'],
             [['feccre', 'fecmod'], 'safe'],
             [['nombre1', 'nombre2', 'apellido1', 'apellido2'], 'string', 'max' => 30],
             [['identificacion'], 'string', 'max' => 20],
             [['login', 'clave', 'authkey', 'accesstoken'], 'string', 'max' => 40],
+            [['email'], 'string', 'max' => 90],
+
+            ['clave', 'match', 'pattern' => "/^.{5,16}$/", 'message' => 'Mínimo 5 y máximo 16 caracteres'],
+            ['clave_repeat', 'compare', 'compareAttribute' => 'clave', 'message' => 'Las claves no coinciden'],
+        
+
             [['estado'], 'string', 'max' => 8],
             [['login'], 'unique'],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
@@ -89,7 +100,9 @@ class Usuario extends \yii\db\ActiveRecord
             'idtide' => 'Tipo ident.',
             'identificacion' => 'Identificacion',
             'login' => 'Login',
+            'email' => 'Email',
             'clave' => 'Clave',
+            'clave_repeat' => 'Repetir Clave',
             'authkey' => 'Authkey',
             'accesstoken' => 'Accesstoken',
             'role' => 'Role',
