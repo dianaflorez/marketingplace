@@ -2,13 +2,21 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\bootstrap\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<h3><?= $msg ?>
+<h3><?= $msg; 
+echo Alert::widget([
+    'options' => [
+        'class' => 'alert-info',
+    ],
+    'body' => 'Say hello...',
+]);
+?>
 
 <div class="usuario-form">
 
@@ -27,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'idtide')->textInput() ?>
+    <?= Html::activeDropDownList($model, 'idtide',$tipo) ?>
 
     <?= $form->field($model, 'identificacion')->textInput(['maxlength' => true]) ?>
 
@@ -41,13 +49,11 @@ use yii\widgets\ActiveForm;
 </div>
 
   
-    <?= $form->field($model, 'role')->textInput() ?>
+    <?= Html::activeDropDownList($model, 'role',$role) ?>
 
-  
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
+    <?= Html::activeDropDownList($model, 'idemp',$emp) ?>
 
-    <?= $form->field($model, 'idemp')->textInput() ?>
-
+ 
    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -74,6 +74,8 @@ class Usuario extends \yii\db\ActiveRecord
             [['identificacion'], 'string', 'max' => 20],
             [['login', 'clave', 'authkey', 'accesstoken'], 'string', 'max' => 40],
             [['email'], 'string', 'max' => 90],
+            [['email'], 'unique'],
+            [['identificacion'], 'unique'],
 
             ['clave', 'match', 'pattern' => "/^.{5,16}$/", 'message' => 'Mínimo 5 y máximo 16 caracteres'],
             ['clave_repeat', 'compare', 'compareAttribute' => 'clave', 'message' => 'Las claves no coinciden'],
@@ -81,10 +83,13 @@ class Usuario extends \yii\db\ActiveRecord
 
             [['estado'], 'string', 'max' => 8],
             [['login'], 'unique'],
+
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idtide'], 'exist', 'skipOnError' => true, 'targetClass' => Tipo::className(), 'targetAttribute' => ['idtide' => 'idtipo']],
         ];
     }
+
+
 
     /**
      * @inheritdoc

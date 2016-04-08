@@ -4,11 +4,14 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Usuario;
+use app\models\Empresa;
+use app\models\Tipo;
 use app\models\UsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\helpers\ArrayHelper;
 
 /**
  * UsuarioController implements the CRUD actions for Usuario model.
@@ -127,7 +130,12 @@ class UsuarioController extends Controller
     {
         $model = new Usuario();
 
-        $msg = "si";
+        $msg = "";
+
+        $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
+        $emp  = ArrayHelper::map(Empresa::find()->all(), 'idemp', 'nombre');
+        $role = ['M'=>'Male', 'F'=>'Female'];  
+
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
             //return $this->redirect(['view', 'id' => $model->idusu]);
@@ -169,15 +177,12 @@ class UsuarioController extends Controller
                     $table->authkey = $this->randKey("abcdef0123456789", 40);
                     //Creamos un token de acceso único para el usuario
                     $table->accesstoken = $this->randKey("abcdef0123456789", 40);
-                    
-
+                
                     $table->role = $model->role;
                     $table->activate = $model->activate;
                     $table->estado = $model->estado;
                     $table->idemp = $model->idemp;
                     $table->activate = 0;
-                    
-                     
                     
                     //Si el registro es guardado correctamente
                     if ($table->save())
@@ -186,11 +191,11 @@ class UsuarioController extends Controller
                         //Para confirmar al usuario se requiere su id y su authKey
                         $user = $table->find()->where(["email" => $model->email])->one();
                         $id = urlencode($user->idusu);
-                        $authkey = urlencode($user->authKey);
+                        $authkey = urlencode($user->authkey);
                           
                          $subject = "Confirmar registro";
                          $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
-                         $body .= "<a href='http://yii.local/index.php?r=site/confirm&id=".$id."&authKey=".$authKey."'>Confirmar</a>";
+                         $body .= "<a href='http://yii.local/index.php?r=site/confirm&id=".$id."&authKey=".$authkey."'>Confirmar</a>";
                           
                          //Enviamos el correo
                          Yii::$app->mailer->compose()
@@ -218,14 +223,13 @@ class UsuarioController extends Controller
                    var_dump($model->getErrors());
                 }
             }
-        return $this->render("create", ["model" => $model, "msg" => $msg]);
+        return $this->render("create", ["model" => $model, 
+                                        "msg"   => $msg, 
+                                        "tipo"  => $tipo, 
+                                        "emp"  => $emp,
+                                        "role"  => $role
+                                        ]);
       
-
-
-
-
-
-
     }
 
     /**
