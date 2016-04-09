@@ -134,7 +134,7 @@ class UsuarioController extends Controller
 
         $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
         $emp  = ArrayHelper::map(Empresa::find()->all(), 'idemp', 'nombre');
-        $role = ['M'=>'Male', 'F'=>'Female'];  
+        $role = ['1'=>'Comercial', '2'=>'Gerente Empresa', '3'=>'Empresa', '4'=>'Administrador'];  
 
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
@@ -180,9 +180,9 @@ class UsuarioController extends Controller
                 
                     $table->role = $model->role;
                     $table->activate = $model->activate;
-                    $table->estado = $model->estado;
+                    $table->estado = 'Activo';   //Estado del usuario dependiendo del adm
                     $table->idemp = $model->idemp;
-                    $table->activate = 0;
+                    $table->activate = 0;       //Estado de activacion del usuario
                     
                     //Si el registro es guardado correctamente
                     if ($table->save())
