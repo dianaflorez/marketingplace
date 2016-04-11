@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Empresa */
+/* @var $model app\models\Empresainf */
 
-$this->title = $model->idemp;
-$this->params['breadcrumbs'][] = ['label' => 'Empresas', 'url' => ['index']];
+$this->title = $model->idinf;
+$this->params['breadcrumbs'][] = ['label' => 'Empresainfs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="empresa-view">
+<div class="empresainf-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idemp], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idemp], [
+        <?= Html::a('Update', ['update', 'id' => $model->idinf], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->idinf], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,15 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'idinf',
             'idemp',
-            'nombre',
-            'nit',
+            'idtipo',
+            'inf:ntext',
+            'descripcion:ntext',
             'feccre',
             'fecmod',
-            array('label'=>'Quien Modifico',
-             'type'=>'raw',
-             'value'=>$usumod 
-        ),  
+            'usumod',
         ],
     ]) ?>
 

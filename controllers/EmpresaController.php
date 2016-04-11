@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Empresa;
+use app\models\User;
+use yii\filters\AccessControl;
 use app\models\EmpresaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,6 +14,7 @@ use app\models\EmpresaSearchForm;
 use yii\helpers\Html;
 use yii\data\Pagination;
 use yii\helpers\Url;
+use app\models\Usuario;
 
 /**
  * EmpresaController implements the CRUD actions for Empresa model.
@@ -21,16 +24,53 @@ class EmpresaController extends Controller
     /**
      * @inheritdoc
      */
+    
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+      return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['index', 'create', 'update','view'],
+            'rules' => [
+                [
+                    //El administrador tiene permisos sobre las siguientes acciones
+                    'actions' => ['index',  'create', 'update','view'],
+                    //Esta propiedad establece que tiene permisos
+                    'allow' => true,
+                    //Usuarios autenticados, el signo ? es para invitados
+                    'roles' => ['@'],
+                    //Este método nos permite crear un filtro sobre la identidad del usuario
+                    //y así establecer si tiene permisos o no
+                    'matchCallback' => function ($rule, $action) {
+                        //Llamada al método que comprueba si es un administrador
+                        return User::isSuperMegaAdmin(Yii::$app->user->identity->id);
+                    },
                 ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isSuperAdmin(Yii::$app->user->identity->id);
+                  },
+               ],
             ],
-        ];
+        ],
+         //Controla el modo en que se accede a las acciones, en este ejemplo a la acción logout
+         //sólo se puede acceder a través del método post
+        'verbs' => [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'logout' => ['post'],
+            ],
+        ],
+      ];
     }
 
     /**
@@ -41,8 +81,9 @@ class EmpresaController extends Controller
     {
         $searchModel = new EmpresaSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-         $table = new Empresa;
-        $model = $table->find()->andWhere('idemp > 1')->all();
+        
+       // $table = new Empresa;
+        //$model = $table->find()->andWhere('idemp>1')->all();
 
         $form = new EmpresaSearchForm;
         $search = null;
@@ -52,6 +93,7 @@ class EmpresaController extends Controller
             {
                 $search = Html::encode($form->q);
                 $table = Empresa::find()
+                        ->andWhere('idemp>1')
                         ->orWhere(["like", "nombre", $search])
                         ->orWhere(["like", "nit", $search]);
                 $count = clone $table;
@@ -69,7 +111,7 @@ class EmpresaController extends Controller
                 $form->getErrors();
             }
         }else{
-                $table = Empresa::find();
+                $table = Empresa::find()->andWhere('idemp>1');
                 $count = clone $table;
                 $pages = new Pagination([
                     "pageSize" => 4,
@@ -98,8 +140,13 @@ class EmpresaController extends Controller
      */
     public function actionView($id)
     {
+        $model  = $this->findModel($id);
+        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
+        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model'     => $model,
+            'usumod'    => $usumod,
         ]);
     }
 
@@ -132,6 +179,8 @@ class EmpresaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idemp]);

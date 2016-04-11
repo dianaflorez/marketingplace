@@ -134,8 +134,7 @@ class UsuarioController extends Controller
 
         $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
         $emp  = ArrayHelper::map(Empresa::find()->all(), 'idemp', 'nombre');
-        $role = ['1'=>'Comercial', '2'=>'Gerente Empresa', '3'=>'Empresa', '4'=>'Administrador'];  
-
+        $role = ['1'=>'Comercial', '2'=>'Administrador Empresa', '4'=>'Super Administrador'];  
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {
             //return $this->redirect(['view', 'id' => $model->idusu]);
@@ -162,27 +161,30 @@ class UsuarioController extends Controller
                {
                     //Preparamos la consulta para guardar el usuario
                     $table = new Usuario;
-                    $table->nombre1 = $model->nombre1;
-                    $table->apellido1 = $model->apellido1;
-                    $table->idtide = $model->idtide;
+                    $table->nombre1     = trim(ucwords($model->nombre1));
+                    $table->nombre2     = trim(ucwords($model->nombre2));
+                    $table->apellido1   = trim(ucwords($model->apellido1));
+                    $table->apellido2   = trim(ucwords($model->apellido2));
+                    $table->idtide      = $model->idtide;
 
                     $table->identificacion = $model->identificacion;
-                    $table->username = $model->username;
-                    $table->email = $model->email;
+                    $table->username    = trim(strtolower($model->username));
+                    $table->email       = trim(strtolower($model->email));
                     
                     //Encriptamos el password
-                    $table->clave = crypt($model->clave, Yii::$app->params["salt"]);
+                    $table->clave       = crypt($model->clave, Yii::$app->params["salt"]);
                     //Creamos una cookie para autenticar al usuario cuando decida recordar la sesión, esta misma
                     //clave será utilizada para activar el usuario
-                    $table->authkey = $this->randKey("abcdef0123456789", 40);
+                    $table->authkey     = $this->randKey("abcdef0123456789", 40);
                     //Creamos un token de acceso único para el usuario
                     $table->accesstoken = $this->randKey("abcdef0123456789", 40);
                 
-                    $table->role = $model->role;
-                    $table->activate = $model->activate;
-                    $table->estado = 'Activo';   //Estado del usuario dependiendo del adm
-                    $table->idemp = $model->idemp;
-                    $table->activate = 0;       //Estado de activacion del usuario
+                    $table->role        = $model->role;
+                    $table->activate    = 1; //$model->activate;
+                    $table->estado      = 'Activo';   //Estado del usuario dependiendo del adm
+                    $table->idemp       = $model->idemp;
+                    $table->activate    = 0;       //Estado de activacion del usuario
+                    $table->usumod = Yii::$app->user->identity->idusu;
                     
                     //Si el registro es guardado correctamente
                     if ($table->save())

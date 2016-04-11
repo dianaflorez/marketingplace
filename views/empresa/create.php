@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Empresa */
 
-$this->title = 'Create Empresa';
+$this->title = 'Nueva Empresa';
 $this->params['breadcrumbs'][] = ['label' => 'Empresas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

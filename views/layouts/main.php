@@ -21,6 +21,9 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+
+<link rel="stylesheet" id="global-css" href="css/general.css" type="text/css" media="all" />
+
 <body>
 <?php $this->beginBody() ?>
 
@@ -50,8 +53,13 @@ AppAsset::register($this);
 //DF      
             
             [
-            'label' => 'Empresa',
+            'label' => 'Empresas',
             'url' => ['empresa/index'],
+            'visible' => $validarusuario
+            ],
+             [
+            'label' => 'Usuarios',
+            'url' => ['usuario/index'],
             'visible' => $validarusuario
             ],
 

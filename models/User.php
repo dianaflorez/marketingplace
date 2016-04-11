@@ -25,7 +25,6 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      public $fecmod;
      public  $usumod;
 
-
     public static function isSuperMegaAdmin($id)
     {
        if (Usuario::findOne(['idusu' => $id, 'activate' => '1', 'role' => 7])){
@@ -46,6 +45,27 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
             return false;
        }
     }
+
+    public static function isAdminEmp($id)
+    {
+       if (Usuario::findOne(['idusu' => $id, 'activate' => '1', 'role' => 2])){
+        return true;
+       } else {
+
+        return false;
+       }
+    }
+
+    public static function isComercial($id)
+    {
+       if (Usuario::findOne(['idusu' => $id, 'activate' => '1', 'role' => 1])){
+        return true;
+       } else {
+
+        return false;
+       }
+    }
+
 
     /**
      * @inheritdoc

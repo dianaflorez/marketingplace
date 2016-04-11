@@ -33,23 +33,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <h3>Lista de Empresas</h3>
-<table class="table table-bordered">
+<table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Id</th>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th>Clase</th>
-        <th>Nota Final</th>
+        <th>
+            Nombre
+        </th>
+        <th>Nit</th>
+        <th class="action-column fixcolumoperation">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
     <tr>
         <td><?= $row->idemp ?></td>
         <td><?= $row->nombre ?></td>
         <td><?= $row->nit ?></td>
-        <td><a href="#">Editar</a></td>
         <td>
-
-             <a href="#" data-toggle="modal" data-target="#idemp_<?= $row->idemp ?>">Eliminar</a>
+             <!-- Inf. -->
+            <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">
+              <span class="glyphicon glyphicon-list-alt"></span>
+            </a>
+            <!--End Inf.-->
+        
+            <!-- Update -->
+            <a href="<?= Url::toRoute(["empresa/update", "id" => $row->idemp]) ?>" title="Actualizar" aria-label="Actualizar">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <!--End Update-->
+        
+            <!--Delete-->
+             <a href="#" data-toggle="modal" data-target="#idemp_<?= $row->idemp ?>" title="Eliminar" aria-label="Eliminar">
+             <span class="glyphicon glyphicon-trash">.</span>
+             </a>
                 <div class="modal fade" role="dialog" aria-hidden="true" id="idemp_<?= $row->idemp ?>">
                       <div class="modal-dialog">
                             <div class="modal-content">
@@ -71,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->            
             </a>
-
+            <!--End Delete-->
         </td>
     </tr>
     <?php endforeach ?>
