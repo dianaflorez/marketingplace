@@ -44,7 +44,7 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'identificacion')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, "clave")->input("password") ?> 
     <?= $form->field($model, "clave_repeat")->input("password") ?>  

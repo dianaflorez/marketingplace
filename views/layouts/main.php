@@ -24,10 +24,17 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+<?php 
+    $validarusuario = false;
+    if(!Yii::$app->user->isGuest){
+        $validarusuario = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 
+    }
+?>
+
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'MarketingPlace',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -39,9 +46,20 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
+
+//DF      
+            
+            [
+            'label' => 'Empresa',
+            'url' => ['empresa/index'],
+            'visible' => $validarusuario
+            ],
+
+//DFend
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
+            ) : 
+            (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
@@ -51,6 +69,7 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             )
+
         ],
     ]);
     NavBar::end();

@@ -167,7 +167,7 @@ class UsuarioController extends Controller
                     $table->idtide = $model->idtide;
 
                     $table->identificacion = $model->identificacion;
-                    $table->login = $model->login;
+                    $table->username = $model->username;
                     $table->email = $model->email;
                     
                     //Encriptamos el password
@@ -195,7 +195,7 @@ class UsuarioController extends Controller
                           
                          $subject = "Confirmar registro";
                          $body = "<h1>Haga click en el siguiente enlace para finalizar tu registro</h1>";
-                         $body .= "<a href='http://yii.local/index.php?r=site/confirm&id=".$id."&authKey=".$authkey."'>Confirmar</a>";
+                         $body .= "<a href='http://yii.local/index.php?r=site/confirm&id=".$id."&authkey=".$authkey."'>Confirmar</a>";
                           
                          //Enviamos el correo
                          Yii::$app->mailer->compose()
@@ -210,7 +210,8 @@ class UsuarioController extends Controller
                          $model->clave = null;
                          $model->clave_repeat = null;
                          
-                         $msg = "Gracias, ahora sólo falta que confirmes tu registro en tu cuenta de correo";
+                         //$msg = "Gracias, ahora sólo falta que confirmes tu registro en tu cuenta de correo";
+                        $msg = "Su registro se realizo con exito";
                         
                     }else{
                         $msg = "Ha ocurrido un error al llevar a cabo tu registro";
@@ -226,7 +227,7 @@ class UsuarioController extends Controller
         return $this->render("create", ["model" => $model, 
                                         "msg"   => $msg, 
                                         "tipo"  => $tipo, 
-                                        "emp"  => $emp,
+                                        "emp"   => $emp,
                                         "role"  => $role
                                         ]);
       
@@ -242,12 +243,24 @@ class UsuarioController extends Controller
     {
         $model = $this->findModel($id);
 
+        $msg = "";
+
+        $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
+        $emp  = ArrayHelper::map(Empresa::find()->all(), 'idemp', 'nombre');
+        $role = ['1'=>'Comercial', '2'=>'Gerente Empresa', '3'=>'Empresa', '4'=>'Administrador'];  
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idusu]);
         } else {
             return $this->render('update', [
-                'model' => $model,
-            ]);
+                                        'model' => $model,
+                                        "msg"   => $msg,
+                                        "tipo"  => $tipo, 
+                                        "emp"   => $emp,
+                                        "role"  => $role 
+                                    
+                                ]);
         }
     }
 

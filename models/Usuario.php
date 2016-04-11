@@ -14,7 +14,7 @@ use Yii;
  * @property string $apellido2
  * @property integer $idtide
  * @property string $identificacion
- * @property string $login
+ * @property string $username
  * @property string $email
  * @property string $clave
  * @property string $authkey
@@ -68,11 +68,11 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return [
             [['idtide', 'role', 'activate', 'idemp', 'usumod'], 'integer'],
-            [['nombre1','apellido1','identificacion', 'login', 'email', 'clave', 'idemp'], 'required'],
+            [['nombre1','apellido1','identificacion', 'username', 'email', 'clave', 'idemp'], 'required'],
             [['feccre', 'fecmod'], 'safe'],
             [['nombre1', 'nombre2', 'apellido1', 'apellido2'], 'string', 'max' => 30],
             [['identificacion'], 'string', 'max' => 20],
-            [['login', 'clave', 'authkey', 'accesstoken'], 'string', 'max' => 40],
+            [['username', 'clave', 'authkey', 'accesstoken'], 'string', 'max' => 40],
             [['email'], 'string', 'max' => 90],
             [['email'], 'unique'],
             [['identificacion'], 'unique'],
@@ -82,7 +82,7 @@ class Usuario extends \yii\db\ActiveRecord
         
 
             [['estado'], 'string', 'max' => 8],
-            [['login'], 'unique'],
+            [['username'], 'unique'],
 
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idtide'], 'exist', 'skipOnError' => true, 'targetClass' => Tipo::className(), 'targetAttribute' => ['idtide' => 'idtipo']],
@@ -104,7 +104,7 @@ class Usuario extends \yii\db\ActiveRecord
             'apellido2' => 'Apellido2',
             'idtide' => 'Tipo ident.',
             'identificacion' => 'Identificacion',
-            'login' => 'Login',
+            'username' => 'Usuario',
             'email' => 'Email',
             'clave' => 'Clave',
             'clave_repeat' => 'Repetir Clave',

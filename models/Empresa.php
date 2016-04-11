@@ -49,12 +49,12 @@ class Empresa extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idemp' => 'Idemp',
+            'idemp' => 'Id',
             'nombre' => 'Nombre',
             'nit' => 'Nit',
-            'feccre' => 'Feccre',
-            'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'feccre' => 'Creacion',
+            'fecmod' => 'Modificacion',
+            'usumod' => 'Quien Modifico?',
         ];
     }
 
