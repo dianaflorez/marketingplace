@@ -27,7 +27,8 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<?php 
+<?php
+
     $validarusuario = false;
     if(!Yii::$app->user->isGuest){
         $validarusuario = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 
@@ -51,7 +52,11 @@ AppAsset::register($this);
             ['label' => 'Contact', 'url' => ['/site/contact']],
 
 //DF      
-            
+            [
+            'label' => 'Plan Marketing',
+            'url' => ['planmarketing/index'],
+            'visible' => $validarusuario
+            ],                 
             [
             'label' => 'Empresas',
             'url' => ['empresa/index'],
@@ -62,6 +67,12 @@ AppAsset::register($this);
             'url' => ['usuario/index'],
             'visible' => $validarusuario
             ],
+            [
+            'label' => 'Tipos',
+            'url' => ['tipo/index'],
+            'visible' => $validarusuario
+            ],
+         
 
 //DFend
             Yii::$app->user->isGuest ? (

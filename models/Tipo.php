@@ -18,6 +18,7 @@ use Yii;
  *
  * @property Cliente[] $clientes
  * @property Dirtel[] $dirtels
+ * @property Empresainf[] $empresainfs
  * @property Usuario[] $usuarios
  */
 class Tipo extends \yii\db\ActiveRecord
@@ -75,6 +76,14 @@ class Tipo extends \yii\db\ActiveRecord
     public function getDirtels()
     {
         return $this->hasMany(Dirtel::className(), ['idtipo' => 'idtipo']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmpresainfs()
+    {
+        return $this->hasMany(Empresainf::className(), ['idtipo' => 'idtipo']);
     }
 
     /**

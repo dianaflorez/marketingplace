@@ -4,10 +4,15 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Empresainf;
+use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use app\models\Tipo;
+use yii\helpers\Url;
+use yii\helpers\Html;
 
 /**
  * EmpresainfController implements the CRUD actions for Empresainf model.
@@ -33,14 +38,19 @@ class EmpresainfController extends Controller
      * Lists all Empresainf models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Empresainf::find(),
-        ]);
 
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $id = Yii::$app->user->identity->idemp;
+
+        $modelemp = Empresa::findOne($id);
+        $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
+      
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'model'     => $model,
+            'idemp'     => $id,
+            'modelemp'  => $modelemp,
         ]);
     }
 
@@ -64,18 +74,25 @@ class EmpresainfController extends Controller
     public function actionCreate($idemp)
     {
         $model = new Empresainf();
+       
+        $tipos          = Tipo::find()->where(['tabla' => 'empresainf'])->all();
+        $tipo           = ArrayHelper::map($tipos, 'idtipo', 'nombre');
+        $model->idemp   = $idemp;
 
-        $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $model->idemp = Yii::$app->user->identity->idemp;
 
-        $model->idemp = $idemp;
+        $modelemp   = Empresa::findOne($model->idemp);
+
         $model->usumod = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idinf]);
+            return $this->redirect(['index', 'id' => $model->idemp]);
         } else {
             return $this->render('create', [
-                'model' => $model,
-                'tipo'  => $tipo,
+                'model'     => $model,
+                'tipo'      => $tipo,
+                'modelemp'  => $modelemp,
             ]);
         }
     }
@@ -90,11 +107,21 @@ class EmpresainfController extends Controller
     {
         $model = $this->findModel($id);
 
+        $tipos          = Tipo::find()->where(['tabla' => 'empresainf'])->all();
+        $tipo           = ArrayHelper::map($tipos, 'idtipo', 'nombre');
+
+        $modelemp   = Empresa::findOne($model->idemp);
+        
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idinf]);
+            return $this->redirect(['index', 'id' => $model->idemp]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'tipo'      => $tipo,
+                'modelemp'  => $modelemp,
             ]);
         }
     }
@@ -105,11 +132,39 @@ class EmpresainfController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        //$this->findModel($id)->delete();
+      //  return $this->redirect(['index']);
 
-        return $this->redirect(['index']);
+        if(Yii::$app->request->post())
+        {
+            $idinf = Html::encode($_POST["idinf"]);
+            $idemp = Html::encode($_POST["idemp"]);
+            if((int) $idemp)
+            {
+                if(Empresainf::deleteAll("idinf=:idinf", [":idinf" => $idinf]))
+                {
+                    echo "La informacion de la empresa con id $idinf eliminada con éxito, redireccionando ...";
+                    echo "<meta http-equiv='refresh' content='1; ".
+                    Url::toRoute(["empresainf/index", "id" => $idemp])."'>";
+                }
+                else
+                {
+                    echo "Ha ocurrido un error al eliminar la Empresa redireccionando ...";
+                    echo "<meta http-equiv='refresh' content='1; ".Url::toRoute(["empresainf/index", "id" => $idemp])."'>"; 
+                }
+            }
+            else
+            {
+                echo "Ha ocurrido un error al eliminar la empresa, redireccionando ...";
+                echo "<meta http-equiv='refresh' content='2; ".Url::toRoute(["empresainf/index", "id" => $idemp])."'>";
+            }
+        }
+        else
+        {
+            return $this->redirect(["empresainf/index"]);
+        }
     }
 
     /**

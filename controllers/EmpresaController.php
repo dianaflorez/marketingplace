@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Empresa;
+use app\models\Empresainf;
 use app\models\User;
 use yii\filters\AccessControl;
 use app\models\EmpresaSearch;
@@ -204,8 +205,9 @@ class EmpresaController extends Controller
 
         if(Yii::$app->request->post())
         {
-            $idemp = Html::encode($_POST["idemp"]);
-            if((int) $idemp)
+            $idemp  = Html::encode($_POST["idemp"]);
+            $ct     = Empresainf::find()->where(['idemp' => $idemp])->count();
+            if((int) $idemp && $ct == 0)
             {
                 if(Empresa::deleteAll("idemp=:idemp", [":idemp" => $idemp]))
                 {
@@ -220,8 +222,8 @@ class EmpresaController extends Controller
             }
             else
             {
-                echo "Ha ocurrido un error al eliminar la empresa, redireccionando ...";
-                echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empres/index")."'>";
+                echo "La empresa tiene informacion realacionada, no se puede eliminar, redireccionando ...";
+                echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empresa/index")."'>";
             }
         }
         else

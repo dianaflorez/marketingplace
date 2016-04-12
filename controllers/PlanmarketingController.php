@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Tipo;
-use app\models\Usuario;
-use app\models\TipoSearch;
+use app\models\Planmarketing;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TipoController implements the CRUD actions for Tipo model.
+ * PlanmarketingController implements the CRUD actions for Planmarketing model.
  */
-class TipoController extends Controller
+class PlanmarketingController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,66 +30,52 @@ class TipoController extends Controller
     }
 
     /**
-     * Lists all Tipo models.
+     * Lists all Planmarketing models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TipoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Planmarketing::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Tipo model.
+     * Displays a single Planmarketing model.
      * @param integer $id
      * @return mixed
      */
     public function actionView($id)
     {
-        $model  = $this->findModel($id);
-        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
-        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
-
         return $this->render('view', [
-            'model' => $model,
-            'usumod'=> $usumod,
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Tipo model.
+     * Creates a new Planmarketing model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Tipo();
-
-        $tablas = [ 'usuario'   =>'Usuario', 
-                    'empresainf'=>'Empresa', 
-                    'direccion' =>'Direccion',
-                    'telefono'  =>'telefono'
-                ];  
-
-        $model->usumod = Yii::$app->user->identity->idusu;        
+        $model = new Planmarketing();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idtipo]);
+            return $this->redirect(['view', 'id' => $model->idpm]);
         } else {
             return $this->render('create', [
-                'model'     => $model,
-                'tablas'    => $tablas,    
+                'model' => $model,
             ]);
         }
     }
 
     /**
-     * Updates an existing Tipo model.
+     * Updates an existing Planmarketing model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,25 +83,18 @@ class TipoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $tablas = [ 'usuario'   =>'Usuario', 
-                    'empresainf'=>'Empresa', 
-                    'direccion' =>'Direccion',
-                    'telefono'  =>'telefono'
-                ];  
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idtipo]);
+            return $this->redirect(['view', 'id' => $model->idpm]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'tablas'    => $tablas,    
-
             ]);
         }
     }
 
     /**
-     * Deletes an existing Tipo model.
+     * Deletes an existing Planmarketing model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -129,15 +107,15 @@ class TipoController extends Controller
     }
 
     /**
-     * Finds the Tipo model based on its primary key value.
+     * Finds the Planmarketing model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tipo the loaded model
+     * @return Planmarketing the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tipo::findOne($id)) !== null) {
+        if (($model = Planmarketing::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

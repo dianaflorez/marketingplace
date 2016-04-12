@@ -5,29 +5,28 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "empresainf".
+ * This is the model class for table "planmarketing".
  *
- * @property integer $idinf
+ * @property integer $idpm
  * @property integer $idemp
- * @property integer $idtipo
- * @property string $inf
+ * @property string $nombre
  * @property string $descripcion
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
  *
  * @property Empresa $idemp0
- * @property Tipo $idtipo0
  * @property Usuario $usumod0
+ * @property Pmcontenido[] $pmcontenidos
  */
-class Empresainf extends \yii\db\ActiveRecord
+class Planmarketing extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'empresainf';
+        return 'planmarketing';
     }
 
     /**
@@ -36,12 +35,12 @@ class Empresainf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'idtipo', 'inf'], 'required'],
-            [['idemp', 'idtipo', 'usumod'], 'integer'],
-            [['inf', 'descripcion'], 'string'],
+            [['idemp', 'nombre'], 'required'],
+            [['idemp', 'usumod'], 'integer'],
+            [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
+            [['nombre'], 'string', 'max' => 30],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
-            [['idtipo'], 'exist', 'skipOnError' => true, 'targetClass' => Tipo::className(), 'targetAttribute' => ['idtipo' => 'idtipo']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
     }
@@ -52,10 +51,9 @@ class Empresainf extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idinf' => 'Idinf',
+            'idpm' => 'Idpm',
             'idemp' => 'Idemp',
-            'idtipo' => 'Idtipo',
-            'inf' => 'Inf',
+            'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
@@ -74,16 +72,16 @@ class Empresainf extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdtipo0()
+    public function getUsumod0()
     {
-        return $this->hasOne(Tipo::className(), ['idtipo' => 'idtipo']);
+        return $this->hasOne(Usuario::className(), ['idusu' => 'usumod']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsumod0()
+    public function getPmcontenidos()
     {
-        return $this->hasOne(Usuario::className(), ['idusu' => 'usumod']);
+        return $this->hasMany(Pmcontenido::className(), ['idpm' => 'idpm']);
     }
 }

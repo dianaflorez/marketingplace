@@ -11,16 +11,15 @@ use yii\widgets\LinkPager;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Empresas';
+$this->title = 'Plan Marketing';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<a href="<?= Url::toRoute("empresa/create") ?>">Nueva Empresa</a>
-
+<a href="<?= Url::toRoute("planmarketing/create") ?>">Nuevo Plan Marketing</a>
 
 <?php $f = ActiveForm::begin([
     "method" => "get",
-    "action" => Url::toRoute("empresa/index"),
+    "action" => Url::toRoute("planmarketing/index"),
     "enableClientValidation" => true,
 ]);
 ?>
@@ -32,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <h3><?= $search ?></h3>
 
 
-<h3>Lista de Empresas</h3>
+<h3>Lista Planes de Marketing</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Id</th>
