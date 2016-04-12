@@ -16,6 +16,8 @@ use yii\helpers\Html;
 use yii\data\Pagination;
 use yii\helpers\Url;
 use app\models\Usuario;
+use app\models\Planmarketing;
+
 
 /**
  * EmpresaController implements the CRUD actions for Empresa model.
@@ -163,7 +165,19 @@ class EmpresaController extends Controller
         $model->usumod = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $modelpm = new Planmarketing();
+            $modelpm->nombre = "Analisis Situacion Externa";
+            $modelpm->usumod = Yii::$app->user->identity->idusu;
+            $modelpm->save();
+
+            $modelpm = new Planmarketing();
+            $modelpm->nombre = "Analisis Situacion Interna";
+            $modelpm->usumod = Yii::$app->user->identity->idusu;
+            $modelpm->save();
+            
             return $this->redirect(['view', 'id' => $model->idemp]);
+        
         } else {
             return $this->render('create', [
                 'model' => $model,

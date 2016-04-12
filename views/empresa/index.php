@@ -40,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             Nombre
         </th>
         <th>Nit</th>
-        <th class="action-column fixcolumoperation">&nbsp;</th>
+        <th class="action-column ">&nbsp;</th>
+        <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
     <tr>
@@ -52,8 +53,27 @@ $this->params['breadcrumbs'][] = $this->title;
             <a href="<?= Url::toRoute(["pmcontenido/index", "id" => $row->idemp]) ?>" title="Planmarketing" aria-label="planmarketing">
               Plan Marketing
             </a>
-            <!--End Inf.-->
-        
+            <!--End -->
+            
+            <!-- Plan de Accion -->
+            <a href="<?= Url::toRoute(["planaccion/index", "id" => $row->idemp]) ?>" title="Planaccion" aria-label="planaccion">
+              / Plan Accion
+            </a>
+            <!--End -->
+
+            <!-- Clientes -->
+            <a href="<?= Url::toRoute(["clientes/index", "id" => $row->idemp]) ?>" title="Clientes" aria-label="clientes">
+              / Clientes
+            </a>
+            <!--End -->
+
+            <!-- Ventaws -->
+            <a href="<?= Url::toRoute(["ventas/index", "id" => $row->idemp]) ?>" title="Ventas" aria-label="ventas">
+              / Ventas
+            </a>
+            <!--End -->
+        </td>
+        <td>
              <!-- Inf. -->
             <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">
               <span class="glyphicon glyphicon-list-alt"></span>
