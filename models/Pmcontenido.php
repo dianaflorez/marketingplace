@@ -5,29 +5,27 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "planmarketing".
+ * This is the model class for table "pmcontenido".
  *
+ * @property integer $idpmc
  * @property integer $idpm
- * @property integer $idemp
- * @property string $nombre
- * @property integer $orden
+ * @property string $titulo
  * @property string $descripcion
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
  *
- * @property Empresa $idemp0
+ * @property Planmarketing $idpm0
  * @property Usuario $usumod0
- * @property Pmcontenido[] $pmcontenidos
  */
-class Planmarketing extends \yii\db\ActiveRecord
+class Pmcontenido extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'planmarketing';
+        return 'pmcontenido';
     }
 
     /**
@@ -36,12 +34,12 @@ class Planmarketing extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'nombre'], 'required'],
-            [['idemp', 'orden', 'usumod'], 'integer'],
+            [['idpm'], 'required'],
+            [['idpm', 'usumod'], 'integer'],
             [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
-            [['nombre'], 'string', 'max' => 30],
-            [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
+            [['titulo'], 'string', 'max' => 30],
+            [['idpm'], 'exist', 'skipOnError' => true, 'targetClass' => Planmarketing::className(), 'targetAttribute' => ['idpm' => 'idpm']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
     }
@@ -52,10 +50,9 @@ class Planmarketing extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'idpmc' => 'Idpmc',
             'idpm' => 'Idpm',
-            'idemp' => 'Idemp',
-            'nombre' => 'Nombre',
-            'orden' => 'Orden',
+            'titulo' => 'Titulo',
             'descripcion' => 'Descripcion',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
@@ -66,9 +63,9 @@ class Planmarketing extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdemp0()
+    public function getIdpm0()
     {
-        return $this->hasOne(Empresa::className(), ['idemp' => 'idemp']);
+        return $this->hasOne(Planmarketing::className(), ['idpm' => 'idpm']);
     }
 
     /**
@@ -77,13 +74,5 @@ class Planmarketing extends \yii\db\ActiveRecord
     public function getUsumod0()
     {
         return $this->hasOne(Usuario::className(), ['idusu' => 'usumod']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPmcontenidos()
-    {
-        return $this->hasMany(Pmcontenido::className(), ['idpm' => 'idpm']);
     }
 }

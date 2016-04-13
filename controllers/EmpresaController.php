@@ -17,6 +17,8 @@ use yii\data\Pagination;
 use yii\helpers\Url;
 use app\models\Usuario;
 use app\models\Planmarketing;
+use app\models\Pmcontenido;
+use yii\web\Response;
 
 
 /**
@@ -80,10 +82,10 @@ class EmpresaController extends Controller
      * Lists all Empresa models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($msg)
     {
-        $searchModel = new EmpresaSearch;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+     //   $searchModel = new EmpresaSearch;
+     //   $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
        // $table = new Empresa;
         //$model = $table->find()->andWhere('idemp>1')->all();
@@ -127,12 +129,13 @@ class EmpresaController extends Controller
         }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-            "form" => $form, 
-            "search" => $search,
-            "pages" => $pages
+         //   'searchModel'   => $searchModel,
+          //  'dataProvider'  => $dataProvider,
+            'model'         => $model,
+            "form"          => $form, 
+            "search"        => $search,
+            "pages"         => $pages,
+            "msg"           => $msg,
         ]);
     }
 
@@ -161,21 +164,67 @@ class EmpresaController extends Controller
     public function actionCreate()
     {
         $model = new Empresa();
-
+        $model->nombre = trim(ucwords($model->nombre));
         $model->usumod = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
             $modelpm = new Planmarketing();
+            $modelpm->idemp  = $model->idemp;
             $modelpm->nombre = "Analisis Situacion Externa";
+            $modelpm->orden  = 1;
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
 
             $modelpm = new Planmarketing();
+            $modelpm->idemp  = $model->idemp;
             $modelpm->nombre = "Analisis Situacion Interna";
+            $modelpm->orden  = 2;
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
-            
+
+            $modelpm = new Planmarketing();
+            $modelpm->idemp  = $model->idemp;
+            $modelpm->nombre = "Diagnostico de la Situacion";
+            $modelpm->orden  = 3;
+            $modelpm->usumod = Yii::$app->user->identity->idusu;
+            $modelpm->save();
+
+              $modelpmc = new Pmcontenido();
+              $modelpmc->idpm  = $modelpm->idpm;
+              $modelpmc->titulo = "Fortaleza";
+              $modelpmc->usumod = Yii::$app->user->identity->idusu;
+              $modelpmc->save();
+
+              $modelpmc = new Pmcontenido();
+              $modelpmc->idpm  = $modelpm->idpm;
+              $modelpmc->titulo = "Oportunidades";
+              $modelpmc->usumod = Yii::$app->user->identity->idusu;
+              $modelpmc->save();
+
+              $modelpmc = new Pmcontenido();
+              $modelpmc->idpm  = $modelpm->idpm;
+              $modelpmc->titulo = "Debilidades";
+              $modelpmc->usumod = Yii::$app->user->identity->idusu;
+              $modelpmc->save();
+
+              $modelpmc = new Pmcontenido();
+              $modelpmc->idpm  = $modelpm->idpm;
+              $modelpmc->titulo = "Amenazas";
+              $modelpmc->usumod = Yii::$app->user->identity->idusu;
+              $modelpmc->save();
+
+
+
+            $modelpm = new Planmarketing();
+            $modelpm->idemp  = $model->idemp;
+            $modelpm->nombre = "Desiciones Extrategicas";
+            $modelpm->orden  = 4;
+            $modelpm->usumod = Yii::$app->user->identity->idusu;
+            $modelpm->save();
+
+
+
             return $this->redirect(['view', 'id' => $model->idemp]);
         
         } else {
@@ -216,17 +265,23 @@ class EmpresaController extends Controller
     {
         //$this->findModel($id)->delete();
       //  return $this->redirect(['index']);
-
+        $msg  = "Exito!!!";  
         if(Yii::$app->request->post())
         {
             $idemp  = Html::encode($_POST["idemp"]);
-            $ct     = Empresainf::find()->where(['idemp' => $idemp])->count();
-            if((int) $idemp && $ct == 0)
+            $cte    = Empresainf::find()->where(['idemp' => $idemp])->count();
+            $ctu    = Usuario::find()->where(['idemp' => $idemp])->count();
+            $ctpm   = Planmarketing::find()->where(['idemp' => $idemp])->count();
+
+            $form = new EmpresaSearchForm;
+
+            if((int) $idemp && $cte == 0 && $ctu == 0 && $ctpm ==0)
             {
                 if(Empresa::deleteAll("idemp=:idemp", [":idemp" => $idemp]))
                 {
-                    echo "Empresa con id $idemp eliminado con éxito, redireccionando ...";
-                    echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empresa/index")."'>";
+                    $msg = "Empresa con id $idemp eliminada con éxito.";
+                  ///  echo "<meta http-equiv='refresh' content='1; ".Url::toRoute("empresa/index")."'>";
+                   return $this->redirect(["empresa/index", 'msg' => $msg]);
                 }
                 else
                 {
@@ -236,13 +291,15 @@ class EmpresaController extends Controller
             }
             else
             {
-                echo "La empresa tiene informacion realacionada, no se puede eliminar, redireccionando ...";
-                echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empresa/index")."'>";
+                //echo "La empresa tiene informacion realacionada, no se puede eliminar, redireccionando ...";
+             //   echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empresa/index")."'>";
+                $msg = "La empresa tiene informacion realacionada, no se puede eliminar";
+                return $this->redirect(["empresa/index", 'msg' => $msg]);
             }
         }
         else
         {
-            return $this->redirect(["empresa/index"]);
+           return $this->redirect(["empresa/index", 'msg' => $msg]);
         }
     }
 

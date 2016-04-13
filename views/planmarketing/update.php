@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Planmarketing */
 
-$this->title = 'Update Planmarketing: ' . $model->idpm;
-$this->params['breadcrumbs'][] = ['label' => 'Planmarketings', 'url' => ['index']];
+$this->title = $model->nombre;
+//$this->params['breadcrumbs'][] = ['label' => 'Planmarketings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->idpm, 'url' => ['view', 'id' => $model->idpm]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="planmarketing-update">
 

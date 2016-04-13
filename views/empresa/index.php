@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\data\Pagination;
+use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
@@ -15,6 +16,17 @@ $this->title = 'Empresas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<h3>
+<?php if($msg){ 
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-info',
+            ],
+            'body' => $msg,
+        ]);
+    }
+?>
+</h3>
 <a href="<?= Url::toRoute("empresa/create") ?>">Nueva Empresa</a>
 
 

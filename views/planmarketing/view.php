@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Planmarketing */
 
-$this->title = $model->idpm;
+$this->title = $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Planmarketings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,26 +15,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idpm], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idpm], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Editar', ['update', 'id' => $model->idpm], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idpm',
-            'idemp',
+         //   'idpm',
+             array('label'=>'Empresa',
+             'type'=>'raw',
+             'value'=>$nomemp
+            ),  
             'nombre',
             'descripcion:ntext',
             'feccre',
             'fecmod',
-            'usumod',
+             array('label'=>'Quien Modifico',
+             'type'=>'raw',
+             'value'=>$usumod 
+            ),  
         ],
     ]) ?>
 

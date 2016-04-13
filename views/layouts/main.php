@@ -59,7 +59,7 @@ AppAsset::register($this);
             ],                 
             [
             'label' => 'Empresas',
-            'url' => ['empresa/index'],
+            'url' => ['empresa/index', 'msg' => ''],
             'visible' => $validarusuario
             ],
              [
