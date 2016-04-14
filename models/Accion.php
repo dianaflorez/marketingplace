@@ -5,28 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "pmcontenido".
+ * This is the model class for table "accion".
  *
- * @property integer $idpmc
- * @property integer $idpm
- * @property string $titulo
- * @property integer $orden
+ * @property integer $idaccion
+ * @property integer $idpa
  * @property string $descripcion
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
  *
- * @property Planmarketing $idpm0
+ * @property Planaccion $idpa0
  * @property Usuario $usumod0
  */
-class Pmcontenido extends \yii\db\ActiveRecord
+class Accion extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'pmcontenido';
+        return 'accion';
     }
 
     /**
@@ -35,12 +33,11 @@ class Pmcontenido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idpm'], 'required'],
-            [['idpm', 'orden', 'usumod'], 'integer'],
+            [['idpa', 'descripcion'], 'required'],
+            [['idpa', 'usumod'], 'integer'],
             [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
-            [['titulo'], 'string', 'max' => 30],
-            [['idpm'], 'exist', 'skipOnError' => true, 'targetClass' => Planmarketing::className(), 'targetAttribute' => ['idpm' => 'idpm']],
+            [['idpa'], 'exist', 'skipOnError' => true, 'targetClass' => Planaccion::className(), 'targetAttribute' => ['idpa' => 'idpa']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
     }
@@ -51,23 +48,21 @@ class Pmcontenido extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idpmc' => 'Idpmc',
-            'idpm' => 'Idpm',
-            'titulo' => 'Titulo',
-            'orden' => 'Orden',
+            'idaccion' => 'Idaccion',
+            'idpa' => 'Idpa',
             'descripcion' => 'Descripcion',
-            'feccre' => 'Creacion',
-            'fecmod' => 'Modificacion',
-            'usumod' => 'Quien modifico',
+            'feccre' => 'Feccre',
+            'fecmod' => 'Fecmod',
+            'usumod' => 'Usumod',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdpm0()
+    public function getIdpa0()
     {
-        return $this->hasOne(Planmarketing::className(), ['idpm' => 'idpm']);
+        return $this->hasOne(Planaccion::className(), ['idpa' => 'idpa']);
     }
 
     /**

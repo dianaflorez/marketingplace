@@ -1,13 +1,18 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Pmcontenido */
-
-$this->title = 'Update Pmcontenido: ' . $model->idpmc;
+?>
+<h2>
+<a href="<?= Url::toRoute(["pmcontenido/index",  "id" => $emp->idemp, "activo" => $tab]) ?>">
+	<?php echo $model->titulo." - ".$emp->nombre; ?>
+</a>
+</h2>	       	
+<?php
 $this->params['breadcrumbs'][] = ['label' => 'Pmcontenidos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idpmc, 'url' => ['view', 'id' => $model->idpmc]];
+$this->params['breadcrumbs'][] = ['label' => $model->titulo, 'url' => ['view', 'id' => $model->idpmc]];
 $this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="pmcontenido-update">

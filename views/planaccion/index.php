@@ -12,7 +12,7 @@ use yii\widgets\LinkPager;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Empresas';
+$this->title = 'Plan Accion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<a href="<?= Url::toRoute("empresa/create") ?>">Nueva Empresa</a>
+<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/create", "id" => $idemp]) ?>">Nuevo Plan de Accion</a>
 
 
 <?php $f = ActiveForm::begin([
@@ -36,15 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
     "enableClientValidation" => true,
 ]);
 ?>
-<div class="form-group">
-    <?= $f->field($form, "q")->input("search") ?>
-</div>
-<?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-<?php $f->end() ?>
-<h3><?= $search ?></h3>
 
-
-<h3>Lista de Empresas</h3>
+<h3>Plan de Accion</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Id</th>
@@ -60,31 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->idemp ?></td>
         <td><?= $row->nombre ?></td>
         <td><?= $row->nit ?></td>
-        <td>
-             <!-- Cargo todo el plan de marketing con su inf. que esta en pmcontenido -->
-            <a href="<?= Url::toRoute(["pmcontenido/index", "id" => $row->idemp,"activo" => "pm1"]) ?>" title="Planmarketing" aria-label="planmarketing">
-              Plan Marketing
-            </a>
-            <!--End -->
-            
-            <!-- Plan de Accion -->
-            <a href="<?= Url::toRoute(["planaccion/index", "id" => $row->idemp]) ?>" title="Planaccion" aria-label="planaccion">
-              / Plan Accion
-            </a>
-            <!--End -->
-
-            <!-- Clientes -->
-            <a href="<?= Url::toRoute(["clientes/index", "id" => $row->idemp]) ?>" title="Clientes" aria-label="clientes">
-              / Clientes
-            </a>
-            <!--End -->
-
-            <!-- Ventaws -->
-            <a href="<?= Url::toRoute(["ventas/index", "id" => $row->idemp]) ?>" title="Ventas" aria-label="ventas">
-              / Ventas
-            </a>
-            <!--End -->
-        </td>
         <td>
              <!-- Inf. -->
             <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">
@@ -128,7 +96,3 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>
     <?php endforeach ?>
 </table>
-
-<?= LinkPager::widget([
-    "pagination" => $pages,
-]);

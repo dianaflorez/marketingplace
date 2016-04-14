@@ -98,7 +98,7 @@ class EmpresaController extends Controller
             {
                 $search = Html::encode($form->q);
                 $table = Empresa::find()
-                        ->andWhere('idemp>1')
+                        ->andWhere('idemp>0')
                         ->orWhere(["like", "nombre", $search])
                         ->orWhere(["like", "nit", $search]);
                 $count = clone $table;
@@ -116,7 +116,7 @@ class EmpresaController extends Controller
                 $form->getErrors();
             }
         }else{
-                $table = Empresa::find()->andWhere('idemp>1');
+                $table = Empresa::find()->andWhere('idemp>0');
                 $count = clone $table;
                 $pages = new Pagination([
                     "pageSize" => 4,
@@ -193,24 +193,28 @@ class EmpresaController extends Controller
               $modelpmc = new Pmcontenido();
               $modelpmc->idpm  = $modelpm->idpm;
               $modelpmc->titulo = "Fortaleza";
+              $modelpmc->orden  = 1;
               $modelpmc->usumod = Yii::$app->user->identity->idusu;
               $modelpmc->save();
 
               $modelpmc = new Pmcontenido();
               $modelpmc->idpm  = $modelpm->idpm;
               $modelpmc->titulo = "Oportunidades";
+              $modelpmc->orden  = 2;
               $modelpmc->usumod = Yii::$app->user->identity->idusu;
               $modelpmc->save();
 
               $modelpmc = new Pmcontenido();
               $modelpmc->idpm  = $modelpm->idpm;
               $modelpmc->titulo = "Debilidades";
+              $modelpmc->orden  = 3;
               $modelpmc->usumod = Yii::$app->user->identity->idusu;
               $modelpmc->save();
 
               $modelpmc = new Pmcontenido();
               $modelpmc->idpm  = $modelpm->idpm;
               $modelpmc->titulo = "Amenazas";
+              $modelpmc->orden  = 4;
               $modelpmc->usumod = Yii::$app->user->identity->idusu;
               $modelpmc->save();
 
