@@ -37,13 +37,18 @@ class PlanaccionController extends Controller
      */
     public function actionIndex($id,$msg=null)
     {
-       $model2 = Planaccion::find(['idemp' => $id])->all();
+        $model2 = Planaccion::find()
+                ->joinWith(['accions'])
+                ->where(['planaccion.idemp' => $id])
+                ->all();
+            
+        $emp    = Empresa::findOne(['idemp' => $id]);
 
         return $this->render('index', [
             'model'   => $model2,
             'msg'     => $msg,
-            'idemp'   =>$id,
-
+            'idemp'   => $id,
+            'emp'     => $emp, 
         ]);
     }
 

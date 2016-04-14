@@ -12,7 +12,7 @@ use yii\widgets\LinkPager;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Plan Accion';
+$this->title = 'Plan Accion - '.$emp->nombre;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]);
 ?>
 
-<h3>Plan de Accion</h3>
+<h3>Plan de Accion <?php echo ' - '.$emp->nombre;?></h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
@@ -53,6 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <tr>
         <td>
             <?= $row->nombre ?>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <?php foreach($row->accions as $acc): 
+                        echo "- ".$acc->descripcion."<br />";
+                     endforeach ?>
+                </div>
+            </div>    
             <a  href="<?= Url::toRoute(["accion/create", 
                                     "idpa"    => $row->idpa, 
                                     "idemp" => $row->idemp, 
@@ -69,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
           
             <!-- Update -->
             <a href="<?= Url::toRoute(["planaccion/update", "id" => $row->idpa]) ?>" title="Actualizar" aria-label="Actualizar">
-              <span class="glyphicon glyphicon-eye-open"></span>
+              <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <!--End Update-->
         

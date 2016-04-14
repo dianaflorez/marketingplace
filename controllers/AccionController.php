@@ -83,7 +83,7 @@ class AccionController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->idemp]);
+            return $this->redirect(['planaccion/index', 'id' => $model->idemp]);
         } else {
             return $this->render('create', [
                 'model' => $model,
