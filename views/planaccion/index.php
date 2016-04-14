@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $f = ActiveForm::begin([
     "method" => "get",
-    "action" => Url::toRoute("empresa/index"),
+    "action" => Url::toRoute("planaccion/index"),
     "enableClientValidation" => true,
 ]);
 ?>
@@ -40,58 +40,39 @@ $this->params['breadcrumbs'][] = $this->title;
 <h3>Plan de Accion</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
-        <th>Id</th>
-        <th>
-            Nombre
-        </th>
-        <th>Nit</th>
-        <th class="action-column ">&nbsp;</th>
+        <th>Nombre</th>
+        <th>Inicia</th>
+        <th>Fin</th>
+        <th>Responsable</th>
+        <th>Elemento</th>
+        <th>Costo</th>
+        <th>Estado</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
     <tr>
-        <td><?= $row->idemp ?></td>
-        <td><?= $row->nombre ?></td>
-        <td><?= $row->nit ?></td>
         <td>
-             <!-- Inf. -->
-            <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">
-              <span class="glyphicon glyphicon-list-alt"></span>
-            </a>
-            <!--End Inf.-->
-        
+            <?= $row->nombre ?>
+            <a class="btn btn-warning" href="<?= Url::toRoute(["accion/create", 
+                                    "id"    => $row->idpa, 
+                                    "idemp" => $emp->idemp, 
+                                ]) ?>">
+            Agregar Objetivo</a>    
+        </td>
+        <td><?= $row->fecini ?></td>
+        <td><?= $row->fecfin ?></td>
+        <td><?= $row->responsable ?></td>
+        <td>...</td>
+        <td><?= $row->costo ?></td>
+        <td><?= $row->estado ?></td>
+        <td>
+          
             <!-- Update -->
-            <a href="<?= Url::toRoute(["empresa/update", "id" => $row->idemp]) ?>" title="Actualizar" aria-label="Actualizar">
+            <a href="<?= Url::toRoute(["planaccion/update", "id" => $row->idpa]) ?>" title="Actualizar" aria-label="Actualizar">
               <span class="glyphicon glyphicon-eye-open"></span>
             </a>
             <!--End Update-->
         
-            <!--Delete-->
-             <a href="#" data-toggle="modal" data-target="#idemp_<?= $row->idemp ?>" title="Eliminar" aria-label="Eliminar">
-             <span class="glyphicon glyphicon-trash">.</span>
-             </a>
-                <div class="modal fade" role="dialog" aria-hidden="true" id="idemp_<?= $row->idemp ?>">
-                      <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Eliminar Empresa</h4>
-                              </div>
-                              <div class="modal-body">
-                                    <p>¿Realmente deseas eliminar esta empresa con nit <?= $row->nit ?>?</p>
-                              </div>
-                              <div class="modal-footer">
-                              <?= Html::beginForm(Url::toRoute("empresa/delete"), "POST") ?>
-                                    <input type="hidden" name="idemp" value="<?= $row->idemp ?>">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Eliminar</button>
-                              <?= Html::endForm() ?>
-                              </div>
-                            </div><!-- /.modal-content -->
-                      </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->            
-            </a>
-            <!--End Delete-->
         </td>
     </tr>
     <?php endforeach ?>

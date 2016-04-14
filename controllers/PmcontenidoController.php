@@ -77,7 +77,8 @@ class PmcontenidoController extends Controller
         return $this->render('view', [
             'model'     => $model,
             'usumod'    => $usumod,
-        ]);    }
+        ]);
+    }
 
     /**
      * Creates a new Pmcontenido model.

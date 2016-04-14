@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Planaccion;
 use app\models\Empresa;
+use app\models\Usuario;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -53,8 +54,17 @@ class PlanaccionController extends Controller
      */
     public function actionView($id)
     {
+        $model  = $this->findModel($id);
+        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
+        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
+        $nomemp = Empresa::findOne(['idemp' => $model->idemp]);  
+        $nomemp = strtoupper($nomemp->nombre);
+       
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model'     => $model,
+            'usumod'    => $usumod,
+            'nomemp'    => $nomemp,
+            
         ]);
     }
 
@@ -66,6 +76,7 @@ class PlanaccionController extends Controller
     public function actionCreate($id)
     {
         $model = new Planaccion();
+       
         $model->idemp   = $id;
         $model->usumod  = Yii::$app->user->identity->idusu;
 
@@ -77,13 +88,16 @@ class PlanaccionController extends Controller
         $estado = ['En Ejecucion'=>'En Ejecucion','Ejecutado'=>'Ejecutado', 
                     'Pendiente'=>'Pendiente', 'Terminado'=>'Terminado'];  
 
+        $fecha = date('Y.m.d');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $emp->idemp]);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'emp'   => $emp,
-                'estado'  => $estado,    
+                'estado'  => $estado, 
+                'fecha'   => $fecha,     
             ]);
         }
     }
@@ -97,12 +111,23 @@ class PlanaccionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod  = Yii::$app->user->identity->idusu;
+
+        $estado = ['En Ejecucion'=>'En Ejecucion','Ejecutado'=>'Ejecutado', 
+                    'Pendiente'=>'Pendiente', 'Terminado'=>'Terminado'];  
+
+        $emp = Empresa::findOne(['idemp' => $model->idemp]);
+                    
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idpa]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'estado'  => $estado, 
+                'emp'   => $emp,
+
             ]);
         }
     }

@@ -6,3 +6,5 @@ protected/data/*.db
 themes/classic/views/
 .DS_Store
 vendor/
+composer.phar
+composer.json.bk

@@ -8,12 +8,14 @@ use Yii;
  * This is the model class for table "accion".
  *
  * @property integer $idaccion
+ * @property integer $idemp
  * @property integer $idpa
  * @property string $descripcion
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
  *
+ * @property Empresa $idemp0
  * @property Planaccion $idpa0
  * @property Usuario $usumod0
  */
@@ -33,10 +35,11 @@ class Accion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['idemp', 'idpa', 'usumod'], 'integer'],
             [['idpa', 'descripcion'], 'required'],
-            [['idpa', 'usumod'], 'integer'],
             [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
+            [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idpa'], 'exist', 'skipOnError' => true, 'targetClass' => Planaccion::className(), 'targetAttribute' => ['idpa' => 'idpa']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
@@ -49,12 +52,21 @@ class Accion extends \yii\db\ActiveRecord
     {
         return [
             'idaccion' => 'Idaccion',
+            'idemp' => 'Idemp',
             'idpa' => 'Idpa',
             'descripcion' => 'Descripcion',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdemp0()
+    {
+        return $this->hasOne(Empresa::className(), ['idemp' => 'idemp']);
     }
 
     /**

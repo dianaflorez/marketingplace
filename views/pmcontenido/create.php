@@ -1,13 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Pmcontenido */
 use yii\helpers\Url;
-/* @var $this yii\web\View */
-/* @var $model app\models\Pmcontenido */
 ?>
 <h2>
 <a href="<?= Url::toRoute(["pmcontenido/index",  "id" => $emp->idemp, "activo" => $tab]) ?>">
