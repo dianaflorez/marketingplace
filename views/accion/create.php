@@ -1,14 +1,15 @@
 <?php
 
 use yii\helpers\Html;
-
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Accion */
-
-$this->title = 'Create Accion';
-$this->params['breadcrumbs'][] = ['label' => 'Accions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["pmcontenido/index",  "id" => $emp->idemp]) ?>">
+	<?php echo "Nueva Accion - ".$emp->nombre; ?>
+</a>
+</h2>	
+<?php
+$this->params['breadcrumbs'][] = "Nueva Accion";
 ?>
 <div class="accion-create">
 
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'emp'	=> $emp,
     ]) ?>
 
 </div>

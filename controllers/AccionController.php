@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Accion;
+use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,15 +62,22 @@ class AccionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idpa, $idemp)
     {
         $model = new Accion();
+        $model->idemp   = $idemp;
+        $model->idpa    = $idpa;
+        $model->usumod  = Yii::$app->user->identity->idusu;
+
+        $emp = Empresa::findOne(['idemp' => $idemp]);
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idaccion]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'emp'   => $emp,
             ]);
         }
     }

@@ -4,37 +4,41 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Accion */
+/* @var $model app\models\Planaccion */
 
-$this->title = $model->idaccion;
-$this->params['breadcrumbs'][] = ['label' => 'Accions', 'url' => ['index']];
+$this->title = $model->idpa;
+$this->params['breadcrumbs'][] = ['label' => 'Planaccions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="accion-view">
+<div class="planaccion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idaccion], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idaccion], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Update', ['update', 'id' => $model->idpa], ['class' => 'btn btn-primary']) ?>
+      
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idaccion',
-            'idemp',
-            'idpa',
-            'descripcion:ntext',
+            array('label'=>'Empresa',
+             'type'=>'raw',
+             'value'=>$nomemp 
+            ),
+            'nombre',
+            'fecini',
+            'fecfin',
+            'idresponsable',
+            'idelemento',
+            'costo',
+            'estado',
             'feccre',
             'fecmod',
-            'usumod',
+            array('label'=>'Quien Modifico',
+             'type'=>'raw',
+             'value'=>$usumod 
+           ),
         ],
     ]) ?>
 

@@ -11,6 +11,7 @@ use Yii;
  * @property integer $idemp
  * @property integer $idpa
  * @property string $descripcion
+ * @property integer $orden
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
@@ -35,7 +36,7 @@ class Accion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'idpa', 'usumod'], 'integer'],
+            [['idemp', 'idpa', 'orden', 'usumod'], 'integer'],
             [['idpa', 'descripcion'], 'required'],
             [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
@@ -55,6 +56,7 @@ class Accion extends \yii\db\ActiveRecord
             'idemp' => 'Idemp',
             'idpa' => 'Idpa',
             'descripcion' => 'Descripcion',
+            'orden' => 'Orden',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',

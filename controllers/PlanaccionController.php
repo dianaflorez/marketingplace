@@ -37,10 +37,10 @@ class PlanaccionController extends Controller
      */
     public function actionIndex($id,$msg=null)
     {
-       $model = Planaccion::find(['idemp' => $id])->all();
+       $model2 = Planaccion::find(['idemp' => $id])->all();
 
         return $this->render('index', [
-            'model'   => $model,
+            'model'   => $model2,
             'msg'     => $msg,
             'idemp'   =>$id,
 
@@ -64,7 +64,7 @@ class PlanaccionController extends Controller
             'model'     => $model,
             'usumod'    => $usumod,
             'nomemp'    => $nomemp,
-            
+
         ]);
     }
 

@@ -11,6 +11,7 @@ use Yii;
  * @property integer $idemp
  * @property integer $idpa
  * @property string $descripcion
+ * @property integer $orden
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
@@ -35,7 +36,7 @@ class Elemento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'idpa', 'usumod'], 'integer'],
+            [['idemp', 'idpa', 'orden', 'usumod'], 'integer'],
             [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
@@ -54,6 +55,7 @@ class Elemento extends \yii\db\ActiveRecord
             'idemp' => 'Idemp',
             'idpa' => 'Idpa',
             'descripcion' => 'Descripcion',
+            'orden' => 'Orden',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',
