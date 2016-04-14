@@ -2,20 +2,22 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Planaccion */
-
-$this->title = $model->idpa;
-$this->params['breadcrumbs'][] = ['label' => 'Planaccions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["planaccion/index",  "id" => $model->idemp]) ?>">
+    <?php echo $model->nombre." - ".$nomemp; ?>
+</a>
+</h2>           
+<?php
+$this->params['breadcrumbs'][] = "Actualizar";
 ?>
 <div class="planaccion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idpa], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Actualizar', ['update', 'id' => $model->idpa], ['class' => 'btn btn-primary']) ?>
       
     </p>
 
@@ -29,8 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'fecini',
             'fecfin',
-            'idresponsable',
-            'idelemento',
+            'responsable',
             'costo',
             'estado',
             'feccre',

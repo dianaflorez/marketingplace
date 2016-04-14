@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Accion;
+use app\models\Usuario;
 use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -52,8 +53,17 @@ class AccionController extends Controller
      */
     public function actionView($id)
     {
+        $model  = $this->findModel($id);
+        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
+        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
+        $nomemp = Empresa::findOne(['idemp' => $model->idemp]);  
+        $nomemp = strtoupper($nomemp->nombre);
+       
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model'     => $model,
+            'usumod'    => $usumod,
+            'nomemp'    => $nomemp,
+
         ]);
     }
 
@@ -73,7 +83,7 @@ class AccionController extends Controller
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idaccion]);
+            return $this->redirect(['index', 'id' => $model->idemp]);
         } else {
             return $this->render('create', [
                 'model' => $model,
