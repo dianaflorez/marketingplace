@@ -4,9 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'Clientes';
+$this->title = 'Clientes Institucionales- '.$emp->nombre;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<h1><?= Html::encode($this->title) ?></h1>
 
 <h3>
 <?php if($msg){ 
@@ -19,7 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", "id" => $emp->idemp]) ?>">Nuevo Cliente</a>
+<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                        "idemp"        => $emp->idemp,
+                                                        "cliente"   => "Institucional"]) ?>">Nuevo Cliente</a>
 
 <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", "id" => $emp->idemp]) ?>">Clientes Individuales</a>
 <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", "id" => $emp->idemp]) ?>">Clientes Esporadicos</a>
@@ -27,12 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="cliente-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Cliente', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
+    
+<?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],

@@ -76,6 +76,7 @@ class PlanmarketingController extends Controller
     public function actionCreate()
     {
         $model = new Planmarketing();
+        $model->usumod = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idpm]);

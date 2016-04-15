@@ -4,11 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cliente;
+use app\models\Tipo;
 use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ClienteController implements the CRUD actions for Cliente model.
@@ -66,25 +68,34 @@ class ClienteController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idemp)
+    public function actionCreate($idemp, $cliente )
     {
         $model = new Cliente();
+        $model->idemp   = $idemp;
+        $model->tipo    = $cliente; //tipo cliente 
+        $model->usumod  = Yii::$app->user->identity->idusu;
 
         $msg = "";
 
+        $tide = ArrayHelper::map(Tipo::find(['table' => 'usuario'])->all(), 'idtipo', 'nombre');
+        $genero = ['Femenino'=>'Femenino', 'Masculino'=>'Masculino'];  
+        $estado = ['Activo'=>'Activo', 'Inactivo'=>'Inactivo'];  
+
+        $emp = Empresa::findOne(['idemp' => $idemp]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            
-            $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
-            $genero = ['Femenino'=>'Femenino', 'Masculino'=>'Masculino'];  
-
+          
             return $this->redirect(['view', 'id' => $model->idcli]);
 
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'tipo'  => $tipo, 
+                'tide'  => $tide, 
                 'msg'   => $msg,
+                'genero'=> $genero,
+                'tipo'  => $cliente,
+                'estado'=> $estado,
+                'emp'   => $emp,
             ]);
         }
     }
@@ -98,12 +109,26 @@ class ClienteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
+        $msg = "";
+
+        $cliente = $model->tipo;
+
+        $tide = ArrayHelper::map(Tipo::find(['table' => 'usuario'])->all(), 'idtipo', 'nombre');
+        $genero = ['Femenino'=>'Femenino', 'Masculino'=>'Masculino'];  
+        $estado = ['Activo'=>'Activo', 'Inactivo'=>'Inactivo'];  
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcli]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'tide'  => $tide, 
+                'msg'   => $msg,
+                'genero'=> $genero,
+                'tipo'  => $cliente,
+                'estado'=> $estado,
             ]);
         }
     }
