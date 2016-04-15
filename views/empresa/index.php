@@ -92,9 +92,15 @@ $this->params['breadcrumbs'][] = $this->title;
             </a>
             <!--End Inf.-->
         
+            <!-- View -->
+            <a href="<?= Url::toRoute(["empresa/view", "id" => $row->idemp]) ?>" title="Ver" aria-label="Ver">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <!--End View-->
+        
             <!-- Update -->
             <a href="<?= Url::toRoute(["empresa/update", "id" => $row->idemp]) ?>" title="Actualizar" aria-label="Actualizar">
-              <span class="glyphicon glyphicon-eye-open"></span>
+              <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <!--End Update-->
         

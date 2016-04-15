@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <h2>
-<a href="<?= Url::toRoute(["pmcontenido/index",  "id" => $emp->idemp]) ?>">
+<a href="<?= Url::toRoute(["planaacion/index",  "id" => $emp->idemp]) ?>">
 	<?php echo "Nueva Accion - ".$emp->nombre; ?>
 </a>
 </h2>	

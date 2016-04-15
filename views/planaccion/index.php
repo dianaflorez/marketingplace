@@ -56,9 +56,46 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <?php foreach($row->accions as $acc): 
-                        echo "- ".$acc->descripcion."<br />";
-                     endforeach ?>
+                    <?php foreach($row->accions as $acc): ?>
+                        
+                        <!-- Update -->
+                        <a href="<?= Url::toRoute(["accion/update", "id" => $acc->idaccion]) ?>" 
+                                    title="Actualizar" aria-label="Actualizar">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <!--End Update-->
+ <!--Delete-->
+             <a href="#" data-toggle="modal" data-target="#idaccion_<?= $acc->idaccion ?>" title="Eliminar" aria-label="Eliminar">
+                <span class="glyphicon glyphicon-trash"></span>
+             </a>
+                <div class="modal fade" role="dialog" aria-hidden="true" id="idaccion_<?= $acc->idaccion ?>">
+                      <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">Eliminar Accion</h4>
+                              </div>
+                              <div class="modal-body">
+                                    <p>¿Realmente deseas eliminar esta accion: <?= $acc->descripcion ?>?</p>
+                              </div>
+                              <div class="modal-footer">
+                              <?= Html::beginForm(Url::toRoute("accion/delete"), "POST") ?>
+                                    <input type="hidden" name="idaccion" value="<?= $acc->idaccion ?>">
+                                    <input type="hidden" name="idemp" value="<?= $acc->idemp ?>">
+                                    
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                              <?= Html::endForm() ?>
+                              </div>
+                            </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->            
+            </a>
+            <!--End Delete-->
+                        <?php echo $acc->descripcion; ?><br />
+                    
+                    <?php endforeach ?>
                 </div>
             </div>    
             <a  href="<?= Url::toRoute(["accion/create", 
@@ -70,7 +107,31 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->fecini ?></td>
         <td><?= $row->fecfin ?></td>
         <td><?= $row->responsable ?></td>
-        <td>...</td>
+        <td>
+            
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <?php foreach($row->elementos as $ele): ?>
+                        
+                        <!-- Update -->
+                        <a href="<?= Url::toRoute(["elemnto/update", "id" => $ele->idele]) ?>" 
+                                    title="Actualizar" aria-label="Actualizar">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <!--End Update-->
+                        <?php echo $acc->descripcion; ?><br />
+                    
+                    <?php endforeach ?>
+                </div>
+            </div>    
+            <a  href="<?= Url::toRoute(["elemnto/create", 
+                                    "idpa"    => $row->idpa, 
+                                    "idemp" => $row->idemp, 
+                                ]) ?>">
+            Agregar Elemento</a>           
+
+        </td>
         <td><?= $row->costo ?></td>
         <td><?= $row->estado ?></td>
         <td>

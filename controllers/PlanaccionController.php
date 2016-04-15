@@ -40,7 +40,12 @@ class PlanaccionController extends Controller
         $model2 = Planaccion::find()
                 ->joinWith(['accions'])
                 ->where(['planaccion.idemp' => $id])
+                ->joinWith(['elementos'])
+           //     ->where(['elemento.idemp' => $id])
                 ->all();
+
+                echo "<br /><br /><br />";
+                var_dump($model2);
             
         $emp    = Empresa::findOne(['idemp' => $id]);
 

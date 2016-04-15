@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 
 /**
  * AccionController implements the CRUD actions for Accion model.
@@ -102,11 +103,17 @@ class AccionController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod  = Yii::$app->user->identity->idusu;
+
+        $emp = Empresa::findOne(['idemp' => $model->idemp]);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idaccion]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'emp'   => $emp,
             ]);
         }
     }
@@ -117,11 +124,40 @@ class AccionController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        $msg  = "Exito!!!";  
+        if(Yii::$app->request->post())
+        {
+            $idemp     = Html::encode($_POST["idemp"]);
+            $idaccion  = Html::encode($_POST["idaccion"]);
 
-        return $this->redirect(['index']);
+            if((int) $idemp)
+            {
+                if(Accion::deleteAll("idaccion=:idaccion", [":idaccion" => $idaccion]))
+                {
+                    $msg = "Accion con id $idaccion eliminada con éxito.";
+                  ///  echo "<meta http-equiv='refresh' content='1; ".Url::toRoute("empresa/index")."'>";
+                   return $this->redirect(["planaccion/index",'id' => $idemp, 'msg' => $msg]);
+                }
+                else
+                {
+                    echo "Ha ocurrido un error al eliminar la Empresa redireccionando ...";
+                    echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empresa/index")."'>"; 
+                }
+            }
+            else
+            {
+                //echo "La empresa tiene informacion realacionada, no se puede eliminar, redireccionando ...";
+             //   echo "<meta http-equiv='refresh' content='3; ".Url::toRoute("empresa/index")."'>";
+                $msg = "La empresa tiene informacion realacionada, no se puede eliminar";
+                   return $this->redirect(["planaccion/index",'id' => $idemp, 'msg' => $msg]);
+            }
+        }
+        else
+        {
+           return $this->redirect(["planaccion/index",'id' => $idemp, 'msg' => $msg]);
+        }
     }
 
     /**
