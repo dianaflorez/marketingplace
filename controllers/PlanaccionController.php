@@ -43,9 +43,25 @@ class PlanaccionController extends Controller
                 ->joinWith(['elementos'])
            //     ->where(['elemento.idemp' => $id])
                 ->all();
+            
+        $emp    = Empresa::findOne(['idemp' => $id]);
 
-                echo "<br /><br /><br />";
-                var_dump($model2);
+        return $this->render('index', [
+            'model'   => $model2,
+            'msg'     => $msg,
+            'idemp'   => $id,
+            'emp'     => $emp, 
+        ]);
+    }
+
+    public function actionVerpa($id,$msg=null)
+    {
+        $model2 = Planaccion::find()
+                ->joinWith(['accions'])
+                ->where(['planaccion.idemp' => $id])
+                ->joinWith(['elementos'])
+           //     ->where(['elemento.idemp' => $id])
+                ->all();
             
         $emp    = Empresa::findOne(['idemp' => $id]);
 

@@ -56,9 +56,9 @@ class Elemento extends \yii\db\ActiveRecord
             'idpa' => 'Idpa',
             'descripcion' => 'Descripcion',
             'orden' => 'Orden',
-            'feccre' => 'Feccre',
-            'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'feccre' => 'Creado',
+            'fecmod' => 'Modificado',
+            'usumod' => 'Quien Modifico',
         ];
     }
 
