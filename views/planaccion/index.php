@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </h3>
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/create", "id" => $idemp]) ?>">Nuevo Plan de Accion</a>
-<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/ver", "id" => $idemp]) ?>">Ver Plan de Accion</a>
+<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/verpa", "id" => $idemp]) ?>">Ver Plan de Accion</a>
 
 <?php $f = ActiveForm::begin([
     "method" => "get",

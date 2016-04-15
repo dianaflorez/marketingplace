@@ -54,8 +54,9 @@ class PlanaccionController extends Controller
         ]);
     }
 
-    public function actionVerpa($id,$msg=null)
+    public function actionVerpa($id, $trimestre, $msg=null)
     {
+        $pa = 
         $model2 = Planaccion::find()
                 ->joinWith(['accions'])
                 ->where(['planaccion.idemp' => $id])
@@ -65,7 +66,7 @@ class PlanaccionController extends Controller
             
         $emp    = Empresa::findOne(['idemp' => $id]);
 
-        return $this->render('index', [
+        return $this->render('verpa', [
             'model'   => $model2,
             'msg'     => $msg,
             'idemp'   => $id,
