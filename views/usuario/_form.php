@@ -55,7 +55,7 @@ use yii\bootstrap\ActiveForm;
     <?php echo $form->field($model, 'idemp')->dropDownList($emp, ['prompt'=>'Seleccion...']); ?>
    
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Nuevo' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

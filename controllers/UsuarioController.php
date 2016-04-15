@@ -116,8 +116,30 @@ class UsuarioController extends Controller
      */
     public function actionView($id)
     {
+        $model  = $this->findModel($id);
+       
+        //Usuario que modifico
+        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
+        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
+       
+        $nomemp = Empresa::findOne(['idemp' => $model->idemp]);  
+        $nomemp = strtoupper($nomemp->nombre);
+
+        $tipoidi = Tipo::findOne(['idtipo' => $model->idtide]);
+
+        $role = "Comercial";
+        if($model->role == 2){
+            $role = "Administrador Empresa";
+        }elseif ($model->role == 4) {
+            $role = "Super Administrador";
+        }
+       
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model'     => $model,
+            'usumod'    => $usumod,
+            'nomemp'    => $nomemp,
+            'role'      => $role,
+            'tide'      => $tipoidi->nombre,
         ]);
     }
 
