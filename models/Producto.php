@@ -56,17 +56,17 @@ class Producto extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idpro' => 'Idpro',
-            'idemp' => 'Idemp',
+            'idpro' => 'Producto',
+            'idemp' => 'Empresa',
             'codigo' => 'Codigo',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
             'vlrsiniva' => 'Vlrsiniva',
             'iva' => 'Iva',
             'estado' => 'Estado',
-            'feccre' => 'Feccre',
-            'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'feccre' => 'Creaciado',
+            'fecmod' => 'Modificado',
+            'usumod' => 'Quien Modifico',
         ];
     }
 

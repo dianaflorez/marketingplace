@@ -74,6 +74,10 @@ class FacturahController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    public function actionListprice($id) {
+        $data = Producto::findOne(['idpro' => $id]);
+        return $data->vlrsiniva;
+    }
     public function actionCreate($idemp)
     {
         $model = new Facturah();
@@ -93,9 +97,10 @@ class FacturahController extends Controller
             $modeldf->idemp = Yii::$app->user->identity->idemp;
         }
 
-        $clientes   = ArrayHelper::map(Cliente::find(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
+        $clientes   = ArrayHelper::map(Cliente::find()
+                        ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
         $emp        = Empresa::findOne(['idemp' => $model->idemp]);
-        $productos  = ArrayHelper::map(Producto::find(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
+        $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
         
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -103,7 +108,7 @@ class FacturahController extends Controller
         } else {
             return $this->render('create', [
                 'model'     => $model,
-                'modeldf'   => $modelfd,
+                'modelfd'   => $modelfd,
                 'clientes'  => $clientes,
                 'emp'       => $emp,
                 'productos' => $productos,

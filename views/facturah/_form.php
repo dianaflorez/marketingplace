@@ -19,8 +19,39 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
     <!-- Facturad -->
-    <?php echo $form->field($modelfd, 'idpro')->dropDownList($productos); ?>
+    <table class="table table-striped  table-bordered table-showPageSummary">
+        <tr>
+            <th>Producto</th>
+            <th>Valor</th>
+            <th>Cant.</th>
+            <th>Total</th>
+            <th class="action-column ">&nbsp;</th>
+        </tr>
+        <?php //foreach($model as $row): ?>
+        <tr>
+            <td>
 
+
+                <?php echo $form->field($modelfd, 'idpro')->dropDownList($productos,
+['prompt'=>'-Choose a Product-',
+              'onchange'=>'
+                $.get( "index.php?r=facturah/listprice&id="+$(this).val(), function( data ) {
+                  $( "#total" ).val( data );
+                });
+            ']); 
+
+            ?>
+
+            <input type="text" name="total" id="total" value="0"></input>
+                <?php // $row->idemp ?>
+
+            </td>
+            <td><?= $form->field($modelfd, 'neto')->textInput(['maxlength' => true]) ?></td>
+            <td><?= $form->field($modelfd, 'qty')->textInput(['maxlength' => true]) ?></td>
+            <td><?= $form->field($modelfd, 'total')->textInput(['maxlength' => true]) ?></td>
+            <td></td>
+       </tr>
+       </table>
 
 
     <div class="form-group">

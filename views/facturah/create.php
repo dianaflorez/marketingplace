@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $emp->nombre." - Nueva Venta";
 
     <?= $this->render('_form', [
         'model' 	=> $model,
+        'modelfd'	=> $modelfd,
         'emp'		=> $emp,
         'clientes'	=> $clientes,
         'productos' => $productos,
