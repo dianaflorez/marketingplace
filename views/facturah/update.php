@@ -1,21 +1,28 @@
 <?php
 
 use yii\helpers\Html;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Facturah */
-
-$this->title = 'Update Facturah: ' . $model->idfh;
-$this->params['breadcrumbs'][] = ['label' => 'Facturahs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idfh, 'url' => ['view', 'id' => $model->idfh]];
-$this->params['breadcrumbs'][] = 'Update';
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["facturah/index",  "idemp" => $emp->idemp]) ?>">
+	<?php echo $emp->nombre." - Nueva Venta"; ?>
+</a>
+</h2>	
+<?php
+$this->params['breadcrumbs'][] = $emp->nombre." - Nueva Venta agregando productos"; 
 ?>
 <div class="facturah-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        	'model' => $model,
+            'modelfd'   => $modelfd,
+            'clientes'  => $clientes,
+            'emp'       => $emp,
+            'productos' => $productos,
+            'tipo'      => $tipo,
+            'facturad'	=> $facturad,
     ]) ?>
 
 </div>

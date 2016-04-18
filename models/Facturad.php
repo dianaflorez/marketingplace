@@ -49,7 +49,7 @@ class Facturad extends \yii\db\ActiveRecord
         return [
             [['idfh', 'idemp', 'idpro', 'pordes', 'qty', 'poriva', 'usumod'], 'integer'],
             [['descripcion'], 'string'],
-            [['vlr1', 'vlriva', 'neto', 'total', 'usumod'], 'required'],
+            [[ 'neto', 'total', 'usumod'], 'required'],
             [['vlr1', 'vlr2', 'descuento', 'valor', 'vlriva', 'neto', 'total'], 'number'],
             [['fecini', 'fecmod'], 'safe'],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],

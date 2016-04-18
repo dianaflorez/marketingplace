@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-
 use yii\helpers\Url;
 ?>
 <h2>
@@ -22,6 +21,8 @@ $this->params['breadcrumbs'][] = $emp->nombre." - Nueva Venta";
         'emp'		=> $emp,
         'clientes'	=> $clientes,
         'productos' => $productos,
+        'tipo'		=> $tipo,
+        'facturad'  => $facturad,
     ]) ?>
 
 </div>

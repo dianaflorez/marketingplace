@@ -66,7 +66,7 @@ class Cliente extends \yii\db\ActiveRecord
         return [
             'idcli' => 'Idcli',
             'nit' => 'Nit',
-            'nombre1' => 'Nombre1',
+            'nombre1' => 'Nombre',
             'nombre2' => 'Nombre2',
             'apellido1' => 'Apellido1',
             'apellido2' => 'Apellido2',

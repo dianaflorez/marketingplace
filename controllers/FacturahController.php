@@ -13,6 +13,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
+use yii\base\ErrorException;
+
 
 /**
  * FacturahController implements the CRUD actions for Facturah model.
@@ -78,6 +80,10 @@ class FacturahController extends Controller
         $data = Producto::findOne(['idpro' => $id]);
         return $data->vlrsiniva;
     }
+     public function actionCalprice($qty,$vlr) {
+        $data = $qty*$vlr;
+        return $data;
+    }
     public function actionCreate($idemp)
     {
         $model = new Facturah();
@@ -87,10 +93,7 @@ class FacturahController extends Controller
         $model->usumod = Yii::$app->user->identity->idusu;
 
         $modelfd = new Facturad();
-        $modelfd->idemp = $idemp;
-        $modelfd->fecmod = date('Y.m.d h:i:s');
-        $modelfd->usumod = Yii::$app->user->identity->idusu;
-
+    
         //Verifica la identidad del usuario quien registra Q solo pertenezca a esta empresa
         if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
             $model->idemp = Yii::$app->user->identity->idemp;
@@ -102,9 +105,36 @@ class FacturahController extends Controller
         $emp        = Empresa::findOne(['idemp' => $model->idemp]);
         $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
         
+        $model->totalnormal = 0;
+        $model->totaldes    = 0;
+        $model->vlrdes      = 0;
+        $model->neto        = 0;
+        $model->vlriva      = 0;
+        $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
+        
+        if ($model->load(Yii::$app->request->post()) && $modelfd->load(Yii::$app->request->post())) {
+            
+            if($model->save()){
+                $modelfd->idfh   = $model->idfh;
+                $modelfd->idemp  = $model->idemp;
+                $modelfd->idpro  = $modelfd->idpro;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idfh]);
+                $modelfd->qty    = $modelfd->qty;
+                $modelfd->neto   = $modelfd->neto;               
+                $modelfd->total  = $modelfd->total;               
+                $modelfd->usumod = Yii::$app->user->identity->idusu;
+                try{
+
+                   if($modelfd->save()){
+                        return $this->redirect(['update', 'id' => $model->idfh]);
+                   }
+                        print_r($modelfd->getErrors());
+
+                } catch (ErrorException $e) {
+                    Yii::warning("Division by zero.".$e);
+                    echo "<meta http-equiv='refresh' content='1; ".Url::toRoute("index")."'>";
+                }
+            }
         } else {
             return $this->render('create', [
                 'model'     => $model,
@@ -112,6 +142,8 @@ class FacturahController extends Controller
                 'clientes'  => $clientes,
                 'emp'       => $emp,
                 'productos' => $productos,
+                'tipo'      => $tipo,
+                'facturad'  => array(),
             ]);
         }
     }
@@ -127,13 +159,47 @@ class FacturahController extends Controller
         $model = $this->findModel($id);
         $model->fecmod = date('Y.m.d h:i:s');
         $model->usumod = Yii::$app->user->identity->idusu;
-      
+     
+        $modelfd    = new Facturad;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idfh]);
-        } else {
+        //Para productos ya guardados
+        $facturad   = Facturad::find()
+                        ->joinWith(['idpro0'])
+                        ->where(['idfh' => $model->idfh])
+                        ->all();
+
+        $clientes   = ArrayHelper::map(Cliente::find()
+                        ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
+        $emp        = Empresa::findOne(['idemp' => $model->idemp]);
+        $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
+        $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
+        
+
+        if ($model->load(Yii::$app->request->post()) && $modelfd->load(Yii::$app->request->post())) {
+            
+            if($model->save()){
+                $modelfd->idfh   = $model->idfh;
+                $modelfd->idemp  = $model->idemp;
+                $modelfd->idpro  = $modelfd->idpro;
+
+                $modelfd->qty    = $modelfd->qty;
+                $modelfd->neto   = $modelfd->neto;               
+                $modelfd->total  = $modelfd->total;               
+                $modelfd->usumod = Yii::$app->user->identity->idusu;
+                
+                if ( $modelfd->save(false)) 
+               
+                    return $this->redirect(['update', 'id' => $model->idfh]);
+            }
+       } else {
             return $this->render('update', [
-                'model' => $model,
+                'model'     => $model,
+                'modelfd'   => $modelfd,
+                'clientes'  => $clientes,
+                'emp'       => $emp,
+                'productos' => $productos,
+                'tipo'      => $tipo,
+                'facturad'  => $facturad,  
             ]);
         }
     }

@@ -44,27 +44,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Cliente</th>
         <th>Referencia</th>
         <th>Tipo</th>
-        <th>Total</th>
-        <th>Descuento</th>
-        <th>Neto</th>
-        <th>Iva</th>
+        <th>Estado</th>
         <th>TOTAL</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
     <tr>
-        <td>
-         </td>
         <td><?= $row->fecha ?></td>
         <td><?= $row->idcli ?></td>
         <td><?= $row->refpago ?></td>
         <td><?= $row->tipo ?></td>
-        <td><?= $row->costo ?></td>
         <td><?= $row->estado ?></td>
+        <td><?= $row->total ?></td>
         <td>
           
             <!-- Update -->
-            <a href="<?= Url::toRoute(["planaccion/update", "id" => $row->idpa]) ?>" title="Actualizar" aria-label="Actualizar">
+            <a href="<?= Url::toRoute(["facturah/update", "id" => $row->idfh]) ?>" title="Actualizar" aria-label="Actualizar">
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <!--End Update-->

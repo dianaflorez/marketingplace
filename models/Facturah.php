@@ -59,7 +59,7 @@ class Facturah extends \yii\db\ActiveRecord
             [['refpago'], 'string', 'max' => 27],
             [['prefijo'], 'string', 'max' => 5],
             [['estado'], 'string', 'max' => 8],
-            [['tipo'], 'string', 'max' => 2],
+            [['tipo'], 'string', 'max' => 7],
             [['descripcion'], 'string', 'max' => 50],
             [['moneda'], 'string', 'max' => 3],
             [['refpago'], 'unique'],
