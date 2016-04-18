@@ -12,8 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idemp')->textInput() ?>
-
+   
     <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
@@ -24,16 +23,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'iva')->textInput() ?>
 
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'feccre')->textInput() ?>
-
-    <?= $form->field($model, 'fecmod')->textInput() ?>
-
-    <?= $form->field($model, 'usumod')->textInput() ?>
+    <? if(!$model->estado) $model->estado = 'Activo';
+    echo $form->field($model, 'estado')->radioList(array('Activo'=>'Activo','Inactivo'=>'Inactivo'),
+                                                  array('selected' => 'Activo')      
+                                     ); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Nuevo' : 'Editar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

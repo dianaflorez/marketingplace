@@ -5,11 +5,15 @@ namespace app\controllers;
 use Yii;
 use app\models\Planaccion;
 use app\models\Empresa;
+use app\models\elemento;
+use app\models\Accion;
 use app\models\Usuario;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
+
 
 /**
  * PlanaccionController implements the CRUD actions for Planaccion model.
@@ -54,23 +58,75 @@ class PlanaccionController extends Controller
         ]);
     }
 
-    public function actionVerpa($id, $trimestre, $msg=null)
+    public function actionViewplan($id, $tr = 1, $msg=null)
     {
-        $pa = 
-        $model2 = Planaccion::find()
-                ->joinWith(['accions'])
-                ->where(['planaccion.idemp' => $id])
-                ->joinWith(['elementos'])
-           //     ->where(['elemento.idemp' => $id])
-                ->all();
-            
+        $connection = \Yii::$app->db;
+        $sql = "SELECT date_part('month', MIN(fecini)) as mes FROM planaccion";
+        $model = $connection->createCommand($sql);
+        $mesinicial = $model->queryScalar();
+
+        $sqlyear = "SELECT date_part('year', MIN(fecini)) as anio FROM planaccion";
+        $modelyear = $connection->createCommand($sqlyear);
+        $year = $modelyear->queryScalar();
+
+        $fecini = $year."-".$mesinicial."-01";
+
+        $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
+        $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+
+        if( $tr == 2 ){
+            $fecini = strtotime ( '+3 month' , strtotime ( $fecini ) ) ;
+            $fecini = date ( 'Y-m-d' , $fecini);
+
+            $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
+            $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+        }
+
+        if( $tr == 3){
+            $fecini = strtotime ( '+6 month' , strtotime ( $fecini ) ) ;
+            $fecini = date ( 'Y-m-d' , $fecini);
+
+            $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
+            $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+        }
+
+        if( $tr == 4){
+            $fecini = strtotime ( '+9 month' , strtotime ( $fecini ) ) ;
+            $fecini = date ( 'Y-m-d' , $fecini);
+
+            $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
+            $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+        }
+
+        $sqldatostri = " SELECT * FROM planaccion p 
+            WHERE
+                p.idemp = ".$id." AND
+                fecini > '".$fecini."' AND
+                fecini < '".$fecfin."' 
+            UNION   
+            SELECT * FROM planaccion 
+            WHERE
+                fecfin > '".$fecini."' AND
+                fecfin < '".$fecfin."'   
+            ORDER BY fecfin, feccre";
+
+        $acciones  = Accion::find()->where(['idemp' => $id])->all();
+        $elementos = elemento::find()->where(['idemp' => $id])->all();
+
+        $modeltri = $connection->createCommand($sqldatostri);
+        $planxtri = $modeltri->queryAll();
+
         $emp    = Empresa::findOne(['idemp' => $id]);
 
-        return $this->render('verpa', [
-            'model'   => $model2,
-            'msg'     => $msg,
-            'idemp'   => $id,
-            'emp'     => $emp, 
+        return $this->render('viewplan', [
+            'model'    => $planxtri,
+            'msg'      => $msg,
+            'idemp'    => $id,
+            'emp'      => $emp, 
+            'acciones' => $acciones,
+            'elementos'=> $elementos,
+            'trimestre'=> $tr,  
+            'fectri'  => $fecini.' '.$fecfin, //Fechas de inicio de trimestre     
         ]);
     }
 

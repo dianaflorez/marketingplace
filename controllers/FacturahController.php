@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Facturah;
+use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,14 +34,22 @@ class FacturahController extends Controller
      * Lists all Facturah models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id, $msg=null)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Facturah::find(),
-        ]);
+        $model  = Facturah::find()
+                ->joinWith(['idcli0'])
+                ->where(['facturah.idemp' => $id])
+//                ->joinWith(['elementos'])
+           //     ->where(['elemento.idemp' => $id])
+                ->all();
+            
+        $emp    = Empresa::findOne(['idemp' => $id]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'model'   => $model,
+            'msg'     => $msg,
+            'idemp'   => $id,
+            'emp'     => $emp, 
         ]);
     }
 

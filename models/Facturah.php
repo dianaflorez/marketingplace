@@ -8,7 +8,9 @@ use Yii;
  * This is the model class for table "facturah".
  *
  * @property integer $idfh
+ * @property integer $idemp
  * @property integer $idusu
+ * @property integer $idcli
  * @property string $refpago
  * @property string $prefijo
  * @property integer $codigo
@@ -22,13 +24,15 @@ use Yii;
  * @property string $tipo
  * @property string $fecha
  * @property string $descripcion
- * @property integer $trm
+ * @property double $trm
  * @property string $moneda
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
  *
  * @property Facturad[] $facturads
+ * @property Cliente $idcli0
+ * @property Empresa $idemp0
  * @property Usuario $idusu0
  * @property Usuario $usumod0
  */
@@ -48,9 +52,9 @@ class Facturah extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idusu', 'refpago', 'totalnormal', 'neto', 'vlriva', 'total'], 'required'],
-            [['idusu', 'codigo', 'trm', 'usumod'], 'integer'],
-            [['totalnormal', 'totaldes', 'vlrdes', 'neto', 'vlriva', 'total'], 'number'],
+            [['idemp', 'idusu', 'refpago', 'totalnormal', 'neto', 'vlriva', 'total'], 'required'],
+            [['idemp', 'idusu', 'idcli', 'codigo', 'usumod'], 'integer'],
+            [['totalnormal', 'totaldes', 'vlrdes', 'neto', 'vlriva', 'total', 'trm'], 'number'],
             [['fecha', 'feccre', 'fecmod'], 'safe'],
             [['refpago'], 'string', 'max' => 27],
             [['prefijo'], 'string', 'max' => 5],
@@ -59,6 +63,8 @@ class Facturah extends \yii\db\ActiveRecord
             [['descripcion'], 'string', 'max' => 50],
             [['moneda'], 'string', 'max' => 3],
             [['refpago'], 'unique'],
+            [['idcli'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['idcli' => 'idcli']],
+            [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idusu'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idusu' => 'idusu']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
@@ -71,7 +77,9 @@ class Facturah extends \yii\db\ActiveRecord
     {
         return [
             'idfh' => 'Idfh',
+            'idemp' => 'Idemp',
             'idusu' => 'Idusu',
+            'idcli' => 'Idcli',
             'refpago' => 'Refpago',
             'prefijo' => 'Prefijo',
             'codigo' => 'Codigo',
@@ -99,6 +107,22 @@ class Facturah extends \yii\db\ActiveRecord
     public function getFacturads()
     {
         return $this->hasMany(Facturad::className(), ['idfh' => 'idfh']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdcli0()
+    {
+        return $this->hasOne(Cliente::className(), ['idcli' => 'idcli']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdemp0()
+    {
+        return $this->hasOne(Empresa::className(), ['idemp' => 'idemp']);
     }
 
     /**

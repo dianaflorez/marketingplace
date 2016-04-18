@@ -1,14 +1,18 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Producto */
-
-$this->title = 'Create Producto';
-$this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Productos - '.$emp->nombre;;
+?>
+<h2>
+	<a href="<?= Url::toRoute(["producto/index",  "id" => $emp->idemp]) ?>">
+	    <?php echo "Nuevo producto - ".$emp->nombre; ?>
+	</a>
+</h2>   
+<?php
+//$this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="producto-create">
 
@@ -16,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'emp'	=> $emp,
     ]) ?>
 
 </div>

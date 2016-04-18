@@ -8,10 +8,6 @@ use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\EmpresaSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = 'Plan Accion - '.$emp->nombre;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </h3>
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/create", "id" => $idemp]) ?>">Nuevo Plan de Accion</a>
-<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/verpa", "id" => $idemp]) ?>">Ver Plan de Accion</a>
+<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp]) ?>">Ver Plan de Accion</a>
 
 <?php $f = ActiveForm::begin([
     "method" => "get",

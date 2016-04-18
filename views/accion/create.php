@@ -3,11 +3,11 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
-<h2>
-<a href="<?= Url::toRoute(["planacion/index",  "id" => $emp->idemp]) ?>">
+<h3>
+<a href="<?= Url::toRoute(["planaccion/index",  "id" => $emp->idemp]) ?>">
 	<?php echo "Nueva Accion - ".$emp->nombre; ?>
 </a>
-</h2>	
+</h3>	
 <?php
 $this->params['breadcrumbs'][] = "Nueva Accion";
 ?>

@@ -2,20 +2,23 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Producto */
-
-$this->title = $model->idpro;
-$this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index']];
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["producto/index",  "id" => $model->idemp]) ?>">
+    <?php echo $model->nombre." - ".$nomemp; ?>
+</a>
+</h2>           
+<?php
+$this->title = $model->nombre;
+//$this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index'], 'id' => $model->idemp];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="producto-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idpro], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Editar', ['update', 'id' => $model->idpro], ['class' => 'btn btn-primary']) ?>
+        <?php /*
         <?= Html::a('Delete', ['delete', 'id' => $model->idpro], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -23,13 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        */?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idpro',
-            'idemp',
+         //   'idpro',
+          //  'idemp',
             'codigo',
             'nombre',
             'descripcion:ntext',
@@ -38,7 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'estado',
             'feccre',
             'fecmod',
-            'usumod',
+             array('label'=>'Quien Modifico',
+             'type'=>'raw',
+             'value'=>$usumod 
+            ),
         ],
     ]) ?>
 
