@@ -79,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </a>
             <!--End -->
 
-            <!-- Ventaws -->
-            <a href="<?= Url::toRoute(["facturah/index", "id" => $row->idemp]) ?>" title="Ventas" aria-label="ventas">
+            <!-- Ventas -->
+            <a href="<?= Url::toRoute(["facturah/index", "idemp" => $row->idemp]) ?>" title="Ventas" aria-label="ventas">
               / Ventas
             </a>
             <!--End -->

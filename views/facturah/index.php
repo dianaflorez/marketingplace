@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<a class="btn btn-info" href="<?= Url::toRoute(["facturah/create", "id" => $idemp]) ?>">Nuevo Venta</a>
+<a class="btn btn-info" href="<?= Url::toRoute(["facturah/create", "idemp" => $idemp]) ?>">Nuevo Venta</a>
 <a class="btn btn-info" href="<?= Url::toRoute(["producto/index", "id" => $idemp]) ?>">Nuevo Producto</a>
 
 <?php $f = ActiveForm::begin([

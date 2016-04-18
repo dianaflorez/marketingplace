@@ -37,12 +37,14 @@ class ProductoController extends Controller
      */
     public function actionIndex($id, $msg =null)
     {
-        $model = Producto::find()->where(['idemp' => $id])->all();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Producto::find()->where(['idemp' => $id]),
+        ]);
 
         $emp    = Empresa::findOne(['idemp' => $id]);
 
         return $this->render('index', [
-            'model'   => $model,   
+            'dataProvider' => $dataProvider,   
             'msg'     => $msg,
             'idemp'   => $id,
             'emp'     => $emp, 
@@ -107,10 +109,10 @@ class ProductoController extends Controller
         $model->fecmod = date('Y.m.d h:i:s');
         $model->usumod  = Yii::$app->user->identity->idusu;
 
-        $emp    = Empresa::findOne(['idemp' => $id]);
+        $emp    = Empresa::findOne(['idemp' => $model->idemp ]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idpro]);
+            return $this->redirect(['index', 'id' => $model->idemp]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -128,16 +130,17 @@ class ProductoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->fecmod  = date('Y.m.d h:i:s');
-        $model->usumod  = Yii::$app->user->identity->idusu;
-        $model->estado  = "Inactivo";
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
+        $model->estado = "Inactivo";
 
-        $emp    = Empresa::findOne(['idemp' => $id]);
+        $emp    = Empresa::findOne(['idemp' => $model->idemp ]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idpro]);
+        if ($model->save()) {
+            return $this->redirect(['index', 'id' => $model->idemp]);
         } 
-            return $this->redirect(['view', 'id' => $model->idpro]);
+        
+        return $this->redirect(['index', 'id' => $model->idemp]);
 
     }
 

@@ -4,10 +4,14 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Facturah;
+use app\models\Facturad;
+use app\models\Cliente;
+use app\models\Producto;
 use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 
 /**
@@ -34,21 +38,21 @@ class FacturahController extends Controller
      * Lists all Facturah models.
      * @return mixed
      */
-    public function actionIndex($id, $msg=null)
+    public function actionIndex($idemp, $msg=null)
     {
         $model  = Facturah::find()
                 ->joinWith(['idcli0'])
-                ->where(['facturah.idemp' => $id])
+                ->where(['facturah.idemp' => $idemp ])
 //                ->joinWith(['elementos'])
            //     ->where(['elemento.idemp' => $id])
                 ->all();
             
-        $emp    = Empresa::findOne(['idemp' => $id]);
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
 
         return $this->render('index', [
             'model'   => $model,
             'msg'     => $msg,
-            'idemp'   => $id,
+            'idemp'   => $idemp,
             'emp'     => $emp, 
         ]);
     }
@@ -70,15 +74,39 @@ class FacturahController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idemp)
     {
         $model = new Facturah();
+        $model->idusu = Yii::$app->user->identity->idusu;
+        $model->idemp = $idemp;
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
+
+        $modelfd = new Facturad();
+        $modelfd->idemp = $idemp;
+        $modelfd->fecmod = date('Y.m.d h:i:s');
+        $modelfd->usumod = Yii::$app->user->identity->idusu;
+
+        //Verifica la identidad del usuario quien registra Q solo pertenezca a esta empresa
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
+            $model->idemp = Yii::$app->user->identity->idemp;
+            $modeldf->idemp = Yii::$app->user->identity->idemp;
+        }
+
+        $clientes   = ArrayHelper::map(Cliente::find(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
+        $emp        = Empresa::findOne(['idemp' => $model->idemp]);
+        $productos  = ArrayHelper::map(Producto::find(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idfh]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model'     => $model,
+                'modeldf'   => $modelfd,
+                'clientes'  => $clientes,
+                'emp'       => $emp,
+                'productos' => $productos,
             ]);
         }
     }
@@ -92,6 +120,9 @@ class FacturahController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
+      
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idfh]);

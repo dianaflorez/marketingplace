@@ -2,20 +2,25 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Facturah */
-
-$this->title = 'Create Facturah';
-$this->params['breadcrumbs'][] = ['label' => 'Facturahs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["facturah/index",  "idemp" => $emp->idemp]) ?>">
+	<?php echo $emp->nombre." - Nueva Venta"; ?>
+</a>
+</h2>	
+<?php
+$this->params['breadcrumbs'][] = $emp->nombre." - Nueva Venta"; 
 ?>
 <div class="facturah-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' 	=> $model,
+        'emp'		=> $emp,
+        'clientes'	=> $clientes,
+        'productos' => $productos,
     ]) ?>
 
 </div>
