@@ -5,14 +5,12 @@ use yii\helpers\Url;
 <br />
 <div class="row">
 
-<?php foreach($model2 as $pm): ?>
-	 <?php foreach($pm->pmcontenidos as $pmc): ?>
-
-		<?php if($pmc->titulo == "Objetivo"){  ?>
+<?php foreach($model2 as $pmc): ?>
+	<?php if($pmc->titulo == "Objetivo"){  ?>
 	
-		  	<div class="col-md-5">
+		  	<div class="col-md-10">
 			 	<div class="panel panel-warning">
-			      <div class="panel-heading"><b><?= $pmc->titulo; ?></b></div>
+			      <div class="panel-heading"><b><?= $pmc->titulo.' '.$pmc->orden; ?></b></div>
 			      <div class="panel-body">
 					<p>
 					  	<?= $pmc->descripcion; ?>
@@ -25,17 +23,17 @@ use yii\helpers\Url;
 			</div>
 		<?php } //Fin if obj ?>
 		
-	<?php endforeach ?>	
+<?php endforeach ?>
+	
 <br />
 	<a class="btn btn-warning" href="<?= Url::toRoute(["pmcontenido/create", 
-									"id" 	=> $pm->idpm, 
+									"id" 	=> $pmc->idpm, 
 									"idemp" => $emp->idemp, 
 									"activo" => "pm4a",
 									"cont"	=> "Objetivo",
 								]) ?>">
    	Agregar Objetivo</a>
 </p>
-<?php endforeach ?>
 </div>
 
 

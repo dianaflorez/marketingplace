@@ -83,6 +83,7 @@ class ProductoController extends Controller
     {
         $model = new Producto();
         $model->idemp   = $id;
+        $model->iva     = 0;
         $model->usumod  = Yii::$app->user->identity->idusu;
 
         $emp    = Empresa::findOne(['idemp' => $id]);

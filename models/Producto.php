@@ -61,10 +61,10 @@ class Producto extends \yii\db\ActiveRecord
             'codigo' => 'Codigo',
             'nombre' => 'Nombre',
             'descripcion' => 'Descripcion',
-            'vlrsiniva' => 'Vlrsiniva',
+            'vlrsiniva' => 'Valor',
             'iva' => 'Iva',
             'estado' => 'Estado',
-            'feccre' => 'Creaciado',
+            'feccre' => 'Creado',
             'fecmod' => 'Modificado',
             'usumod' => 'Quien Modifico',
         ];

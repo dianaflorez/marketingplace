@@ -10,8 +10,10 @@ use kartik\date\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nit')->textInput(['maxlength' => true]) ?>
-
+    <?php if($cliente == "Institucional") {?>
+        <?= $form->field($model, 'nit')->textInput(['maxlength' => true]) ?>
+    <?php } ?>    
+    
     <?= $form->field($model, 'nombre1')->textInput(['maxlength' => true]) ?>
 
     <?php if($tipo != "Institucional" ){?>
@@ -36,14 +38,16 @@ use kartik\date\DatePicker;
         ?>
 
         <?php echo $form->field($model, 'genero')->dropDownList($genero); ?>
-<?php } ?>
+    <?php } ?>
+    
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?php echo $form->field($model, 'estado')->dropDownList($estado); ?>
 
     <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Nuevo' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

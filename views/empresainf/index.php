@@ -21,22 +21,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <a href="<?= Url::toRoute(["empresainf/create", "idemp" => $idemp]) ?>">Nueva Informacion</a>
     </p>
 
-<table class="table table-striped  table-bordered table-showPageSummary">
-    <tr>
-        <th>Tipo</th>
-        <th>
-            Informacion
-        </th>
-        <th class="action-column fixcolumoperation">&nbsp;</th>
-    </tr>
-    <?php foreach($model as $row): ?>
-    <tr>
-        <td><?= $row->idtipo0->nombre ?></td>
-        <td><?= $row->inf ?></td>
-        <td>
+   <?php foreach($model as $row): ?>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><?= $row->idtipo0->nombre ?></div>
+      <div class="panel-body">
+        <?= $row->inf ?>
+        <br /><br />
             <!-- Update -->
             <a href="<?= Url::toRoute(["empresainf/update", "id" => $row->idinf]) ?>" title="Actualizar" aria-label="Actualizar">
-              <span class="glyphicon glyphicon-eye-open"></span>
+              <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <!--End Update-->
         
@@ -67,10 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                       </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->            
             </a>
-            <!--End Delete-->
-        </td>
-    </tr>
+            <!--End Delete--> 
+      </div>
+    </div>
+
     <?php endforeach ?>
-</table>
 
 </div>

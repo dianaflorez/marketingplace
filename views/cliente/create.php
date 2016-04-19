@@ -4,7 +4,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 <h2>
-<a href="<?= Url::toRoute(["cliente/index",  "id" => $emp->idemp]) ?>">
+<a href="<?= Url::toRoute(["cliente/index",  
+                                "idemp"  => $emp->idemp,
+                                "cliente"=> $cliente,
+                                ]) ?>">
 	<?php echo "Nueva Cliente ".$tipo.' - '.$emp->nombre; ?>
 </a>
 </h2>	
@@ -23,6 +26,8 @@ $this->params['breadcrumbs'][] = "Nuevo";
         'tide'	=> $tide,
         'estado'=> $estado,
         'emp'	=> $emp,
+        'cliente' => $cliente,
+
     ]) ?>
 
 </div>

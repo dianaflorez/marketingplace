@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<a href="<?= Url::toRoute("empresa/create") ?>">Nueva Empresa</a>
+<a class="btn btn-success" href="<?= Url::toRoute("empresa/create") ?>">Nueva Empresa</a>
 
 
 <?php $f = ActiveForm::begin([
@@ -61,9 +61,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->nombre ?></td>
         <td><?= $row->nit ?></td>
         <td>
+              <!-- Inf. -->
+            <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">
+              Información /
+            </a>
+            <!--End Inf.-->
              <!-- Cargo todo el plan de marketing con su inf. que esta en pmcontenido -->
             <a href="<?= Url::toRoute(["pmcontenido/index", "id" => $row->idemp,"activo" => "pm1"]) ?>" title="Planmarketing" aria-label="planmarketing">
-              Plan Marketing
+              Plan Marketing 
             </a>
             <!--End -->
             
@@ -86,11 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <!--End -->
         </td>
         <td>
-             <!-- Inf. -->
-            <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">
-              <span class="glyphicon glyphicon-list-alt"></span>
-            </a>
-            <!--End Inf.-->
         
             <!-- View -->
             <a href="<?= Url::toRoute(["empresa/view", "id" => $row->idemp]) ?>" title="Ver" aria-label="Ver">

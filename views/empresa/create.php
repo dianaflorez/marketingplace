@@ -4,14 +4,12 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 
-<a href="<?= Url::toRoute("empresa/index") ?>">Lista Empresas</a>
-
 <?php
 /* @var $this yii\web\View */
 /* @var $model app\models\Empresa */
 
 $this->title = 'Nueva Empresa';
-$this->params['breadcrumbs'][] = ['label' => 'Empresas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Empresas', 'url' => ['index', 'msg' => '']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="empresa-create">
@@ -20,8 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' 	=> $model,
-        'tipo'		=> $tipo,
-        'msg'		=> $msg,
     ]) ?>
 
 </div>

@@ -36,18 +36,22 @@ class ClienteController extends Controller
      * Lists all Cliente models.
      * @return mixed
      */
-    public function actionIndex($id, $msg=null)
+    public function actionIndex($idemp, $msg=null, $cliente='Institucional')
     {
-        $emp    = Empresa::findOne(['idemp' => $id]);
+        $model = Cliente::find()
+          //      ->joinWith(['accions'])
+                ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
+          //      ->joinWith(['elementos'])
+           //     ->where(['elemento.idemp' => $id])
+                ->all();
+         
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Cliente::find(),
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'msg'   => $msg,
-            'emp'   => $emp,
+          return $this->render('index', [
+            'model'     => $model,
+            'cliente'   => $cliente,
+            'msg'       => $msg,
+            'emp'       => $emp,
         ]);
     }
 
@@ -85,7 +89,7 @@ class ClienteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
           
-            return $this->redirect(['view', 'id' => $model->idcli]);
+            return $this->redirect(['index', 'idemp' => $model->idemp]);
 
         } else {
             return $this->render('create', [
@@ -96,6 +100,7 @@ class ClienteController extends Controller
                 'tipo'  => $cliente,
                 'estado'=> $estado,
                 'emp'   => $emp,
+                'cliente' => $cliente,
             ]);
         }
     }
@@ -113,7 +118,7 @@ class ClienteController extends Controller
         $model->usumod = Yii::$app->user->identity->idusu;
         $msg = "";
 
-        $cliente = $model->tipo;
+        $tipocli = $model->tipo;
 
         $tide = ArrayHelper::map(Tipo::find(['table' => 'usuario'])->all(), 'idtipo', 'nombre');
         $genero = ['Femenino'=>'Femenino', 'Masculino'=>'Masculino'];  
@@ -127,8 +132,9 @@ class ClienteController extends Controller
                 'tide'  => $tide, 
                 'msg'   => $msg,
                 'genero'=> $genero,
-                'tipo'  => $cliente,
+                'tipo'  => $tipocli,
                 'estado'=> $estado,
+                'cliente'=> $tipocli,
             ]);
         }
     }

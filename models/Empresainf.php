@@ -54,12 +54,12 @@ class Empresainf extends \yii\db\ActiveRecord
         return [
             'idinf' => 'Idinf',
             'idemp' => 'Idemp',
-            'idtipo' => 'Idtipo',
-            'inf' => 'Inf',
+            'idtipo' => 'Tipo',
+            'inf' => 'Informacion',
             'descripcion' => 'Descripcion',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'usumod' => 'Quien Modifico',
         ];
     }
 

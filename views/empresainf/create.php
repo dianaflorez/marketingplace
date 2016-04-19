@@ -2,10 +2,6 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Empresainf */
-
 $this->title = 'Información '.$modelemp->nombre;;
 $this->params['breadcrumbs'][] = ['label' => 'Empresainfs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
-$this->title = 'Productos - '.$emp->nombre;
+$this->title = $emp->nombre.' - Productos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="producto-index">
@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
 <a class="btn btn-success" href="<?= Url::toRoute(["producto/create", "id" => $idemp]) ?>">Nuevo Producto</a>
-<a class="btn btn-info" href="<?= Url::toRoute(["facturah/index", "id" => $idemp]) ?>" > Ventas </a>
+<a class="btn btn-info" href="<?= Url::toRoute(["facturah/index", "idemp" => $idemp]) ?>" > Ventas </a>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'descripcion:ntext',
             'vlrsiniva',
-            'iva',
+        //    'iva',
             'estado',
             // 'feccre',
             // 'fecmod',

@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
             <th>Producto</th>
             <th>Valor</th>
             <th>Cant.</th>
-            <th>Total</th>
+            <th>Total Producto</th>
             <th class="action-column ">&nbsp;</th>
         </tr>
         <?php $totalant = 0; ?>

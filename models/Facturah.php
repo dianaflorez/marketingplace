@@ -88,7 +88,7 @@ class Facturah extends \yii\db\ActiveRecord
             'vlrdes' => 'Vlrdes',
             'neto' => 'Neto',
             'vlriva' => 'Iva',
-            'total' => 'TOTAL',
+            'total' => 'TOTAL VENTA',
             'estado' => 'Estado',
             'tipo' => 'Tipo',
             'fecha' => 'Fecha',

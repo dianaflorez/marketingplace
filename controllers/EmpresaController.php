@@ -227,13 +227,40 @@ class EmpresaController extends Controller
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
 
+            $modelempinf = new Empresainf;
+            $modelempinf->idemp  = $model->idemp;
+            $modelempinf->idtipo = 4;  //Mision
+            $modelempinf->inf = "Nuestra mision...";  
+            $modelempinf->usumod = Yii::$app->user->identity->idusu;
+            $modelempinf->save();
 
+            $modelempinf = new Empresainf;
+            $modelempinf->idemp  = $model->idemp;
+            $modelempinf->idtipo = 5;  //Vision
+            $modelempinf->inf = "Nuestra vision...";  
+            $modelempinf->usumod = Yii::$app->user->identity->idusu;
+            $modelempinf->save();
+
+            $modelempinf = new Empresainf;
+            $modelempinf->idemp  = $model->idemp;
+            $modelempinf->idtipo = 6;  //Proposito
+            $modelempinf->inf = "Nuestro próposito...";  
+            $modelempinf->usumod = Yii::$app->user->identity->idusu;
+            $modelempinf->save();
+
+            $modelempinf = new Empresainf;
+            $modelempinf->idemp  = $model->idemp;
+            $modelempinf->idtipo = 7;  //Mision
+            $modelempinf->inf = "Nuestra filosofía...";  
+            $modelempinf->usumod = Yii::$app->user->identity->idusu;
+            $modelempinf->save();
 
             return $this->redirect(['view', 'id' => $model->idemp]);
         
         } else {
             return $this->render('create', [
                 'model' => $model,
+                
             ]);
         }
     }

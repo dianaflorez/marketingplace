@@ -42,15 +42,17 @@ class PmcontenidoController extends Controller
         $pm1 = Planmarketing::findOne(['idemp' => $id,'orden' =>1]);
         $pm2 = Planmarketing::findOne(['idemp' => $id,'orden' =>2]);
 
-        $pm3 = Planmarketing::find(['idemp' => $id])
-               ->joinWith(['pmcontenidos'])
+        $pm3 = Pmcontenido::find()
+               ->joinWith(['idpm0'])
+               ->orderBy('pmcontenido.orden')
                ->where(['idemp' => $id,'planmarketing.orden' =>3])
                ->all();
         
-        $pm4 = Planmarketing::find(['idemp' => $id,'orden' =>4])
-                ->joinWith(['pmcontenidos'])
-                ->where(['idemp' => $id,'planmarketing.orden' =>4])
-                ->all();
+        $pm4 = Pmcontenido::find()
+               ->joinWith(['idpm0'])
+               ->orderBy('pmcontenido.orden')
+               ->where(['idemp' => $id,'planmarketing.orden' =>4])
+               ->all();
             
         return $this->render('index', [
             'pm1'   => $pm1,
@@ -91,6 +93,16 @@ class PmcontenidoController extends Controller
         $model->idpm    = $id;
         $model->titulo  = $cont;
         $model->usumod  = Yii::$app->user->identity->idusu;
+     
+        if($cont == "Objetivo") {
+            $ct = Pmcontenido::find()->where(['idpm' => $id, 'titulo'=>'Objetivo'])->count();
+            $model->orden = $ct + 1;
+        }
+
+       if($cont == "Estrategia") {
+            $ct = Pmcontenido::find()->where(['idpm' => $id, 'titulo'=>'Estrategia'])->count();
+            $model->orden = $ct + 1;
+        }
 
         $emp = Empresa::findOne(['idemp' => $idemp]);
 

@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nombre',
             'descripcion:ntext',
             'vlrsiniva',
-            'iva',
+       //     'iva',
             'estado',
             'feccre',
             'fecmod',
