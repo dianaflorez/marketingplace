@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?php echo $form->field($model, 'idcli')->dropDownList($clientes); ?>
 
-    <?= $form->field($model, 'refpago')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'refpago')->textInput(['maxlength' => true, 'readonly' => true]) ?>
    
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 

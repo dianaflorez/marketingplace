@@ -86,9 +86,14 @@ class FacturahController extends Controller
     }
     public function actionCreate($idemp)
     {
+       
         $model = new Facturah();
         $model->idusu = Yii::$app->user->identity->idusu;
         $model->idemp = $idemp;
+
+        $emp        = Empresa::findOne(['idemp' => $model->idemp]);
+
+        $model->refpago = substr($emp->nombre,0,2).time();
         $model->fecmod = date('Y.m.d h:i:s');
         $model->usumod = Yii::$app->user->identity->idusu;
 
@@ -102,7 +107,7 @@ class FacturahController extends Controller
 
         $clientes   = ArrayHelper::map(Cliente::find()
                         ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
-        $emp        = Empresa::findOne(['idemp' => $model->idemp]);
+     
         $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
         
         $model->totalnormal = 0;
