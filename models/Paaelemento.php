@@ -5,11 +5,12 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "elemento".
+ * This is the model class for table "paaelemento".
  *
  * @property integer $idele
  * @property integer $idemp
  * @property integer $idpa
+ * @property integer $idaccion
  * @property string $descripcion
  * @property integer $orden
  * @property string $feccre
@@ -20,14 +21,14 @@ use Yii;
  * @property Planaccion $idpa0
  * @property Usuario $usumod0
  */
-class Elemento extends \yii\db\ActiveRecord
+class Paaelemento extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'elemento';
+        return 'paaelemento';
     }
 
     /**
@@ -36,7 +37,7 @@ class Elemento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'idpa', 'orden', 'usumod'], 'integer'],
+            [['idemp', 'idpa', 'idaccion', 'orden', 'usumod'], 'integer'],
             [['descripcion'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
@@ -54,11 +55,12 @@ class Elemento extends \yii\db\ActiveRecord
             'idele' => 'Idele',
             'idemp' => 'Idemp',
             'idpa' => 'Idpa',
+            'idaccion' => 'Idaccion',
             'descripcion' => 'Descripcion',
             'orden' => 'Orden',
-            'feccre' => 'Creado',
-            'fecmod' => 'Modificado',
-            'usumod' => 'Quien Modifico',
+            'feccre' => 'Feccre',
+            'fecmod' => 'Fecmod',
+            'usumod' => 'Usumod',
         ];
     }
 

@@ -10,17 +10,12 @@ use Yii;
  * @property integer $idpa
  * @property integer $idemp
  * @property string $nombre
- * @property string $fecini
- * @property string $fecfin
- * @property string $responsable
- * @property integer $costo
- * @property string $estado
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
  *
- * @property Accion[] $accions
- * @property Elemento[] $elementos
+ * @property Paaccion[] $paaccions
+ * @property Paaelemento[] $paaelementos
  * @property Empresa $idemp0
  * @property Usuario $usumod0
  */
@@ -41,11 +36,9 @@ class Planaccion extends \yii\db\ActiveRecord
     {
         return [
             [['idemp', 'nombre'], 'required'],
-            [['idemp', 'costo', 'usumod'], 'integer'],
-            [['fecini', 'fecfin', 'feccre', 'fecmod'], 'safe'],
-            [['responsable'], 'string'],
+            [['idemp', 'usumod'], 'integer'],
+            [['feccre', 'fecmod'], 'safe'],
             [['nombre'], 'string', 'max' => 30],
-            [['estado'], 'string', 'max' => 25],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
@@ -60,11 +53,6 @@ class Planaccion extends \yii\db\ActiveRecord
             'idpa' => 'Idpa',
             'idemp' => 'Idemp',
             'nombre' => 'Nombre',
-            'fecini' => 'Fecini',
-            'fecfin' => 'Fecfin',
-            'responsable' => 'Responsable',
-            'costo' => 'Costo',
-            'estado' => 'Estado',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',
@@ -74,17 +62,17 @@ class Planaccion extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAccions()
+    public function getPaaccions()
     {
-        return $this->hasMany(Accion::className(), ['idpa' => 'idpa']);
+        return $this->hasMany(Paaccion::className(), ['idpa' => 'idpa']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getElementos()
+    public function getPaaelementos()
     {
-        return $this->hasMany(Elemento::className(), ['idpa' => 'idpa']);
+        return $this->hasMany(Paaelemento::className(), ['idpa' => 'idpa']);
     }
 
     /**

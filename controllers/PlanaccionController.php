@@ -42,9 +42,9 @@ class PlanaccionController extends Controller
     public function actionIndex($id,$msg=null)
     {
         $model2 = Planaccion::find()
-                ->joinWith(['accions'])
+                ->joinWith(['paaccions'])
                 ->where(['planaccion.idemp' => $id])
-                ->joinWith(['elementos'])
+                ->joinWith(['paaelementos'])
            //     ->where(['elemento.idemp' => $id])
                 ->all();
             

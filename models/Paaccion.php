@@ -5,13 +5,18 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "accion".
+ * This is the model class for table "paaccion".
  *
  * @property integer $idaccion
  * @property integer $idemp
  * @property integer $idpa
  * @property string $descripcion
  * @property integer $orden
+ * @property string $fecini
+ * @property string $fecfin
+ * @property string $responsable
+ * @property integer $costo
+ * @property string $estado
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
@@ -20,14 +25,14 @@ use Yii;
  * @property Planaccion $idpa0
  * @property Usuario $usumod0
  */
-class Accion extends \yii\db\ActiveRecord
+class Paaccion extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'accion';
+        return 'paaccion';
     }
 
     /**
@@ -36,10 +41,11 @@ class Accion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'idpa', 'orden', 'usumod'], 'integer'],
+            [['idemp', 'idpa', 'orden', 'costo', 'usumod'], 'integer'],
             [['idpa', 'descripcion'], 'required'],
-            [['descripcion'], 'string'],
-            [['feccre', 'fecmod'], 'safe'],
+            [['descripcion', 'responsable'], 'string'],
+            [['fecini', 'fecfin', 'feccre', 'fecmod'], 'safe'],
+            [['estado'], 'string', 'max' => 25],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idpa'], 'exist', 'skipOnError' => true, 'targetClass' => Planaccion::className(), 'targetAttribute' => ['idpa' => 'idpa']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
@@ -57,6 +63,11 @@ class Accion extends \yii\db\ActiveRecord
             'idpa' => 'Idpa',
             'descripcion' => 'Descripcion',
             'orden' => 'Orden',
+            'fecini' => 'Fecini',
+            'fecfin' => 'Fecfin',
+            'responsable' => 'Responsable',
+            'costo' => 'Costo',
+            'estado' => 'Estado',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',

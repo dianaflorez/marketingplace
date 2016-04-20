@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Empresa;
 use app\models\Empresainf;
+use app\models\Planaccion;
 use app\models\User;
 use yii\filters\AccessControl;
 use app\models\EmpresaSearch;
@@ -218,8 +219,6 @@ class EmpresaController extends Controller
               $modelpmc->usumod = Yii::$app->user->identity->idusu;
               $modelpmc->save();
 
-
-
             $modelpm = new Planmarketing();
             $modelpm->idemp  = $model->idemp;
             $modelpm->nombre = "Desiciones Extrategicas";
@@ -255,8 +254,32 @@ class EmpresaController extends Controller
             $modelempinf->usumod = Yii::$app->user->identity->idusu;
             $modelempinf->save();
 
+            $modelpa = new Planaccion;
+            $modelpa->idemp  = $model->idemp;
+            $modelpa->nombre = "Producto";  
+            $modelpa->usumod = Yii::$app->user->identity->idusu;
+            $modelpa->save();
+
+            $modelpa = new Planaccion;
+            $modelpa->idemp  = $model->idemp;
+            $modelpa->nombre = "Precio";  
+            $modelpa->usumod = Yii::$app->user->identity->idusu;
+            $modelpa->save();
+
+            $modelpa = new Planaccion;
+            $modelpa->idemp  = $model->idemp;
+            $modelpa->nombre = "Plaza";  
+            $modelpa->usumod = Yii::$app->user->identity->idusu;
+            $modelpa->save();        
+
+            $modelpa = new Planaccion;
+            $modelpa->idemp  = $model->idemp;
+            $modelpa->nombre = "Publicidad y promoción";  
+            $modelpa->usumod = Yii::$app->user->identity->idusu;
+            $modelpa->save();
+
             return $this->redirect(['view', 'id' => $model->idemp]);
-        
+    
         } else {
             return $this->render('create', [
                 'model' => $model,
