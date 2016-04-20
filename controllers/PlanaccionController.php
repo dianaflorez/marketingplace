@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Planaccion;
+use app\models\Paaelemento;
 use app\models\Empresa;
 use app\models\elemento;
 use app\models\Accion;
@@ -42,6 +43,8 @@ class PlanaccionController extends Controller
     public function actionIndex($id,$msg=null)
     {
         $model2 = Planaccion::find()
+                ->orderBy('planaccion.orden')
+             
                 ->joinWith(['paaccions'])
                 ->where(['planaccion.idemp' => $id])
                 ->joinWith(['paaelementos'])
@@ -60,12 +63,17 @@ class PlanaccionController extends Controller
 
     public function actionViewplan($id, $tr = 1, $msg=null)
     {
+       //Si un usuario q no es adm Solo puede ver su propia plan accion 
+       if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $idemp = Yii::$app->user->identity->idemp;
+        else $idemp = $id;
+
         $connection = \Yii::$app->db;
-        $sql = "SELECT date_part('month', MIN(fecini)) as mes FROM planaccion";
+        $sql = "SELECT date_part('month', MIN(fecini)) as mes FROM paaccion WHERE idemp = ".$idemp;
         $model = $connection->createCommand($sql);
         $mesinicial = $model->queryScalar();
 
-        $sqlyear = "SELECT date_part('year', MIN(fecini)) as anio FROM planaccion";
+        $sqlyear = "SELECT date_part('year', MIN(fecini)) as anio FROM paaccion WHERE idemp = ".$idemp;
         $modelyear = $connection->createCommand($sqlyear);
         $year = $modelyear->queryScalar();
 
@@ -98,32 +106,32 @@ class PlanaccionController extends Controller
             $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
         }
 
-        $sqldatostri = " SELECT * FROM planaccion p 
+        $sqldatostri = " SELECT * FROM paaccion p 
             WHERE
                 p.idemp = ".$id." AND
                 fecini > '".$fecini."' AND
                 fecini < '".$fecfin."' 
             UNION   
-            SELECT * FROM planaccion 
+            SELECT * FROM paaccion 
             WHERE
                 fecfin > '".$fecini."' AND
                 fecfin < '".$fecfin."'   
             ORDER BY fecfin, feccre";
 
-        $acciones  = Accion::find()->where(['idemp' => $id])->all();
-        $elementos = elemento::find()->where(['idemp' => $id])->all();
+    //    $acciones  = Accion::find()->where(['idemp' => $id])->all();
+          $elementos = Paaelemento::find()->where(['idpa' => $id])->all();
 
         $modeltri = $connection->createCommand($sqldatostri);
         $planxtri = $modeltri->queryAll();
 
         $emp    = Empresa::findOne(['idemp' => $id]);
-
+        echo "<br /><br />";
+var_dump($planxtri);
         return $this->render('viewplan', [
             'model'    => $planxtri,
             'msg'      => $msg,
             'idemp'    => $id,
             'emp'      => $emp, 
-            'acciones' => $acciones,
             'elementos'=> $elementos,
             'trimestre'=> $tr,  
             'fectri'  => $fecini.' '.$fecfin, //Fechas de inicio de trimestre     

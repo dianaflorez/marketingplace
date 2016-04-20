@@ -257,24 +257,28 @@ class EmpresaController extends Controller
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Producto";  
+            $modelpm->orden  = 1;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();
 
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Precio";  
+            $modelpm->orden  = 2;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();
 
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Plaza";  
+            $modelpm->orden  = 3;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();        
 
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Publicidad y promoción";  
+            $modelpm->orden  = 4;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();
 

@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach($model as $row): ?>
     <tr>
         <td colspan="7">
-            <?= $row->nombre ?>
+            <b><?= $row->nombre ?></b>
         <td>
     </tr>        
     <?php foreach($row->paaccions as $acc): ?>
@@ -66,7 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach($row->paaelementos as $ele): ?>
                         
                         <!-- Update -->
-                        <a href="<?= Url::toRoute(["elemnto/update", "id" => $ele->idele]) ?>" 
+                        <a href="<?= Url::toRoute(["paaelemento/update", 
+                                                    "id" => $ele->idele,
+                                                    "pa" => $row->nombre]) ?>" 
                                     title="Actualizar" aria-label="Actualizar">
                           <span class="glyphicon glyphicon-pencil"></span>
                         </a>
@@ -88,12 +90,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <p>¿Realmente deseas eliminar esta elemento: <?= $ele->descripcion ?>?</p>
                               </div>
                               <div class="modal-footer">
-                              <?= Html::beginForm(Url::toRoute("elemento/delete"), "POST") ?>
-                                    <input type="hidden" name="idele" value="<?= $ele->idele ?>">
-                                    <input type="hidden" name="idemp" value="<?= $ele->idemp ?>">
+                              <?= Html::beginForm(Url::toRoute("paaelemento/delete"), "POST") ?>
+                                  <input type="hidden" name="idele" value="<?= $ele->idele ?>">
+                                  <input type="hidden" name="idemp" value="<?= $ele->idemp ?>">
                                     
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary">Eliminar</button>
                               <?= Html::endForm() ?>
                               </div>
                             </div><!-- /.modal-content -->
@@ -110,6 +112,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <a  href="<?= Url::toRoute(["paaelemento/create", 
                                     "idpa"  => $row->idpa, 
                                     "idemp" => $row->idemp, 
+                                    "idaccion" => $acc->idaccion,
+                                    "pa"    => $row->nombre,
                                 ]) ?>">
             Agregar Elemento</a>           
 

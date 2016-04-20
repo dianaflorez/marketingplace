@@ -31,29 +31,32 @@ $this->params['breadcrumbs'][] = $title;
 </h3>
 <?php if($trimestre != 1) { ?>
     <a class="btn btn-primary" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 1]) ?>">Trimestre uno</a>
-<?php } ?>
+<?php }else{ ?>
+    <a class="btn btn-warning" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 1]) ?>">Trimestre uno</a>
+<?php  } ?>
 
 <?php if($trimestre != 2) { ?>
     <a class="btn btn-primary" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 2]) ?>">Trimestre dos</a>
+<?php }else{ ?>
+    <a class="btn btn-warning" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 2]) ?>">Trimestre dos</a>
 <?php } ?>
 
 <?php if($trimestre != 3) { ?>
     <a class="btn btn-primary" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 3]) ?>">Trimestre tres</a>
+<?php }else{ ?>
+    <a class="btn btn-warning" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 3]) ?>">Trimestre tres</a>
 <?php } ?>
 
 <?php if($trimestre != 4) { ?>
     <a class="btn btn-primary" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 4]) ?>">Trimestre cuatro</a>
+<?php }else{ ?>
+    <a class="btn btn-warning" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp, "tr" => 4]) ?>">Trimestre cuatro</a>
 <?php } ?>
 
 <br />
 <br />
 
-<?php $f = ActiveForm::begin([
-    "method" => "get",
-    "action" => Url::toRoute("planaccion/index"),
-    "enableClientValidation" => true,
-]);
-?>
+<h3>Plan de Accion <?php echo ' - '.$emp->nombre;?></h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
@@ -63,47 +66,35 @@ $this->params['breadcrumbs'][] = $title;
         <th>Elemento</th>
         <th>Costo</th>
         <th>Estado</th>
+        <th class="action-column ">&nbsp;</th>
     </tr>
-    <?php foreach($model as $row): ?>
+
+    <?php foreach($model as $acc): ?>
     <tr>
+        <td colspan="7">
+            <b><?//$row->nombre ?></b>
         <td>
-            <?= $row['nombre']; ?>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <?php foreach($acciones as $acc): ?>
-                        
-                        <?php
-                            if($acc->idpa == $row['idpa']){ 
-                                echo $acc->descripcion."<br />";
-                            }    
-                         ?>
-                            
-                    
-                    <?php endforeach ?>
-                </div>
-            </div>    
-          </td>
-        <td><?= $row['fecini'] ?></td>
-        <td><?= $row['fecfin'] ?></td>
-        <td><?= $row['responsable'] ?></td>
+    </tr>        
+    <tr>
+        <td><?= $acc['descripcion'] ?></td>
+        <td><?= $acc['fecini'] ?></td>
+        <td><?= $acc['fecfin'] ?></td>
+        <td><?= $acc['responsable'] ?></td>
         <td>
             <div class="panel panel-default">
                 <div class="panel-body">
                     <?php foreach($elementos as $ele): ?>
-               
-                        <?php 
-                            if($ele->idpa == $row['idpa']){
-                                echo $ele->descripcion."<br />";
-                            } ?>
+                        
+                        <?php echo $ele->descripcion; ?><br />
                     
                     <?php endforeach ?>
                 </div>
             </div>    
-          
+    
         </td>
-        <td><?= $row['costo'] ?></td>
-        <td><?= $row['estado'] ?></td>
-       
-    </tr>
+        <td><?= $acc['costo'] ?></td>
+        <td><?= $acc['estado'] ?></td>
+     </tr>
+             
     <?php endforeach ?>
 </table>
