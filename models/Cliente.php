@@ -71,7 +71,7 @@ class Cliente extends \yii\db\ActiveRecord
             'nit' => 'Nit',
             'nombre1' => 'Nombre',
             'nombre2' => 'Nombre2',
-            'apellido1' => 'Apellido1',
+            'apellido1' => 'Apellido',
             'apellido2' => 'Apellido2',
             'idtide' => 'Tipo Ide.',
             'identificacion' => 'Identificacion',

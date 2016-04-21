@@ -17,11 +17,11 @@ use kartik\date\DatePicker;
     <?= $form->field($model, 'nombre1')->textInput(['maxlength' => true]) ?>
 
     <?php if($tipo != "Institucional" ){?>
-        <?= $form->field($model, 'nombre2')->textInput(['maxlength' => true]) ?>
+        <?php // $form->field($model, 'nombre2')->textInput(['maxlength' => true]) ?>
             
         <?= $form->field($model, 'apellido1')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
+        <?php // $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
 
         <?php echo $form->field($model, 'idtide')->dropDownList($tide); ?>
 

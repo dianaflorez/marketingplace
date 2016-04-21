@@ -43,10 +43,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         "idemp" => $emp->idemp,             
                                                         "cliente"   => "Institucional"]) 
                                                         ?>">Clientes Institucionales</a>
+<?php }else{ ?>
+<a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
+                                                        "idemp" => $emp->idemp,             
+                                                        "cliente"   => "Institucional"]) 
+                                                        ?>">Clientes Institucionales</a>
 <?php } ?>
-
 <?php if($cliente != "Individual") { ?>
 <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
+                                                        "idemp" => $emp->idemp,             
+                                                        "cliente"   => "Individual"]) 
+                                                        ?>">Clientes Individuales</a>
+<?php }else{ ?>
+<a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
                                                         "idemp" => $emp->idemp,             
                                                         "cliente"   => "Individual"]) 
                                                         ?>">Clientes Individuales</a>
@@ -54,6 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php if($cliente != "Esporadico") { ?>
 <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
+                                                        "idemp" => $emp->idemp, 
+                                                        "cliente"   => "Esporadico"]) 
+                                                        ?>">Clientes Esporadicos</a>
+<?php }else{ ?>
+<a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
                                                         "idemp" => $emp->idemp, 
                                                         "cliente"   => "Esporadico"]) 
                                                         ?>">Clientes Esporadicos</a>

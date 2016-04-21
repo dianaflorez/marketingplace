@@ -64,6 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel panel-default">
                 <div class="panel-body">
                     <?php foreach($row->paaelementos as $ele): ?>
+                      <?php if($ele->idaccion == $acc->idaccion){?>
                         
                         <!-- Update -->
                         <a href="<?= Url::toRoute(["paaelemento/update", 
@@ -105,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <!--End Delete-->
  
                         <?php echo $ele->descripcion; ?><br />
-                    
+                      <?php }?>
                     <?php endforeach ?>
                 </div>
             </div>    

@@ -60,12 +60,16 @@ echo Tabs::widget([
             'items' => [
                  [
                     'label' => 'Objetivos de Marketing', 
-                    'content' => $this->render('pm4a',['model2' => $pm4, 'emp' => $emp]),
+                    'content' => $this->render('pm4a',[ 'model2' => $pm4, 
+                                                        'emp'   => $emp, 
+                                                        'pm4id' => $pm4id ]),
                     'active' => $sw4a,
                  ],
                  [
                     'label' => 'Estrategicas de Marketing',
-                    'content' => $this->render('pm4b',['model2' => $pm4, 'emp' => $emp]),
+                    'content' => $this->render('pm4b',[ 'model2' => $pm4, 
+                                                        'emp' => $emp,
+                                                        'pm4id' => $pm4id ]),
                     'active' => $sw4b,
                  ],
             ],

@@ -66,35 +66,41 @@ $this->params['breadcrumbs'][] = $title;
         <th>Elemento</th>
         <th>Costo</th>
         <th>Estado</th>
-        <th class="action-column ">&nbsp;</th>
     </tr>
-
-    <?php foreach($model as $acc): ?>
+    <?php foreach($plana as $pa): ?>
     <tr>
         <td colspan="7">
-            <b><?//$row->nombre ?></b>
+                <b><?= $pa->nombre ?></b>
         <td>
     </tr>        
-    <tr>
-        <td><?= $acc['descripcion'] ?></td>
-        <td><?= $acc['fecini'] ?></td>
-        <td><?= $acc['fecfin'] ?></td>
-        <td><?= $acc['responsable'] ?></td>
-        <td>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <?php foreach($elementos as $ele): ?>
-                        
-                        <?php echo $ele->descripcion; ?><br />
-                    
-                    <?php endforeach ?>
-                </div>
-            </div>    
-    
-        </td>
-        <td><?= $acc['costo'] ?></td>
-        <td><?= $acc['estado'] ?></td>
-     </tr>
+  
+        <?php foreach($model as $acc): ?>
+
+            <?php if($acc['idpa'] == $pa->idpa){?>
+                <tr>
+                    <td><?= $acc['descripcion'] ?></td>
+                    <td><?= $acc['fecini'] ?></td>
+                    <td><?= $acc['fecfin'] ?></td>
+                    <td><?= $acc['responsable'] ?></td>
+                    <td>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <?php foreach($elementos as $ele): ?>
+                                    
+                                    <?php if($ele->idaccion == $acc['idaccion']) {
+                                        echo $ele->descripcion."<br />"; 
+                                    }
+                                    ?>
+                                
+                                <?php endforeach ?>
+                            </div>
+                        </div>            
+                    </td>
+                    <td><?= $acc['costo'] ?></td>
+                    <td><?= $acc['estado'] ?></td>
+                 </tr>
+            <?php }?>     
+        <?php endforeach ?>
              
     <?php endforeach ?>
 </table>

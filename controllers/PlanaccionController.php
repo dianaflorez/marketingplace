@@ -109,24 +109,27 @@ class PlanaccionController extends Controller
         $sqldatostri = " SELECT * FROM paaccion p 
             WHERE
                 p.idemp = ".$id." AND
-                fecini > '".$fecini."' AND
-                fecini < '".$fecfin."' 
+                fecini >= '".$fecini."' AND
+                fecini <= '".$fecfin."' 
             UNION   
             SELECT * FROM paaccion 
             WHERE
-                fecfin > '".$fecini."' AND
-                fecfin < '".$fecfin."'   
+                fecfin >= '".$fecini."' AND
+                fecfin <= '".$fecfin."'   
             ORDER BY fecfin, feccre";
 
-    //    $acciones  = Accion::find()->where(['idemp' => $id])->all();
-          $elementos = Paaelemento::find()->where(['idpa' => $id])->all();
+        $planaccion = Planaccion::find()
+                    ->where(['idemp' => $id])
+                    ->orderBy('orden')    
+                    ->all();
+
+        $elementos  = Paaelemento::find()->where(['idpa' => $id])->all();
 
         $modeltri = $connection->createCommand($sqldatostri);
         $planxtri = $modeltri->queryAll();
 
         $emp    = Empresa::findOne(['idemp' => $id]);
-        echo "<br /><br />";
-var_dump($planxtri);
+     
         return $this->render('viewplan', [
             'model'    => $planxtri,
             'msg'      => $msg,
@@ -134,7 +137,8 @@ var_dump($planxtri);
             'emp'      => $emp, 
             'elementos'=> $elementos,
             'trimestre'=> $tr,  
-            'fectri'  => $fecini.' '.$fecfin, //Fechas de inicio de trimestre     
+            'plana'    => $planaccion,    
+            'fectri'   => $fecini.' '.$fecfin, //Fechas de inicio de trimestre  
         ]);
     }
 

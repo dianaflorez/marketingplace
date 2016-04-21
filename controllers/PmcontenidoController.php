@@ -53,6 +53,8 @@ class PmcontenidoController extends Controller
                ->orderBy('pmcontenido.orden')
                ->where(['idemp' => $id,'planmarketing.orden' =>4])
                ->all();
+
+        $pm4id = Planmarketing::findOne(['idemp' => $id,'orden' =>4]);
             
         return $this->render('index', [
             'pm1'   => $pm1,
@@ -60,7 +62,8 @@ class PmcontenidoController extends Controller
             'pm3'   => $pm3,
             'pm4'   => $pm4,
             'emp'   => $emp,
-            'activo'=> $activo
+            'activo'=> $activo,
+            'pm4id' => $pm4id->idpm,
         ]);
     }
 

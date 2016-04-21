@@ -27,7 +27,7 @@ use yii\helpers\Url;
 	
 <br />
 	<a class="btn btn-warning" href="<?= Url::toRoute(["pmcontenido/create", 
-									"id" 	=> $pmc->idpm, 
+									"id" 	=> $pm4id, 
 									"idemp" => $emp->idemp, 
 									"activo" => "pm4a",
 									"cont"	=> "Objetivo",
