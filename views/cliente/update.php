@@ -1,14 +1,17 @@
 <?php
 
 use yii\helpers\Html;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Cliente */
-
-$this->title = 'Actualizar Cliente: ' . $model->tipo.' - '.$model->idemp ;
-$this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idcli, 'url' => ['view', 'id' => $model->idcli]];
-$this->params['breadcrumbs'][] = 'Update';
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["cliente/index",  "idemp" => $model->idemp, "cliente" => $model->tipo]) ?>">
+	<?php echo $emp->nombre." - Actualizar Cliente ".$cliente; ?>
+</a>
+</h2>	       	
+<?php
+$this->params['breadcrumbs'][] = ['label' => 'Clientes', 'url' => ['index', 'idemp'=>$model->idemp, 'cliente' => $model->tipo]];
+$this->params['breadcrumbs'][] = ['label' => $model->nombre1, 'url' => ['view', 'id' => $model->idcli]];
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="cliente-update">
 
@@ -21,6 +24,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'tide'	=> $tide,
         'estado'=> $estado,
    		'cliente'=> $cliente,
+   		'emp'	=> $emp,
     ]) ?>
 
 </div>

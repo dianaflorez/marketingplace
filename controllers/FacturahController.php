@@ -158,12 +158,11 @@ class FacturahController extends Controller
                             $modelcredito->usumod = Yii::$app->user->identity->idusu;
                             
                             if($modelcredito->save()){
-                                 print_r($modelcredito->getErrors());
-                                return $this->redirect(['index', 'idemp' => $model->idemp]);
+                                return $this->redirect(['update', 'id' => $model->idfh]);
                             }
 
                         }else{
-                            //return $this->redirect(['update', 'id' => $model->idfh]);
+                            return $this->redirect(['update', 'id' => $model->idfh]);
                         }
 
                    }

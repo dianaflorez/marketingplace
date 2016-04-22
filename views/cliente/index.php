@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Nombre</th>
         <?php if($cliente == "Institucional") {?>
             <th>Nit</th>
-        <?php }else{ ?>
+        <?php }elseif($cliente == "Individual"){ ?>
             <th>Identificacion</th>
             <th>Nacimiento</th>
         <?php }?>
@@ -97,8 +97,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if($cliente == "Institucional") {?>
             <td><?= $row->nombre1 ?> </td>
             <td><?= $row->nit ?></td>
-        <?php }else{ ?>
+        <?php }elseif($cliente == "Individual" || $cliente == "Esporadico"){ ?>
             <td><?= $row->nombre1.' '.$row->nombre2.' '.$row->apellido1.' '.$row->apellido2?></td> 
+        <?php }
+       if($cliente == "Individual"){ ?>
             <td><?= $row->identificacion ?></td>
             <td><?= $row->fecnac ?></td>
         <?php } ?>    

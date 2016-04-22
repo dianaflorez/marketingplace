@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cliente;
+use app\models\Usuario;
 use app\models\Tipo;
 use app\models\Empresa;
 use yii\data\ActiveDataProvider;
@@ -62,8 +63,17 @@ class ClienteController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $emp   = Empresa::findOne(['idemp' => $model->idemp]);
+        $tipoide   = Tipo::findOne(['idtipo' => $model->idtide]);
+        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
+        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'emp'   => $emp,
+            'usumod'=> $usumod,
+            'tipoide' => $tipoide->nombre,
         ]);
     }
 
@@ -89,7 +99,7 @@ class ClienteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
           
-            return $this->redirect(['index', 'idemp' => $model->idemp]);
+            return $this->redirect(['index', 'idemp' => $model->idemp, 'cliente' => $model->tipo]);
 
         } else {
             return $this->render('create', [
@@ -124,6 +134,8 @@ class ClienteController extends Controller
         $genero = ['Femenino'=>'Femenino', 'Masculino'=>'Masculino'];  
         $estado = ['Activo'=>'Activo', 'Inactivo'=>'Inactivo'];  
 
+        $emp    = Empresa::findOne(['idemp' => $model->idemp]);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcli]);
         } else {
@@ -135,6 +147,7 @@ class ClienteController extends Controller
                 'tipo'  => $tipocli,
                 'estado'=> $estado,
                 'cliente'=> $tipocli,
+                'emp'   => $emp,
             ]);
         }
     }
@@ -147,9 +160,17 @@ class ClienteController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->estado = "Inactivo";
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->usumod = Yii::$app->user->identity->idusu;
+        $msg = "";
 
-        return $this->redirect(['index']);
+        $emp    = Empresa::findOne(['idemp' => $model->idemp]);
+        
+        $model->save();
+        return $this->redirect(['index', 'idemp' => $model->idemp, 'cliente' => $model->tipo]);
+        
     }
 
     /**

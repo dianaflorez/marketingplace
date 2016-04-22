@@ -82,8 +82,8 @@ class Cliente extends \yii\db\ActiveRecord
             'email' => 'Email',
             'observacion' => 'Observacion',
             'feccre' => 'Creacion',
-            'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'fecmod' => 'Modificacion',
+            'usumod' => 'Quien Modifico',
         ];
     }
 

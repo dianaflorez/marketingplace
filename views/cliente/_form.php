@@ -23,21 +23,24 @@ use kartik\date\DatePicker;
 
         <?php // $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
 
-        <?php echo $form->field($model, 'idtide')->dropDownList($tide); ?>
+        <?php if($tipo != "Esporadico" ){?>
 
-        <?= $form->field($model, 'identificacion')->textInput(['maxlength' => true]) ?>
+            <?php echo $form->field($model, 'idtide')->dropDownList($tide); ?>
+
+            <?= $form->field($model, 'identificacion')->textInput(['maxlength' => true]) ?>
    
-        <?php
-        echo $form->field($model, 'fecnac')->widget(DatePicker::classname(), [
-            'options' => ['placeholder' => 'Ingrese Fecha de Nacimiento ...'],
-            'pluginOptions' => [
-                'autoclose'=>true,
-                'format' => 'yyyy-m-dd'
-            ]
-        ]);
-        ?>
+            <?php
+            echo $form->field($model, 'fecnac')->widget(DatePicker::classname(), [
+                'options' => ['placeholder' => 'Ingrese Fecha de Nacimiento ...'],
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-m-dd'
+                ]
+            ]);
+            ?>
 
-        <?php echo $form->field($model, 'genero')->dropDownList($genero); ?>
+            <?php echo $form->field($model, 'genero')->dropDownList($genero); ?>
+        <?php } ?>
     <?php } ?>
     
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>

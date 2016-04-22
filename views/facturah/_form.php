@@ -52,7 +52,8 @@ use yii\widgets\ActiveForm;
                   $( "#facturad-total" ).val( data );
                   $total = parseInt(data) + parseInt($("#totalant").val());
                   $( "#facturah-total" ).val( $total );
-                  $( "#faccredito-saldo" ).val(data);
+                  $( "#faccredito-saldo" ).val($total);
+                  $( "#faccredito-abono" ).val(0);
 
                 });
             ']); 
@@ -67,6 +68,7 @@ use yii\widgets\ActiveForm;
                   $( "#facturad-total" ).val( $totalfd );
                   $( "#facturah-total" ).val( $totalfh);
                   $( "#faccredito-saldo" ).val($totalfh);
+                  $( "#faccredito-abono" ).val(0);
 
             ']);  ?>
 
@@ -77,9 +79,15 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($modelfd, 'qty')->textInput(['maxlength' => true, 'value' =>1,
              'onchange'=>'
                 $.get( "index.php?r=facturah/calprice&qty="+$(this).val()+"&vlr="+$("#facturad-valor").val(), function( data ) {
+                 
+                  $totalfd = data;
+                  //Quede aqui.........XXXXXXXX  
+                  $totalfh = parseInt($totalfd) + parseInt($("#totalant").val());
+                  
                   $( "#facturad-total" ).val( data );
-                  $( "#facturah-total" ).val( data );
-                  $( "#faccredito-saldo" ).val(data);
+                  $( "#facturah-total" ).val( $totalfh);
+                  $( "#faccredito-saldo" ).val($totalfh);
+                  $( "#faccredito-abono" ).val(0);
 
                 });
             ']); 
