@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
           
           <tr>
             <th><?= $row->idpro0->nombre;?></th>
-            <th><?= $row->neto; ?></th>
+            <th><?= $row->valor; ?></th>
             <th><?= $row->qty;?></th>
             <th><?= $row->total;?></th>
             <th class="action-column ">&nbsp;</th>
@@ -46,30 +46,41 @@ use yii\widgets\ActiveForm;
             ['prompt'=>'-Choose a Product-',
               'onchange'=>'
                 $.get( "index.php?r=facturah/listprice&id="+$(this).val(), function( data ) {
+                  $( "#facturad-valor" ).val( data );
+                  $( "#facturad-vlr1" ).val( data );
                   $( "#facturad-neto" ).val( data );
                   $( "#facturad-total" ).val( data );
                   $total = parseInt(data) + parseInt($("#totalant").val());
                   $( "#facturah-total" ).val( $total );
+                  $( "#faccredito-saldo" ).val(data);
+
                 });
             ']); 
 
             ?>
             </td>
-            <td><?= $form->field($modelfd, 'neto')->textInput(['maxlength' => true,
+            <td>
+            <?= $form->field($modelfd, 'valor')->textInput(['maxlength' => true,
             'onchange'=>'
                   $totalfd = parseInt($(this).val());
                   $totalfh = $totalfd + parseInt($("#totalant").val());
                   $( "#facturad-total" ).val( $totalfd );
                   $( "#facturah-total" ).val( $totalfh);
-                
+                  $( "#faccredito-saldo" ).val($totalfh);
+
             ']);  ?>
+
+            <?= $form->field($modelfd, 'vlr1')->textInput(['maxlength' => true])->hiddenInput()->label(false);?>
+            <?= $form->field($modelfd, 'neto')->textInput(['maxlength' => true])->hiddenInput()->label(false);?>
             </td>
             <td>
                 <?= $form->field($modelfd, 'qty')->textInput(['maxlength' => true, 'value' =>1,
              'onchange'=>'
-                $.get( "index.php?r=facturah/calprice&qty="+$(this).val()+"&vlr="+$("#facturad-neto").val(), function( data ) {
+                $.get( "index.php?r=facturah/calprice&qty="+$(this).val()+"&vlr="+$("#facturad-valor").val(), function( data ) {
                   $( "#facturad-total" ).val( data );
                   $( "#facturah-total" ).val( data );
+                  $( "#faccredito-saldo" ).val(data);
+
                 });
             ']); 
 
@@ -84,19 +95,32 @@ use yii\widgets\ActiveForm;
                     <?= Html::submitButton($model->isNewRecord ? 'Agregar Producto' : 'Agregar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                 </div>
            </td>
-           <td colspan="2"><?= $form->field($model, 'total')->textInput(['readonly' => true]) ?></td>
-       </tr>
-       </table>
+           <td colspan="2">
+              <?= $form->field($model, 'total')->textInput(['readonly' => true]) ?>
 
-      <?php echo $form->field($model, 'tipo')->dropDownList($tipo,
+              <?php echo $form->field($model, 'tipo')->dropDownList($tipo,
             [ 'onchange'=>'
-                $.get( "index.php?r=facturah/listprice&id="+$(this).val(), function( data ) {
-                  $( "#facturad-neto" ).val( data );
-                  $( "#facturad-total" ).val( data );
-                });
+                  $totalfh = $( "#facturah-total" ).val();
+                  $("#faccredito-saldo").val($totalfh);
+                  document.getElementById("credito").style.display = "block"; 
             ']); 
 
       ?>
+              <div id="credito" name="credito" style="display: none;">
+                <?= $form->field($modelcredito, 'abono')->textInput(['maxlength' => true, 
+                                                                         'value' =>0,
+                'onchange'=>'
+                  $totalfh = $( "#facturah-total" ).val();
+                  $vlrsaldo = $totalfh - parseInt ($(this).val());
+                  $( "#faccredito-saldo" ).val($vlrsaldo);
+                ']) ?>
+                <?= $form->field($modelcredito, 'saldo')->textInput(['readonly' => true]) ?>
+                
+              </div>
+           </td>
+       </tr>
+       </table>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar Venta' : 'Agregar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

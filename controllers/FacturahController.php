@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Facturah;
 use app\models\Facturad;
+use app\models\Faccredito;
 use app\models\Cliente;
 use app\models\Producto;
 use app\models\Empresa;
@@ -14,6 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 use yii\base\ErrorException;
+use yii\helpers\Url;
 
 
 /**
@@ -88,21 +90,26 @@ class FacturahController extends Controller
     {
        
         $model = new Facturah();
-        $model->idusu = Yii::$app->user->identity->idusu;
-        $model->idemp = $idemp;
+        $model->idusu   = Yii::$app->user->identity->idusu;
+        $model->idemp   = $idemp;
 
-        $emp        = Empresa::findOne(['idemp' => $model->idemp]);
+        $emp = Empresa::findOne(['idemp' => $model->idemp]);
 
         $model->refpago = substr($emp->nombre,0,2).time();
-        $model->fecmod = date('Y.m.d h:i:s');
-        $model->usumod = Yii::$app->user->identity->idusu;
+        $model->fecmod  = date('Y.m.d h:i:s');
+        $model->usumod  = Yii::$app->user->identity->idusu;
 
+        //Credito
+        $modelcredito = new Faccredito();
+       
+        //Factura detalle
         $modelfd = new Facturad();
     
         //Verifica la identidad del usuario quien registra Q solo pertenezca a esta empresa
         if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
-            $model->idemp = Yii::$app->user->identity->idemp;
-            $modeldf->idemp = Yii::$app->user->identity->idemp;
+            $model->idemp        = Yii::$app->user->identity->idemp;
+            $modeldf->idemp      = Yii::$app->user->identity->idemp;
+            $modelcredito->idemp = Yii::$app->user->identity->idemp;
         }
 
         $clientes   = ArrayHelper::map(Cliente::find()
@@ -115,35 +122,68 @@ class FacturahController extends Controller
         $model->vlrdes      = 0;
         $model->neto        = 0;
         $model->vlriva      = 0;
+        $model->total       = $model->total;
         $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
-        if ($model->load(Yii::$app->request->post()) && $modelfd->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && 
+            $modelfd->load(Yii::$app->request->post()) &&
+            $modelcredito->load(Yii::$app->request->post()) ) {
             
             if($model->save()){
                 $modelfd->idfh   = $model->idfh;
                 $modelfd->idemp  = $model->idemp;
                 $modelfd->idpro  = $modelfd->idpro;
 
+                $modelfd->vlr1   = $modelfd->vlr1;  //Vlr del producto 
                 $modelfd->qty    = $modelfd->qty;
-                $modelfd->neto   = $modelfd->neto;               
+                $modelfd->vlr2   = $modelfd->valor;   //vlr en el que se lo vendio realmente
+
+                $modelfd->valor  = $modelfd->valor;
+
+                $modelfd->descuento  = (Int)$modelfd->vlr1-(Int)$modelfd->vlr2;  
+
+                $modelfd->neto   = $modelfd->neto  ;               
                 $modelfd->total  = $modelfd->total;               
                 $modelfd->usumod = Yii::$app->user->identity->idusu;
                 try{
 
                    if($modelfd->save()){
-                        return $this->redirect(['update', 'id' => $model->idfh]);
+
+                        if($model->tipo == "Credito"){
+                            $modelcredito->idfh     = $model->idfh;
+                            $modelcredito->idemp    = $model->idemp;
+                            $modelcredito->totalfh  = $model->total;
+                            $modelcredito->abono    = $modelcredito->abono;
+                            $modelcredito->saldo    = (int)$model->total - $modelcredito->abono;
+                            $modelcredito->usumod = Yii::$app->user->identity->idusu;
+                            
+                            if($modelcredito->save()){
+                                 print_r($modelcredito->getErrors());
+                                return $this->redirect(['index', 'idemp' => $model->idemp]);
+                            }
+
+                        }else{
+                            //return $this->redirect(['update', 'id' => $model->idfh]);
+                        }
+
                    }
                         print_r($modelfd->getErrors());
+                        print_r($modelcredito->getErrors());
 
                 } catch (ErrorException $e) {
                     Yii::warning("Division by zero.".$e);
-                    echo "<meta http-equiv='refresh' content='1; ".Url::toRoute("index")."'>";
+                    echo $e;
+                    echo "<meta http-equiv='refresh' content='16; ".Url::toRoute(["update",
+                                                "id"=>$model->idemp])."'>";
+                     //   return $this->redirect(['update', 'id' => $model->idfh]);
+
                 }
             }
         } else {
             return $this->render('create', [
                 'model'     => $model,
                 'modelfd'   => $modelfd,
+                'modelcredito'   => $modelcredito,
                 'clientes'  => $clientes,
                 'emp'       => $emp,
                 'productos' => $productos,
@@ -162,9 +202,14 @@ class FacturahController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->total       = $model->total;
         $model->fecmod = date('Y.m.d h:i:s');
         $model->usumod = Yii::$app->user->identity->idusu;
      
+        //Credito
+        $modelcredito = new Faccredito();
+     
+        //Detalles factura         
         $modelfd    = new Facturad;
 
         //Para productos ya guardados
@@ -187,8 +232,15 @@ class FacturahController extends Controller
                 $modelfd->idemp  = $model->idemp;
                 $modelfd->idpro  = $modelfd->idpro;
 
+                $modelfd->vlr1   = $modelfd->vlr1;  //Vlr del producto 
                 $modelfd->qty    = $modelfd->qty;
-                $modelfd->neto   = $modelfd->neto;               
+                $modelfd->vlr2   = $modelfd->valor;   //vlr en el que se lo vendio realmente
+
+                $modelfd->valor  = $modelfd->valor;
+
+                $modelfd->descuento  = (Int)$modelfd->vlr1-(Int)$modelfd->vlr2;  
+
+                $modelfd->neto   = $modelfd->neto  ;               
                 $modelfd->total  = $modelfd->total;               
                 $modelfd->usumod = Yii::$app->user->identity->idusu;
                 
@@ -200,6 +252,7 @@ class FacturahController extends Controller
             return $this->render('update', [
                 'model'     => $model,
                 'modelfd'   => $modelfd,
+                'modelcredito' => $modelcredito,
                 'clientes'  => $clientes,
                 'emp'       => $emp,
                 'productos' => $productos,

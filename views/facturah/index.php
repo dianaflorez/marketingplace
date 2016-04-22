@@ -43,9 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Fecha</th>
         <th>Cliente</th>
         <th>Referencia</th>
-        <th>Tipo</th>
         <th>Estado</th>
         <th>TOTAL</th>
+        <th>Tipo</th>
+        <th>Deuda</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
@@ -53,9 +54,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->fecha ?></td>
         <td><?= $row->idcli ?></td>
         <td><?= $row->refpago ?></td>
-        <td><?= $row->tipo ?></td>
         <td><?= $row->estado ?></td>
         <td><?= $row->total ?></td>
+        <td><?= $row->tipo ?></td>
+        <td>cargar tabla de creditos</td>
         <td>
           
             <!-- Update -->
