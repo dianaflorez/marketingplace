@@ -122,6 +122,7 @@ use yii\helpers\Url;
                   $totalfh = $( "#facturah-total" ).val();
                   $vlrsaldo = $totalfh - parseInt ($(this).val());
                   $( "#faccredito-saldo" ).val($vlrsaldo);
+                  $( "#abono" ).val( $(this).val() );
                 ']) ?>
                 <?= $form->field($modelcredito, 'saldo')->textInput(['readonly' => true, 'value' => $totalant]) ?>
                 
@@ -137,18 +138,14 @@ use yii\helpers\Url;
        </tr>
        </table>
 
-    <?= Html::beginForm(Url::toRoute("facturah/updateend"), "POST") ?>
+                          <br />
+    <?php ActiveForm::end(); ?>
+ <?= Html::beginForm(Url::toRoute("facturah/updateend"), "POST") ?>
           <input type="hidden" name="idfh" value="<?= $model->idfh ?>">
           <input type="hidden" name="tipo" value="<?= $model->tipo ?>">
-          <input type="hidden" name="abono" value="<?= $modelcredito->abono ?>">
+          <input type="hidden" id="abono" name="abono" value="">
                                     
-          <button type="submit" class="btn btn-primary">Terminar</button>
+          <button type="submit" class="btn btn-primary">Terminar Venta</button>
     <?= Html::endForm() ?>
-                          <br />
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Guardar Venta' : 'Agregar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
+   
 </div>

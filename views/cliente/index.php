@@ -73,6 +73,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         "cliente"   => "Esporadico"]) 
                                                         ?>">Clientes Esporadicos</a>
 <?php } ?>
+<a class="btn btn-danger" href="<?= Url::toRoute(["cita/index", 
+                                                        "idemp" => $emp->idemp
+                                                        ]) 
+                                                        ?>">Agenda</a>
+
 <br />
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">

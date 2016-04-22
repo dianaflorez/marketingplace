@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
 use yii\filters\VerbFilter;
 use yii\base\ErrorException;
 use yii\helpers\Url;
+use yii\helpers\Html;  //encode
 
 
 /**
@@ -307,8 +308,10 @@ class FacturahController extends Controller
             $modelcredito->usumod = Yii::$app->user->identity->idusu;
      
             if($modelcredito->save()){
-                return $this->redirect(['index', 'idepm' => $model->idemp]);
-            }
+                return $this->redirect(['index', 'idemp' => $modelcredito->idemp]);
+            }else
+                        print_r($modelcredito->getErrors());
+
             
         }
     }
