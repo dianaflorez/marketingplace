@@ -206,8 +206,11 @@ class FacturahController extends Controller
         $model->usumod = Yii::$app->user->identity->idusu;
      
         //Credito
-        $modelcredito = new Faccredito();
-     
+        if($model->tipo == "Credito")
+            $modelcredito = Faccredito::findOne(['idfh' => $model->idfh]);
+        else 
+            $modelcredito = new Faccredito();
+
         //Detalles factura         
         $modelfd    = new Facturad;
 
@@ -224,7 +227,9 @@ class FacturahController extends Controller
         $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
 
-        if ($model->load(Yii::$app->request->post()) && $modelfd->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && 
+            $modelfd->load(Yii::$app->request->post()) &&
+            $modelcredito->load(Yii::$app->request->post())) {
             
             if($model->save()){
                 $modelfd->idfh   = $model->idfh;
@@ -244,8 +249,22 @@ class FacturahController extends Controller
                 $modelfd->usumod = Yii::$app->user->identity->idusu;
                 
                 if ( $modelfd->save(false)) 
-               
-                    return $this->redirect(['update', 'id' => $model->idfh]);
+            
+                    if($model->tipo == "Credito"){
+                        $modelcredito->idfh     = $model->idfh;
+                        $modelcredito->idemp    = $model->idemp;
+                        $modelcredito->totalfh  = $model->total;
+                        $modelcredito->abono    = $modelcredito->abono;
+                        $modelcredito->saldo    = (int)$model->total - $modelcredito->abono;
+                        $modelcredito->usumod = Yii::$app->user->identity->idusu;
+                        
+                        if($modelcredito->save()){
+                            return $this->redirect(['update', 'id' => $model->idfh]);
+                        }
+
+                    }else{
+                        return $this->redirect(['update', 'id' => $model->idfh]);
+                    }
             }
        } else {
             return $this->render('update', [
@@ -258,6 +277,39 @@ class FacturahController extends Controller
                 'tipo'      => $tipo,
                 'facturad'  => $facturad,  
             ]);
+        }
+    }
+
+   public function actionUpdateend()
+    {
+        //$msg  = "Exito!!!";  
+        if(Yii::$app->request->post())
+        {
+            $idfh   = Html::encode($_POST["idfh"]);
+            $tipo   = Html::encode($_POST["tipo"]);
+            $abono   = Html::encode($_POST["abono"]);
+
+            if($tipo == "Pagada") {
+                //Facturah
+                $modelfh = Facturah::findOne(['idfh' => $idfh]);
+                $modelfh->tipo     = "Pagada";
+                $modelfh->fecmod = date('Y.m.d h:i:s');
+                $modelfh->usumod = Yii::$app->user->identity->idusu;
+                $modelfh->save(); 
+
+                Faccredito::deleteAll("idfh=:idfh", [":idfh" => $idfh])   ;
+            }
+
+            //Credito
+            $modelcredito = Faccredito::findOne(['idfh' => $idfh]);
+            $modelcredito->abono  = $abono; 
+            $modelcredito->fecmod = date('Y.m.d h:i:s');
+            $modelcredito->usumod = Yii::$app->user->identity->idusu;
+     
+            if($modelcredito->save()){
+                return $this->redirect(['index', 'idepm' => $model->idemp]);
+            }
+            
         }
     }
 

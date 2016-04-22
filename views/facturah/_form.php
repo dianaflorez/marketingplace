@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Facturah */
@@ -112,8 +113,8 @@ use yii\widgets\ActiveForm;
                   $("#faccredito-saldo").val($totalfh);
                   document.getElementById("credito").style.display = "block"; 
             ']); 
+            ?>
 
-      ?>
               <div id="credito" name="credito" style="display: none;">
                 <?= $form->field($modelcredito, 'abono')->textInput(['maxlength' => true, 
                                                                          'value' =>0,
@@ -122,13 +123,28 @@ use yii\widgets\ActiveForm;
                   $vlrsaldo = $totalfh - parseInt ($(this).val());
                   $( "#faccredito-saldo" ).val($vlrsaldo);
                 ']) ?>
-                <?= $form->field($modelcredito, 'saldo')->textInput(['readonly' => true]) ?>
+                <?= $form->field($modelcredito, 'saldo')->textInput(['readonly' => true, 'value' => $totalant]) ?>
                 
               </div>
+
+              <?php if($model->tipo == "Credito"){ ?> 
+                <script type="text/javascript">
+                  document.getElementById("credito").style.display = "block"; 
+                </script>
+            <?php } ?>
+            
            </td>
        </tr>
        </table>
 
+    <?= Html::beginForm(Url::toRoute("facturah/updateend"), "POST") ?>
+          <input type="hidden" name="idfh" value="<?= $model->idfh ?>">
+          <input type="hidden" name="tipo" value="<?= $model->tipo ?>">
+          <input type="hidden" name="abono" value="<?= $modelcredito->abono ?>">
+                                    
+          <button type="submit" class="btn btn-primary">Terminar</button>
+    <?= Html::endForm() ?>
+                          <br />
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Guardar Venta' : 'Agregar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Cliente;
 use app\models\Usuario;
+use app\models\Dirtel;
 use app\models\Tipo;
 use app\models\Empresa;
 use yii\data\ActiveDataProvider;
@@ -39,20 +40,26 @@ class ClienteController extends Controller
      */
     public function actionIndex($idemp, $msg=null, $cliente='Institucional')
     {
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $idemp = Yii::$app->user->identity->idemp;
+ 
         $model = Cliente::find()
           //      ->joinWith(['accions'])
                 ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
           //      ->joinWith(['elementos'])
            //     ->where(['elemento.idemp' => $id])
                 ->all();
-         
+        
         $emp    = Empresa::findOne(['idemp' => $idemp]);
+        $dirtel = Dirtel::find()->where(['idemp'=> $idemp, 'tabla'=>'cliente'])->all();
 
           return $this->render('index', [
             'model'     => $model,
             'cliente'   => $cliente,
             'msg'       => $msg,
             'emp'       => $emp,
+            'dirtel'    => $dirtel,
         ]);
     }
 

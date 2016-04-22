@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\bootstrap\Alert;
 
 $this->title = $emp->nombre.' - '.$cliente;
 $this->params['breadcrumbs'][] = $this->title;
@@ -104,8 +105,129 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?= $row->identificacion ?></td>
             <td><?= $row->fecnac ?></td>
         <?php } ?>    
-        <td>Direccion</td>
-        <td>Telefono</td>
+        <td>
+            <div class="panel panel-default">
+                <div class="panel-body">
+             
+                <?php foreach($dirtel as $dir) :
+                    if($dir->idtipo == 11 && $dir->idtabla == $row->idcli){ ?>
+                        <!-- Update -->
+                        <a href="<?= Url::toRoute(["dirtel/update", 
+                                                    "id"    => $dir->iddirtel,
+                                                    "lbl"   => "Direccion",
+                                                    "cliente"=> $cliente,    
+                                                    ]) ?>" 
+                                    title="Editar" aria-label="Editar">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <!--End Update-->
+   <!--Delete-->
+             <a href="#" data-toggle="modal" data-target="#iddirtel_<?= $dir->iddirtel ?>" title="Eliminar" aria-label="Eliminar">
+                <span class="glyphicon glyphicon-trash"></span>
+             </a>
+                <div class="modal fade" role="dialog" aria-hidden="true" id="iddirtel_<?= $dir->iddirtel ?>">
+                      <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">Eliminar Accion</h4>
+                              </div>
+                              <div class="modal-body">
+                                    <p>¿Realmente deseas eliminar esta elemento: <?= $dir->dirtel ?>?</p>
+                              </div>
+                              <div class="modal-footer">
+                              <?= Html::beginForm(Url::toRoute("dirtel/delete"), "POST") ?>
+                                  <input type="hidden" name="iddirtel" value="<?= $dir->iddirtel ?>">
+                                  <input type="hidden" name="idemp" value="<?= $dir->idemp ?>">
+                                    
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary">Eliminar</button>
+                              <?= Html::endForm() ?>
+                              </div>
+                            </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->            
+            </a>
+            <!--End Delete-->
+ 
+                    <?php    echo $dir->dirtel."<br />";
+                    }
+                 endforeach ?>    
+             </div>
+            </div>
+           <a  href="<?= Url::toRoute(["dirtel/create", 
+                                "idemp"     => $row->idemp,
+                                "tabla"     => "cliente", 
+                                "idtabla"   => $row->idcli, 
+                                "idtipo"    => 11, //"Direccion ppal."
+                                "cliente"   => $cliente,
+                            ]) ?>">
+            Agregar Direccion
+           </a>
+        </td>
+        <td>
+              <div class="panel panel-default">
+                <div class="panel-body">
+             
+                <?php foreach($dirtel as $tel) :
+                    if($tel->idtipo == 13 && $tel->idtabla == $row->idcli){ ?>
+                        <!-- Update -->
+                        <a href="<?= Url::toRoute(["dirtel/update", 
+                                                    "id"    => $tel->iddirtel,
+                                                    "lbl"   => "Telefono",
+                                                    "cliente"=> $cliente,    
+                                                    ]) ?>" 
+                                    title="Editar" aria-label="Editar">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <!--End Update-->
+                        <!--Delete-->
+             <a href="#" data-toggle="modal" data-target="#iddirtel_<?= $dir->iddirtel ?>" title="Eliminar" aria-label="Eliminar">
+                <span class="glyphicon glyphicon-trash"></span>
+             </a>
+                <div class="modal fade" role="dialog" aria-hidden="true" id="iddirtel_<?= $dir->iddirtel ?>">
+                      <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">Eliminar Accion</h4>
+                              </div>
+                              <div class="modal-body">
+                                    <p>¿Realmente deseas eliminar esta elemento: <?= $dir->dirtel ?>?</p>
+                              </div>
+                              <div class="modal-footer">
+                              <?= Html::beginForm(Url::toRoute("dirtel/delete"), "POST") ?>
+                                  <input type="hidden" name="iddirtel" value="<?= $dir->iddirtel ?>">
+                                  <input type="hidden" name="idemp" value="<?= $dir->idemp ?>">
+                                    
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary">Eliminar</button>
+                              <?= Html::endForm() ?>
+                              </div>
+                            </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->            
+            </a>
+            <!--End Delete-->
+ 
+                        <?php    echo $tel->dirtel."<br />";
+                    }
+                 endforeach ?>    
+             </div>
+            </div>
+           <a  href="<?= Url::toRoute(["dirtel/create", 
+                                "idemp"     => $row->idemp,
+                                "tabla"     => "cliente", 
+                                "idtabla"   => $row->idcli, 
+                                "idtipo"    => 13, //"Telefono ppal."
+                                "cliente"   => $cliente,
+                            ]) ?>">
+            Agregar Telefono
+           </a>
+ 
+        </td>
         <td><?= $row->email ?></td>
         <?php if($cliente == "Institucional") {?>
             <td>Sitio Web</td>
