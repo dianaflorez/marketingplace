@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cita;
+use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,14 +34,19 @@ class CitaController extends Controller
      * Lists all Cita models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($idemp, $msg=null)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Cita::find(),
-        ]);
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $idemp = Yii::$app->user->identity->idemp;
+ 
+        $model  = Cita::find()->where(['idemp' => $idemp])->all();
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'model' => $model,
+            'emp'   => $emp,
+            'msg'   => $msg,
         ]);
     }
 
@@ -61,9 +67,18 @@ class CitaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idemp)
     {
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $idemp = Yii::$app->user->identity->idemp;
+ 
         $model = new Cita();
+        $model->idemp = $idemp;
+        $model->idusu  = Yii::$app->user->identity->idusu;
+
+        $model->usumod  = Yii::$app->user->identity->idusu;
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcita]);

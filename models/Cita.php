@@ -60,16 +60,16 @@ class Cita extends \yii\db\ActiveRecord
     {
         return [
             'idcita' => 'Idcita',
-            'idemp' => 'Idemp',
-            'idusu' => 'Idusu',
-            'idcli' => 'Idcli',
+            'idemp' => 'Empresa',
+            'idusu' => 'Usuario',
+            'idcli' => 'Cliente',
             'fecha' => 'Fecha',
             'hora' => 'Hora',
             'estado' => 'Estado',
             'observacion' => 'Observacion',
-            'feccre' => 'Feccre',
-            'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'feccre' => 'Creacion',
+            'fecmod' => 'Modificacion',
+            'usumod' => 'Quien modifico',
         ];
     }
 
