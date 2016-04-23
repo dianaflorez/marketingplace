@@ -7,6 +7,7 @@ use app\models\Cita;
 use app\models\Empresa;
 use app\models\Usuario;
 use app\models\Cliente;
+use app\models\Citapedido;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -50,10 +51,13 @@ class CitaController extends Controller
 
         $emp    = Empresa::findOne(['idemp' => $idemp]);
 
+        $pedidos = Citapedido::find()->where(['idemp' => $idemp])->all();
+
         return $this->render('index', [
             'model' => $model,
             'emp'   => $emp,
             'msg'   => $msg,
+            'pedidos'=> $pedidos,
         ]);
     }
 

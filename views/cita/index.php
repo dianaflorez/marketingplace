@@ -49,7 +49,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->estado ?></td>
         <td><?= $row->observacion ?></td>
         <td>
+            <div class="panel panel-default">
+                <div class="panel-body">
             
+                <?php
+                foreach($pedidos as $cp):
+                    if($cp->idcita == $row->idcita)
+                        echo $cp->pedido."<br />";
+                endforeach ?>
+                </div>
+            </div>
              <a  href="<?= Url::toRoute(["citapedido/create", 
                                     "idemp"  => $row->idemp, 
                                     "idcita" => $row->idcita,

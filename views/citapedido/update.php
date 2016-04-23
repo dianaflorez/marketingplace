@@ -8,7 +8,7 @@ use yii\helpers\Html;
 $this->title = 'Update Citapedido: ' . $model->idcita;
 $this->params['breadcrumbs'][] = ['label' => 'Citapedidos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->idcita, 'url' => ['view', 'id' => $model->idcita]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="citapedido-update">
 
@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'emp'	=> $emp,
+
     ]) ?>
 
 </div>

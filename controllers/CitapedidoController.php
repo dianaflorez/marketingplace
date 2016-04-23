@@ -64,22 +64,23 @@ class CitapedidoController extends Controller
      */
     public function actionCreate($idemp, $idcita)
     {
-         //Si un usuario q no es adm Solo puede crear de su propia emp 
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
         if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
             $idemp = Yii::$app->user->identity->idemp;
 
         $emp    = Empresa::findOne(['idemp' => $idemp]);
- 
+        
         $model = new Citapedido();
         $model->idemp = $idemp;
         $model->idcita = $idcita;
         $model->usumod  = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idcita]);
+            return $this->redirect(['cita/index', 'idemp' => $emp->idemp]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'emp'   => $emp,
             ]);
         }
     }

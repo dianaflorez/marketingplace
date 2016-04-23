@@ -11,6 +11,7 @@ use Yii;
  * @property integer $idemp
  * @property integer $idcita
  * @property string $pedido
+ * @property integer $cant
  * @property string $feccre
  * @property string $fecmod
  * @property integer $usumod
@@ -35,7 +36,7 @@ class Citapedido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idemp', 'idcita', 'usumod'], 'integer'],
+            [['idemp', 'idcita', 'cant', 'usumod'], 'integer'],
             [['idcita', 'pedido'], 'required'],
             [['pedido'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
@@ -55,6 +56,7 @@ class Citapedido extends \yii\db\ActiveRecord
             'idemp' => 'Idemp',
             'idcita' => 'Idcita',
             'pedido' => 'Pedido',
+            'cant' => 'Cant',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',

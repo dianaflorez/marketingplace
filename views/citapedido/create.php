@@ -1,14 +1,19 @@
 <?php
 
 use yii\helpers\Html;
-
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Citapedido */
-
-$this->title = 'Create Citapedido';
-$this->params['breadcrumbs'][] = ['label' => 'Citapedidos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["cita/index",  
+                                "idemp"  => $emp->idemp
+                                ]) ?>">
+	<?php echo $emp->nombre." - Nuevo Pedido "; ?>
+</a>
+</h2>	
+<?php
+$this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['cita/index', 
+																'idemp' => $emp->idemp]];
+$this->params['breadcrumbs'][] = "Pedido";
 ?>
 <div class="citapedido-create">
 
@@ -16,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'emp'	=> $emp,
     ]) ?>
 
 </div>

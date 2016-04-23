@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'idemp',
             'idcita',
             'pedido:ntext',
-            'feccre',
+            'cant',
+            // 'feccre',
             // 'fecmod',
             // 'usumod',
 
