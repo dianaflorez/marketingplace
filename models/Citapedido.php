@@ -37,7 +37,7 @@ class Citapedido extends \yii\db\ActiveRecord
     {
         return [
             [['idemp', 'idcita', 'cant', 'usumod'], 'integer'],
-            [['idcita', 'pedido'], 'required'],
+            [['pedido'], 'required'],
             [['pedido'], 'string'],
             [['feccre', 'fecmod'], 'safe'],
             [['idcita'], 'exist', 'skipOnError' => true, 'targetClass' => Cita::className(), 'targetAttribute' => ['idcita' => 'idcita']],
