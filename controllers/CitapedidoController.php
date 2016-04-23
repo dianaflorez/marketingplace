@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Citapedido;
+use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,9 +62,18 @@ class CitapedidoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idemp, $idcita)
     {
+         //Si un usuario q no es adm Solo puede crear de su propia emp 
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $idemp = Yii::$app->user->identity->idemp;
+
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+ 
         $model = new Citapedido();
+        $model->idemp = $idemp;
+        $model->idcita = $idcita;
+        $model->usumod  = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcita]);

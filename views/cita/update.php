@@ -1,21 +1,28 @@
 <?php
 
 use yii\helpers\Html;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Cita */
-
-$this->title = 'Update Cita: ' . $model->idcita;
-$this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idcita, 'url' => ['view', 'id' => $model->idcita]];
-$this->params['breadcrumbs'][] = 'Update';
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["cita/index",  "idemp" => $model->idemp]) ?>">
+	<?php echo $emp->nombre." - Editar Cita "; ?>
+</a>
+</h2>	       	
+<?php
+//$this->title = 'Update Cita: ' . $model->idcita;
+$this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['index','idemp' => $emp->idemp]];
+$this->params['breadcrumbs'][] = ['label' => 'Vista', 'url' => ['view', 'id' => $model->idcita]];
+$this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="cita-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' 	=> $model,
+        'clientes'	=> $clientes,
+        'estado'	=> $estado,
+        'emp'		=> $emp,
     ]) ?>
 
 </div>

@@ -2,20 +2,23 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Cita */
-
-$this->title = $model->idcita;
-$this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['index']];
+use yii\helpers\Url;
+?>
+<h2>
+<a href="<?= Url::toRoute(["cita/index",  "idemp" => $model->idemp]) ?>">
+    <?php echo $emp->nombre." - Vista Cita"; ?>
+</a>
+</h2>           
+<?php
+$this->title = "Cita";
+$this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['index','idemp' => $emp->idemp]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cita-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idcita], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Editar', ['update', 'id' => $model->idcita, 'idemp' => $emp->idemp], ['class' => 'btn btn-primary']) ?>
+      <?php /*?>
         <?= Html::a('Delete', ['delete', 'id' => $model->idcita], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -23,22 +26,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        */ ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idcita',
-            'idemp',
-            'idusu',
-            'idcli',
+           // 'idcita',
+            array('label'=>'Cliente',
+             'type'=>'raw',
+             'value'=>$nomcli 
+            ),
             'fecha',
             'hora',
             'estado',
             'observacion:ntext',
             'feccre',
             'fecmod',
-            'usumod',
+            array('label'=>'Quien Modifico',
+             'type'=>'raw',
+             'value'=>$usumod 
+            ),
         ],
     ]) ?>
 

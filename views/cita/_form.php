@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
-
+use kartik\time\TimePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Cita */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,9 +13,8 @@ use kartik\date\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php echo $form->field($model, 'idcli')->dropDownList($clientes); ?>
   
-    <?= $form->field($model, 'idcli')->textInput() ?>
-
     <?php
     echo $form->field($model, 'fecha')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Ingrese Fecha de Inicio ...'],
@@ -26,19 +25,15 @@ use kartik\date\DatePicker;
     ]);
     ?>
 
-    <?= $form->field($model, 'hora')->textInput() ?>
+<?php echo $form->field($model, 'hora')->widget(TimePicker::classname(), [
 
-    <?php
-    echo $form->field($model, 'hora')->widget(DatePicker::classname(), [
-        'options' => ['placeholder' => 'Ingrese hora ...'],
-    
+    'name' => 'start_time', 
+        'value' => '08:24 AM',
         'pluginOptions' => [
-            'autoclose'=>true,
-            'format' => 'hh:mm:ss a'
-        ]
-    ]);
-    ?>
+            'showSeconds' => true
 
+        ]
+]); ?>
 
 
 <?php /*
@@ -54,18 +49,13 @@ echo DateTimePicker::widget([
     ]
 ]);*/
 ?>
-    <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
-
+    <?php echo $form->field($model, 'estado')->dropDownList($estado); ?>
+   
     <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'feccre')->textInput() ?>
-
-    <?= $form->field($model, 'fecmod')->textInput() ?>
-
-    <?= $form->field($model, 'usumod')->textInput() ?>
-
+  
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Nueva' : 'Editar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

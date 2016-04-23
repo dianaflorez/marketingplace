@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <h2>
 <a href="<?= Url::toRoute(["cliente/index",  "idemp" => $emp->idemp]) ?>">
-    <?php echo $emp->nombre." - Nueva cita"; ?>
+    <?php echo $emp->nombre." - Clientes"; ?>
 </a>
 </h2>   
 
@@ -32,21 +32,41 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
   <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
-        <th>Nombre</th>
-        <th>Inicia</th>
-        <th>Fin</th>
-        <th>Responsable</th>
-        <th>Elemento</th>
-        <th>Costo</th>
+        <th>Cliente</th>
+        <th>Fecha</th>
+        <th>Hora</th>
         <th>Estado</th>
+        <th>Observacion</th>
+        <th>Pedido</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
 
     <?php foreach($model as $row): ?>
     <tr>
-        <td colspan="7">
-            <b><?= $row->idcli ?></b>
+        <td><?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?></td>
+        <td><?= $row->fecha ?></td>
+        <td><?= $row->hora ?></td>
+        <td><?= $row->estado ?></td>
+        <td><?= $row->observacion ?></td>
         <td>
+            
+             <a  href="<?= Url::toRoute(["citapedido/create", 
+                                    "idemp"  => $row->idemp, 
+                                    "idcita" => $row->idcita,
+                                ]) ?>">
+            Agregar Pedido</a>           
+
+        </td>
+        <td>
+              <!-- Update -->
+            <a href="<?= Url::toRoute(["cita/update", "id" => $row->idcita, "idemp" =>$row->idemp]) ?>" 
+                        title="Actualizar" aria-label="Actualizar">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <!--End Update-->
+          
+
+        </td>
     </tr>        
     <?php endforeach?>
     </table>    

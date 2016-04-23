@@ -5,10 +5,13 @@ namespace app\controllers;
 use Yii;
 use app\models\Cita;
 use app\models\Empresa;
+use app\models\Usuario;
+use app\models\Cliente;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * CitaController implements the CRUD actions for Cita model.
@@ -40,7 +43,11 @@ class CitaController extends Controller
         if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
             $idemp = Yii::$app->user->identity->idemp;
  
-        $model  = Cita::find()->where(['idemp' => $idemp])->all();
+        $model  = Cita::find()
+                    ->joinWith(['idcli0'])
+                    ->where(['cita.idemp' => $idemp])
+                    ->all();
+
         $emp    = Empresa::findOne(['idemp' => $idemp]);
 
         return $this->render('index', [
@@ -57,8 +64,20 @@ class CitaController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $emp   = Empresa::findOne(['idemp' => $model->idemp]);
+       
+        $usumod = Usuario::findOne(['idusu' => $model->usumod]);
+        $usumod = ucwords($usumod->nombre1.' '.$usumod->apellido1);    
+
+        $nomcli = Cliente::findOne(['idcli' => $model->idcli]);
+        $nomcli = ucwords($nomcli->nombre1.' '.$nomcli->apellido1);    
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'emp'   => $emp,
+            'usumod'=> $usumod,
+            'nomcli'=> $nomcli,
         ]);
     }
 
@@ -72,19 +91,27 @@ class CitaController extends Controller
         //Si un usuario q no es adm Solo puede crear de su propia emp 
         if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
             $idemp = Yii::$app->user->identity->idemp;
+
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
  
         $model = new Cita();
         $model->idemp = $idemp;
         $model->idusu  = Yii::$app->user->identity->idusu;
-
         $model->usumod  = Yii::$app->user->identity->idusu;
 
-
+        $estado = ['Pendiente'=>'Pendiente', 'Cumplido'=>'Cumplido', 'Aplazado' => 'Aplazado'];  
+        
+        $clientes   = ArrayHelper::map(Cliente::find()
+                        ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
+     
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcita]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'emp'   => $emp,
+                'estado'=> $estado,
+                'clientes' => $clientes,
             ]);
         }
     }
@@ -95,15 +122,32 @@ class CitaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $idemp)
     {
+               //Si un usuario q no es adm Solo puede crear de su propia emp 
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
+            $idemp = Yii::$app->user->identity->idemp;
+ 
         $model = $this->findModel($id);
+        $model->fecmod = date('Y.m.d h:i:s');
+        $model->idusu  = Yii::$app->user->identity->idusu;
+
+        $emp   = Empresa::findOne(['idemp' => $idemp]);
+
+        $estado = ['Pendiente'=>'Pendiente', 'Cumplido'=>'Cumplido', 'Aplazado' => 'Aplazado'];  
+
+        $clientes   = ArrayHelper::map(Cliente::find()
+                        ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
+     
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcita]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model'     => $model,
+                'clientes'  => $clientes,
+                'estado'    => $estado,
+                'emp'       => $emp,
             ]);
         }
     }
