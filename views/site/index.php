@@ -2,52 +2,74 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'MarketingPlace';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+    <img class="logo" src="images/logo.png">
+   
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-5  col-sm-7  col-md-offset-1 col-md-5 col-md-offset-1 ">
+            <p class="lead">Creemos que con una gestion optima del mercadeo y de tus clientes, tu empresa será mejor <b>¡Acepta el reto!<b></p>
+        </div>
+    
+        <div class="col-xs-offset-1 col-xs-4  col-sm-3  col-md-3">
+            <a class="btn btn-block btn-info" href="index.php?r=site%2Flogin">
+                Ingresar</a>
+            <br />
+            <a class="btn btn-block btn-info" href="index.php?r=site%2Fabout">
+                Conócenos</a>
+        </div>
     </div>
-
+<br />
     <div class="body-content">
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
+        <div class="row" >
+            <div class="well col-xs-offset-1 col-xs-10 col-xs-offset-1 
+                            col-sm-offset-1 col-sm-10 col-md-offset-1">
+                <h4><b>6</b> Modulos para mejorar la Planeación, gestión y control de tu mercado y clientes</h4>
+                
+                <div class="col-xs-3 col-sm-2">
+                
+                    <a href="">
+                       <img class="iconos" src="images/suitcase.png">     
+                        Información Empresa
+                    </a>
+                    
+                </div>
+                <div class="col-xs-3 col-sm-2">
+                    <a href="">
+                       <img class="iconos" src="images/location.png"> <br />    
+                        Plan de Mercadeo
+                    </a>
+                    
+                </div>
+                <div class="col-xs-3 col-sm-2">
+                        <a  href="">
+                       <img class="iconos" src="images/calendar.png"> <br />    
+   
+                        Plan de Accion</a>
+                
+                </div>
+                <div class="col-xs-3 col-sm-2">
+                    <a  href="">
+                        <img class="iconos" src="images/people.png"> <br />    
+                        Gestion de Clientes
+                    </a>
+                </div>
+                <div class="col-xs-3 col-sm-2">
+                    <a  href="">
+                        <img class="iconos" src="images/coins.png"> <br />    
+                        Ventas
+                    </a>
+                </div>
+                <div class="col-xs-3 col-sm-2">
+                    <a  href="">
+                        <img class="iconos" src="images/arrow.png"> <br />    
+                        Evaluación
+                    </a>
+                </div>
+             </div>
+       
     </div>
 </div>

@@ -89,6 +89,18 @@ $this->params['breadcrumbs'][] = $this->title;
               / Ventas
             </a>
             <!--End -->
+
+             <!-- Agenda -->
+            <a href="<?= Url::toRoute(["cita/index", "idemp" => $row->idemp]) ?>" title="Agenda" aria-label="Agenda">
+              / Agenda
+            </a>
+            <!--End -->
+
+            <!-- Analisis -->
+            <a href="<?= Url::toRoute(["analisis/index", "idemp" => $row->idemp]) ?>" title="Analisis" aria-label="Analisis">
+              / Analisis
+            </a>
+            <!--End -->
         </td>
         <td>
         
