@@ -9,10 +9,13 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
+use app\models\Empresa;
+use app\models\Empresainf;
 
 
 class SiteController extends Controller
 {
+    public $layout='/sinmenu';
     public function behaviors()
     {
       return [
@@ -103,15 +106,28 @@ class SiteController extends Controller
     }
 
     public function actionSuperadmin(){
+        $this->layout='main';
         return $this->render('superadmin');
     }
 
     public function actionSupermegaadmin(){
+        $this->layout='main';
         return $this->render('superMegaAdmin');
     }
 
-    public function actionAdminEmp(){
-        return $this->render('adminemp');
+    public function actionAdminemp(){
+        $this->layout='menuizq';
+          $id = Yii::$app->user->identity->idemp;
+
+        $modelemp = Empresa::findOne($id);
+        $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
+      
+        return $this->render('adminEmp', [
+            'model'     => $model,
+            'idemp'     => $id,
+            'modelemp'  => $modelemp,
+        ]);
+
     }
 
     public function actionComercial(){
@@ -136,6 +152,14 @@ class SiteController extends Controller
             {
                 return $this->redirect(["site/superadmin"]);
             }
+            elseif (User::isAdminEmp(Yii::$app->user->identity->id))
+            {
+                return $this->redirect(["site/adminemp"]);
+            }
+            elseif (User::isComercial(Yii::$app->user->identity->id))
+            {
+                return $this->redirect(["site/comercial"]);
+            }
             else 
             {
                 return $this->redirect(["site/index"]);
@@ -153,7 +177,15 @@ class SiteController extends Controller
             {
                 return $this->redirect(["site/superadmin"]);
             }
-            else
+            elseif (User::isAdminEmp(Yii::$app->user->identity->id))
+            {
+                return $this->redirect(["site/adminemp"]);
+            }
+            elseif (User::isComercial(Yii::$app->user->identity->id))
+            {
+                return $this->redirect(["site/comercial"]);
+            }
+           else
             {
                 return $this->redirect(["site/index"]);
             }

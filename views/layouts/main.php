@@ -29,10 +29,28 @@ AppAsset::register($this);
 
 <?php
 
-    $validarusuario = false;
+    $validarusuario  = false;
+    $validaremp      = false;
+    $validartipo     = false;
+    $superMegaAdmin  = false;
+    $superadmin      = false;
+
     if(!Yii::$app->user->isGuest){
-        $validarusuario = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 
+        $superMegaAdmin = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 
+  
+        $superadmin     = Yii::$app->user->identity->isSuperAdmin(Yii::$app->user->identity->idusu);
+
+        if($superMegaAdmin){
+            $validaremp     = true;
+            $validarusuario = true;
+            $validartipo    = true;
+        } elseif($superadmin){
+            $validaremp     = true;
+            $validarusuario = true;
+            
+        }
     }
+
 ?>
 
 <div class="wrap">
@@ -49,18 +67,13 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+           // ['label' => 'Contact', 'url' => ['/site/contact']],
 
 //DF      
             [
-            'label' => 'Plan Marketing',
-            'url' => ['planmarketing/index'],
-            'visible' => $validarusuario
-            ],                 
-            [
             'label' => 'Empresas',
             'url' => ['empresa/index', 'msg' => ''],
-            'visible' => $validarusuario
+            'visible' => $validaremp
             ],
              [
             'label' => 'Usuarios',
@@ -70,7 +83,7 @@ AppAsset::register($this);
             [
             'label' => 'Tipos',
             'url' => ['tipo/index'],
-            'visible' => $validarusuario
+            'visible' => $validartipo
             ],
          
 
@@ -104,9 +117,11 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Ideartics <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">
+            &copy;wwww.growthmipymes.com <?= date('Y') ?>
+        </p>
+        <p class="pull-right"> Desarrollado por <a href="http://www.ideartics.com" target="_blank"> IdearTics </a></p>
+       
     </div>
 </footer>
 

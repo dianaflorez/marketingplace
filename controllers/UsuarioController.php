@@ -151,11 +151,12 @@ class UsuarioController extends Controller
     public function actionCreate()
     {
         $model = new Usuario();
+        $model->activate = 1;
 
         $msg = "";
 
         $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
-        $emp  = ArrayHelper::map(Empresa::find()->all(), 'idemp', 'nombre');
+        $emp  = ArrayHelper::map(Empresa::find()->andWhere('idemp>0')->all(), 'idemp', 'nombre');
         $role = ['1'=>'Comercial', '2'=>'Administrador Empresa', '4'=>'Super Administrador'];  
 
         if ($model->load(Yii::$app->request->post()) && Yii::$app->request->isAjax) {

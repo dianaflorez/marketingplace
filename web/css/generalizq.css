@@ -1,0 +1,87 @@
+body{
+	
+}
+
+.navbar-inverse {
+    background-color: #fafafa;
+    border-color: #ccc;
+}
+
+
+.wellr {
+   	left: 0; 
+   	bottom: 0;
+   	color: #ccc;
+   	height: auto;
+  	background-color: #073A59;
+  	border-color: #ddd;
+  	float: left;
+	height: auto!important;
+	min-height: 700px;
+
+}
+
+.wrap > .container {
+	padding-top: 50px;
+	padding-bottom: 0;
+}
+.container{
+	margin-left: 0; 
+}
+
+.iconos{
+	width: 100%;
+}
+.wellr a{
+	margin: 2%;
+	padding: 2%;
+}
+.btnm:hover { 
+    background-color: #366774;
+}
+
+.menulbl{
+	padding-top: 20px;
+	color: #fff;
+	font-size: 1.2em;
+	letter-spacing: 0.1em;
+	line-height: 1;
+}
+
+.logo{
+	margin: 1%;
+}
+
+.about{
+	margin: 2%;
+}
+.table th{
+	color: #337ab7;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #eeeeea;
+}
+
+.fixcolumoperation{
+	width: 100px;
+	margin: 0 auto;
+}
+
+
+@media screen and (max-width: 767px) { 
+	.wellr{
+		text-align: center;
+		min-height: 50px;
+	}
+	.btnm{
+		text-align: center;
+	}
+	.menulbl{
+		color: #fff;
+		font-size: 0em;
+		letter-spacing: 0.1em;
+		line-height: 1;
+		text-align: center;
+	}
+ }

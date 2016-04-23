@@ -6,8 +6,6 @@ $this->title = 'MarketingPlace';
 ?>
 <div class="site-index">
 
-    <img class="logo" src="images/logo.png">
-   
     <div class="row">
         <div class="col-xs-offset-1 col-xs-5  col-sm-7  col-md-offset-1 col-md-5 col-md-offset-1 ">
             <p class="lead">Creemos que con una gestion optima del mercadeo y de tus clientes, tu empresa será mejor <b>¡Acepta el reto!<b></p>

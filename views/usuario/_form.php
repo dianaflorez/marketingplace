@@ -21,7 +21,7 @@ use yii\bootstrap\ActiveForm;
     }
 ?>
 
-<div class="usuario-form col-md-4">
+<div class="usuario-form col-md-7">
 
     <?php $form = ActiveForm::begin([
             'method' => 'post',
@@ -34,12 +34,8 @@ use yii\bootstrap\ActiveForm;
  
     <?= $form->field($model, 'nombre1')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nombre2')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'apellido1')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'apellido2')->textInput(['maxlength' => true]) ?>
-
+    
     <?php echo $form->field($model, 'idtide')->dropDownList($tipo); ?>
 
     <?= $form->field($model, 'identificacion')->textInput(['maxlength' => true]) ?>
