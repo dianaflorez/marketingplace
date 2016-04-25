@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach($model as $row): ?>
     <tr>
         <td><?= $row->fecha ?></td>
-        <td><?= $row->idcli ?></td>
+        <td><?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?></td>
         <td><?= $row->refpago ?></td>
         <td><?= $row->estado ?></td>
         <td><?= $row->total ?></td>

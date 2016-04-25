@@ -34,11 +34,19 @@ AppAsset::register($this);
     $validartipo     = false;
     $superMegaAdmin  = false;
     $superadmin      = false;
+    $adminemp        = false;   
+    $comercio        = false;   
+    $ae_inicio       = false;   
 
     if(!Yii::$app->user->isGuest){
         $superMegaAdmin = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 
   
         $superadmin     = Yii::$app->user->identity->isSuperAdmin(Yii::$app->user->identity->idusu);
+
+        $adminemp     = Yii::$app->user->identity->isAdminEmp(Yii::$app->user->identity->idusu);
+
+        $comercial    = Yii::$app->user->identity->isComercial(Yii::$app->user->identity->idusu);
+
 
         if($superMegaAdmin){
             $validaremp     = true;
@@ -48,6 +56,10 @@ AppAsset::register($this);
             $validaremp     = true;
             $validarusuario = true;
             
+        }elseif ($adminemp) {
+            $ae_inicio = true;
+        }elseif ($comercial){
+            $com_inicio = true;
         }
     }
 
@@ -56,7 +68,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'MarketingPlace',
+        'brandLabel' => Html::img('@web/images/logopeq2.png', ['alt'=>Yii::$app->name]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -65,9 +77,21 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
+              ['label' => 'Home', 'url' => ['/site/index'],'visible' => $validartipo],
+              ['label' => 'About', 'url' => ['/site/about'],'visible' => $validartipo],
            // ['label' => 'Contact', 'url' => ['/site/contact']],
+
+            [
+            'label' => 'Inicio',
+            'url' => ['site/adminemp'],
+            'visible' => $ae_inicio
+            ],
+
+            [
+            'label' => 'Inicio',
+            'url' => ['site/comercial'],
+            'visible' => $com_inicio
+            ],
 
 //DF      
             [

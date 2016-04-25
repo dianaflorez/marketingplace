@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $title;
     <tr>
         <td colspan="7">
                 <b><?= $pa->nombre ?></b>
-        <td>
+        </td>
     </tr>        
   
         <?php foreach($model as $acc): ?>

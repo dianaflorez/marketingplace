@@ -11,8 +11,8 @@ use yii\helpers\Url;
 </a>
 </h2>	       	
 <?php
-$this->params['breadcrumbs'][] = ['label' => 'Pmcontenidos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->titulo, 'url' => ['view', 'id' => $model->idpmc]];
+//$this->params['breadcrumbs'][] = ['label' => 'Pmcontenidos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->titulo, 'url' => ['view', 'id' => $model->idpmc, "activo" => $tab]];
 $this->params['breadcrumbs'][] = 'Editar';
 ?>
 <div class="pmcontenido-update">

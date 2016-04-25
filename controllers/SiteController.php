@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
+use app\models\Usuario;
 use app\models\Empresa;
 use app\models\Empresainf;
 
@@ -117,7 +118,7 @@ class SiteController extends Controller
 
     public function actionAdminemp(){
         $this->layout='menuizq';
-          $id = Yii::$app->user->identity->idemp;
+        $id = Yii::$app->user->identity->idemp;
 
         $modelemp = Empresa::findOne($id);
         $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
@@ -131,7 +132,69 @@ class SiteController extends Controller
     }
 
     public function actionComercial(){
-        return $this->render('comercial');
+        $this->layout='menuizq';
+        $id = Yii::$app->user->identity->idemp;
+
+        $modelemp = Empresa::findOne($id);
+        $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
+      
+        return $this->render('comercial', [
+            'model'     => $model,
+            'idemp'     => $id,
+            'modelemp'  => $modelemp,
+        ]);
+    }
+
+    public function actionDatos($msg = null){
+        $this->layout='menuizq';
+
+        $model = Usuario::findOne(Yii::$app->user->identity->idusu);
+        $model->clave        = ""; 
+        $model->clave_repeat = "";
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            if($model->clave == $model->clave_repeat ){
+                
+                if(!$model->clave_anterior){
+                    return $this->redirect(['datos', 
+                    'msg' => "No puede estar vacia la clave anterior"]);
+                }else{    
+                    $claveant = crypt($model->clave_anterior, Yii::$app->params["salt"]);
+
+                    $verificar = Usuario::find()
+                            ->where([
+                            'idusu' =>Yii::$app->user->identity->idusu,
+                            'clave' =>$claveant])
+                            ->count();
+                    
+                    if($verificar){
+                        $tabla = Usuario::findOne(Yii::$app->user->identity->idusu);
+                        $tabla->clave = crypt($model->clave, Yii::$app->params["salt"]);
+                        
+                        if($tabla->save()){
+                           return $this->redirect(['datos', 'msg' => "Datos actualizados exitosamente."]);
+                        }else{
+                            print_r($model->getErrors());
+
+                        }
+                    }else{
+                    return $this->redirect(['datos', 
+                        'msg' => "La clave anterior no es correcta"]);
+                    }
+                }
+            }else{
+                return $this->redirect(['datos', 
+                    'msg' => "Las claves deben ser iguales"]);
+
+            }    
+        } else {
+            return $this->render('datos', [
+                                        'model' => $model,
+                                        "msg"   => $msg,
+                                    
+                                ]);
+        }
     }
 
     public function actionIndex()

@@ -10,6 +10,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
+use yii\filters\AccessControl;
+use app\models\User;
 
 /**
  * DirtelController implements the CRUD actions for Dirtel model.

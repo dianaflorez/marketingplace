@@ -17,6 +17,8 @@ use yii\filters\VerbFilter;
 use yii\base\ErrorException;
 use yii\helpers\Url;
 use yii\helpers\Html;  //encode
+use yii\filters\AccessControl;
+use app\models\User;
 
 
 /**
@@ -29,15 +31,80 @@ class FacturahController extends Controller
      */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+      return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['index', 'create', 'update','view'],
+            'rules' => [
+                [
+                    //El administrador tiene permisos sobre las siguientes acciones
+                    'actions' => ['index',  'create', 'update','view'],
+                    //Esta propiedad establece que tiene permisos
+                    'allow' => true,
+                    //Usuarios autenticados, el signo ? es para invitados
+                    'roles' => ['@'],
+                    //Este método nos permite crear un filtro sobre la identidad del usuario
+                    //y así establecer si tiene permisos o no
+                    'matchCallback' => function ($rule, $action) {
+                        //Llamada al método que comprueba si es un administrador
+                        return User::isSuperMegaAdmin(Yii::$app->user->identity->id);
+                    },
                 ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isSuperAdmin(Yii::$app->user->identity->id);
+                  },
+               ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isAdminEmp(Yii::$app->user->identity->id);
+                  },
+               ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isComercial(Yii::$app->user->identity->id);
+                  },
+               ],
             ],
-        ];
+        ],
+         //Controla el modo en que se accede a las acciones, en este ejemplo a la acción logout
+         //sólo se puede acceder a través del método post
+        'verbs' => [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'logout' => ['post'],
+            ],
+        ],
+      ];
     }
+
 
     /**
      * Lists all Facturah models.
@@ -124,11 +191,13 @@ class FacturahController extends Controller
         $model->neto        = 0;
         $model->vlriva      = 0;
         $model->total       = $model->total;
-        $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
+        $tipo = ['En Proceso','Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
         if ($model->load(Yii::$app->request->post()) && 
-            $modelfd->load(Yii::$app->request->post()) &&
-            $modelcredito->load(Yii::$app->request->post()) ) {
+            $modelfd->load(Yii::$app->request->post()) 
+
+            &&  $modelcredito->load(Yii::$app->request->post()) 
+            ) {
             
             if($model->save()){
                 $modelfd->idfh   = $model->idfh;
@@ -150,7 +219,7 @@ class FacturahController extends Controller
 
                    if($modelfd->save()){
 
-                        if($model->tipo == "Credito"){
+                     /*   if($model->tipo == "Credito"){
                             $modelcredito->idfh     = $model->idfh;
                             $modelcredito->idemp    = $model->idemp;
                             $modelcredito->totalfh  = $model->total;
@@ -166,9 +235,13 @@ class FacturahController extends Controller
                             return $this->redirect(['update', 'id' => $model->idfh]);
                         }
 
+                        */    
+                        return $this->redirect(['update', 'id' => $model->idfh]);
+
+
                    }
                         print_r($modelfd->getErrors());
-                        print_r($modelcredito->getErrors());
+                      //  print_r($modelcredito->getErrors());
 
                 } catch (ErrorException $e) {
                     Yii::warning("Division by zero.".$e);
@@ -225,12 +298,14 @@ class FacturahController extends Controller
                         ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
         $emp        = Empresa::findOne(['idemp' => $model->idemp]);
         $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
-        $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
+        $tipo = ['En Proceso'=> 'En Proceso','Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
 
         if ($model->load(Yii::$app->request->post()) && 
             $modelfd->load(Yii::$app->request->post()) &&
             $modelcredito->load(Yii::$app->request->post())) {
+            
+            $model->tipo ="En Proceso";
             
             if($model->save()){
                 $modelfd->idfh   = $model->idfh;
@@ -266,6 +341,10 @@ class FacturahController extends Controller
                     }else{
                         return $this->redirect(['update', 'id' => $model->idfh]);
                     }
+            }else {
+
+                                print_r($model->getErrors());
+
             }
        } else {
             return $this->render('update', [
@@ -283,37 +362,54 @@ class FacturahController extends Controller
 
    public function actionUpdateend()
     {
+
         //$msg  = "Exito!!!";  
         if(Yii::$app->request->post())
         {
+
             $idfh   = Html::encode($_POST["idfh"]);
             $tipo   = Html::encode($_POST["tipo"]);
             $abono   = Html::encode($_POST["abono"]);
 
-            if($tipo == "Pagada") {
+            if($idfh && $tipo){
+            
                 //Facturah
                 $modelfh = Facturah::findOne(['idfh' => $idfh]);
-                $modelfh->tipo     = "Pagada";
+                $modelfh->tipo     = $tipo;
                 $modelfh->fecmod = date('Y.m.d h:i:s');
                 $modelfh->usumod = Yii::$app->user->identity->idusu;
-                $modelfh->save(); 
-
-                Faccredito::deleteAll("idfh=:idfh", [":idfh" => $idfh])   ;
-            }
-
-            //Credito
-            $modelcredito = Faccredito::findOne(['idfh' => $idfh]);
-            $modelcredito->abono  = $abono; 
-            $modelcredito->fecmod = date('Y.m.d h:i:s');
-            $modelcredito->usumod = Yii::$app->user->identity->idusu;
-     
-            if($modelcredito->save()){
-                return $this->redirect(['index', 'idemp' => $modelcredito->idemp]);
-            }else
-                        print_r($modelcredito->getErrors());
-
+             
+                if($modelfh->save()){ 
             
-        }
+                    if($tipo == "Credito"){
+                        //Credito
+                        $modelcredito = new Faccredito;
+                        $modelcredito->idfh     = $modelfh->idfh;
+                        $modelcredito->idemp    = $modelfh->idemp;
+                        $modelcredito->totalfh  = $modelfh->total;
+                        $modelcredito->abono    = $abono;
+                        $modelcredito->saldo    = (int)$modelfh->total - $abono;
+                        $modelcredito->fecmod   = date('Y.m.d h:i:s');
+                        $modelcredito->usumod   = Yii::$app->user->identity->idusu;
+                 
+                        if($modelcredito->save()){
+             return $this->redirect(['facturah/index', 'idemp' => $modelfh->idemp]);
+        
+                        }else{
+                            print_r($modelcredito->getErrors());
+                        }
+                    }  
+                    return $this->redirect(['index', 'idemp' => $modelfh->idemp]);
+
+                } else{
+                    print_r($model->getErrors());
+                }
+                
+            }else{  //No hay datos
+                return $this->redirect(['index', 'idemp' => Yii::$app->user->identity->idemp]);
+
+            }
+        }else echo $msg ="aqui estoy";
     }
 
     /**

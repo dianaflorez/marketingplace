@@ -155,7 +155,7 @@ class UsuarioController extends Controller
 
         $msg = "";
 
-        $tipo = ArrayHelper::map(Tipo::find()->all(), 'idtipo', 'nombre');
+        $tipo = ArrayHelper::map(Tipo::find()->where(['tabla'=>'usuario'])->all(), 'idtipo', 'nombre');
         $emp  = ArrayHelper::map(Empresa::find()->andWhere('idemp>0')->all(), 'idemp', 'nombre');
         $role = ['1'=>'Comercial', '2'=>'Administrador Empresa', '4'=>'Super Administrador'];  
 
@@ -203,11 +203,10 @@ class UsuarioController extends Controller
                     $table->accesstoken = $this->randKey("abcdef0123456789", 40);
                 
                     $table->role        = $model->role;
-                    $table->activate    = 1; //$model->activate;
                     $table->estado      = 'Activo';   //Estado del usuario dependiendo del adm
                     $table->idemp       = $model->idemp;
-                    $table->activate    = 0;       //Estado de activacion del usuario
-                    $table->usumod = Yii::$app->user->identity->idusu;
+                    $table->activate    = 1;       //Estado de activacion del usuario
+                    $table->usumod      = Yii::$app->user->identity->idusu;
                     
                     //Si el registro es guardado correctamente
                     if ($table->save())
@@ -241,12 +240,11 @@ class UsuarioController extends Controller
                     }else{
                         $msg = "Ha ocurrido un error al llevar a cabo tu registro";
                           echo "<br /><br /><br /><br /><br /><br /><br />";
-                   var_dump($table->getErrors());
+                  // var_dump($table->getErrors());
                     }
                  
                 }else{
-                    echo "<br /><br /><br /><br /><br /><br /><br />";
-                   var_dump($model->getErrors());
+                    var_dump( $model->getErrors() );
                 }
             }
         return $this->render("create", ["model" => $model, 

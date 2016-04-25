@@ -54,7 +54,7 @@ class Usuario extends \yii\db\ActiveRecord
      */
 
     public $clave_repeat;
-    
+    public $clave_anterior;
 
     public static function tableName()
     {
@@ -78,6 +78,7 @@ class Usuario extends \yii\db\ActiveRecord
             [['identificacion'], 'unique'],
 
             ['clave', 'match', 'pattern' => "/^.{5,16}$/", 'message' => 'Mínimo 5 y máximo 16 caracteres'],
+            ['clave_anterior', 'match', 'pattern' => "/^.{5,16}$/", 'message' => 'Mínimo 5 y máximo 16 caracteres'],
             ['clave_repeat', 'compare', 'compareAttribute' => 'clave', 'message' => 'Las claves no coinciden'],
         
 
@@ -98,9 +99,9 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return [
             'idusu' => 'Id',
-            'nombre1' => 'Nombre1',
+            'nombre1' => 'Nombre',
             'nombre2' => 'Nombre2',
-            'apellido1' => 'Apellido1',
+            'apellido1' => 'Apellido',
             'apellido2' => 'Apellido2',
             'idtide' => 'Tipo ident.',
             'identificacion' => 'Identificacion',

@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use app\models\User;
 
 /**
  * FacturadController implements the CRUD actions for Facturad model.
@@ -19,15 +21,80 @@ class FacturadController extends Controller
      */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+      return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['index', 'create', 'update','view'],
+            'rules' => [
+                [
+                    //El administrador tiene permisos sobre las siguientes acciones
+                    'actions' => ['index',  'create', 'update','view'],
+                    //Esta propiedad establece que tiene permisos
+                    'allow' => true,
+                    //Usuarios autenticados, el signo ? es para invitados
+                    'roles' => ['@'],
+                    //Este método nos permite crear un filtro sobre la identidad del usuario
+                    //y así establecer si tiene permisos o no
+                    'matchCallback' => function ($rule, $action) {
+                        //Llamada al método que comprueba si es un administrador
+                        return User::isSuperMegaAdmin(Yii::$app->user->identity->id);
+                    },
                 ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isSuperAdmin(Yii::$app->user->identity->id);
+                  },
+               ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isAdminEmp(Yii::$app->user->identity->id);
+                  },
+               ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isComercial(Yii::$app->user->identity->id);
+                  },
+               ],
             ],
-        ];
+        ],
+         //Controla el modo en que se accede a las acciones, en este ejemplo a la acción logout
+         //sólo se puede acceder a través del método post
+        'verbs' => [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'logout' => ['post'],
+            ],
+        ],
+      ];
     }
+
 
     /**
      * Lists all Facturad models.

@@ -26,6 +26,14 @@ AppAsset::register($this);
 
 <body>
 <?php $this->beginBody() ?>
+<?php 
+    $role = Yii::$app->user->identity->role; 
+    if($role == 2){
+        $role = "adminemp";
+    }else{
+        $role = "comercial";
+    }
+?>
 
 <div class="wrap">
     <?php
@@ -39,8 +47,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Conóscanos', 'url' => ['/site/about']],
+              ['label' => 'Usuario', 'url' => ['/site/datos']],
+          //  ['label' => 'Conóscanos', 'url' => ['/site/about']],
            // ['label' => 'Contact', 'url' => ['/site/contact']],
 
             Yii::$app->user->isGuest ? (
@@ -71,8 +79,15 @@ AppAsset::register($this);
  <div class="row" >
             <div class="wellr col-xs-12 col-sm-4 col-md-3" >
                 <br />
+                    <?php
+                        if($role == "adminemp")
+                            $urlinicio = "index.php?r=site%2Fadminemp";
+                        else
+                            $urlinicio = "index.php?r=site%2Fcomercial";
+                    ?>
+
                     <a class="col-xs-1 col-sm-12 col-md-12" 
-                        href="index.php?r=site%2Fadminemp">
+                        href="<?=$urlinicio?>">
                         <div class="row btnm">
                             <div class="col-xs-12 col-sm-4">
                                 <img class="iconos" src="images/suitcase.png">     
@@ -82,8 +97,11 @@ AppAsset::register($this);
                             </div>
                         </div>
                     </a>
-                    
-                    <a class="col-xs-1 col-sm-12 col-md-12"  href="">
+
+
+                    <?php $url = "index.php?r=pmcontenido%2Findex&id=".Yii::$app->user->identity->idemp."&activo=pm1" ?>
+                    <a class="col-xs-1 col-sm-12 col-md-12"  
+                        href="<?=$url?>">
                          <div class="row btnm" >
                             <div class="col-sm-4">
                                 <img class="iconos" src="images/location.png">
@@ -93,8 +111,15 @@ AppAsset::register($this);
                             </div>
                         </div>
                     </a>
+                    <?php
+                        if($role == "adminemp")
+                            $urlpa = "index.php?r=planaccion%2Findex&id=".Yii::$app->user->identity->idemp;
+                        else
+                            $urlpa = "index.php?r=planaccion%2Fviewplan&id=1&tr=1";
+                    ?>
                     
-                    <a class="col-xs-1 col-sm-12 col-md-12" href="">
+                    <a class="col-xs-1 col-sm-12 col-md-12" 
+                        href="<?= $urlpa?>">
                        <div class="row btnm" >
                             <div class="col-sm-4">
                                <img class="iconos" src="images/calendar.png"> <br />    
@@ -105,7 +130,10 @@ AppAsset::register($this);
                         </div>
                     </a>
               
-                    <a class="col-xs-1 col-sm-12 col-md-12" href="">
+                    <?php $urlacc = "index.php?r=cliente%2Findex&idemp=".Yii::$app->user->identity->idemp ?>
+                    
+                    <a class="col-xs-1 col-sm-12 col-md-12" 
+                        href="<?=$urlacc?>">
                        <div class="row btnm" >
                             <div class="col-sm-4">
                                 <img class="iconos" src="images/people.png"> <br />    
@@ -116,7 +144,10 @@ AppAsset::register($this);
                         </div>
                     </a>
              
-                    <a class="col-xs-1 col-sm-12 col-md-12" href="">
+             <?php $urlventas = "index.php?r=facturah%2Findex&idemp=".Yii::$app->user->identity->idemp ?>
+                    
+                    <a class="col-xs-1 col-sm-12 col-md-12" 
+                        href="<?= $urlventas?>">
                        <div class="row btnm" >
                             <div class="col-sm-4">
                                 <img class="iconos" src="images/coins.png"> <br />    

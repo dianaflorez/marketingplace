@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Planmarketing */
+use yii\helpers\Url;
 
 $this->title = $model->nombre;
-$this->params['breadcrumbs'][] = ['label' => 'Planmarketings', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => 'Planmarketings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <div class="planmarketing-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

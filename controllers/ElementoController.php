@@ -11,8 +11,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
-
+use yii\filters\AccessControl;
+use app\models\User;
 
 /**
  * ElementoController implements the CRUD actions for Elemento model.
