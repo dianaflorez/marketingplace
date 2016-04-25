@@ -35,8 +35,9 @@ AppAsset::register($this);
     $superMegaAdmin  = false;
     $superadmin      = false;
     $adminemp        = false;   
-    $comercio        = false;   
-    $ae_inicio       = false;   
+    $comercial        = false;   
+    $ae_inicio       = false;
+    $com_inicio      = false;   
 
     if(!Yii::$app->user->isGuest){
         $superMegaAdmin = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 

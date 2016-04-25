@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <b><?= $row->nombre ?></b>
         <td>
     </tr>        
+    <?php $suma = 0;?>
     <?php foreach($row->paaccions as $acc): ?>
     <tr>
         <td><?= $acc->descripcion ?></td>
@@ -119,7 +120,14 @@ $this->params['breadcrumbs'][] = $this->title;
             Agregar Elemento</a>           
 
         </td>
-        <td><?= $acc->costo ?></td>
+        <td align="right">
+            <?php $costo = $acc->costo ?>
+                        <?php
+                        setlocale(LC_MONETARY, 'en_US.UTF-8');
+                        echo  money_format('%.2n', $costo);
+                        ?>    
+                        <?php $suma = $suma + $costo; ?>
+        </td>
         <td><?= $acc->estado ?></td>
         <td>
           
@@ -164,7 +172,20 @@ $this->params['breadcrumbs'][] = $this->title;
         </td>
     </tr>
                 <?php endforeach ?>
-
+  <tr>
+            <td colspan="5" align="right">
+                <b>Total <?= $row->nombre ?>:</b>
+            </td>
+        
+            <td  align="right">
+                <?php
+                setlocale(LC_MONETARY, 'en_US.UTF-8');
+                $suma = money_format('%.2n', $suma);
+                ?>
+                <b><?= $suma ?></b>
+            </td>
+            <td colspan="2"></td>
+        </tr>  
     <tr>
       <td colspan="8">
            <a  href="<?= Url::toRoute(["paaccion/create", 

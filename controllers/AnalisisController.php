@@ -6,6 +6,7 @@ use Yii;
 use app\models\Planaccion;
 use app\models\Paaelemento;
 use app\models\Empresa;
+use app\models\Facturah;
 use app\models\elemento;
 use app\models\Accion;
 use app\models\Usuario;
@@ -17,6 +18,7 @@ use yii\filters\AccessControl;
 use app\models\User;
 use yii\db\Query;
 use mPDF;
+use yii\helpers\Html;
 
 /**
  * PlanaccionController implements the CRUD actions for Planaccion model.
@@ -44,73 +46,15 @@ class AnalisisController extends Controller
      */
     public function actionIndex($idemp,$msg=null)
     {
-        $emp    = Empresa::findOne(['idemp' => $idemp]);
-
-        return $this->render('index', [
-            //'model'   => $model2,
-            'msg'     => $msg,
-            'emp'     => $emp, 
-        ]);
-    }
-
-    public function actionMercadeo($idemp){
-
-        $mpdf = new mpdf;
         
-        $mpdf->WriteHTML('<p>Hallo World</p>');
-        $mpdf->Output();
-        exit;
-
-        $emp    = Empresa::findOne(['idemp' => $idemp]);
-
-  $planaccion = Planaccion::find()
-                    ->where(['idemp' => $idemp])
-                    ->orderBy('orden')    
-                    ->all();
- $fecini = "2016-02-02";
- $fecfin = "2016-12-12";
-        $connection = \Yii::$app->db;
-
- $sqldatostri = " SELECT * FROM paaccion p 
-            WHERE
-                p.idemp = ".$idemp." AND
-                fecini >= '".$fecini."' AND
-                fecini <= '".$fecfin."' 
-            UNION   
-            SELECT * FROM paaccion 
-            WHERE
-                fecfin >= '".$fecini."' AND
-                fecfin <= '".$fecfin."'   
-            ORDER BY fecfin, feccre";
-
-        $modeltri = $connection->createCommand($sqldatostri);
-        $planxtri = $modeltri->queryAll();
-
-        $elementos  = Paaelemento::find()->where(['idpa' => 1])->all();
-
-
-       // get your HTML raw content without any layouts or scripts
-    $content = $this->renderPartial('viewplan',['id'=>1,
-                                             'model'    =>$planxtri,   
-                                             'emp' => $emp,
-                                             'trimestre'=> 1,
-                                             'fectri'   =>'2016',
-                                             'msg'      => '..',
-                                             'idemp'    => $emp->idemp,
-                                             'plana'=> $planaccion,
-                                             'elementos'=> $elementos,   
-                                              ]);
- 
-    }
-
-
-    public function actionViewplan($id, $tr = 1, $msg=null)
-    {
-       //Si un usuario q no es adm Solo puede ver su propia plan accion 
+        //Si un usuario q no es adm Solo puede ver su propia plan accion 
        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
             $idemp = Yii::$app->user->identity->idemp;
-        else $idemp = $id;
+      
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
 
+        //*****************************
+        //Esto es para el tab de Mercadeo
         $connection = \Yii::$app->db;
         $sql = "SELECT date_part('month', MIN(fecini)) as mes FROM paaccion WHERE idemp = ".$idemp;
         $model = $connection->createCommand($sql);
@@ -124,34 +68,58 @@ class AnalisisController extends Controller
 
         $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
         $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+        
+    
+        return $this->render('index', [
+            'msg'      => $msg,
+            'emp'      => $emp, 
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
+       
+        ]);
+    }
 
-        if( $tr == 2 ){
-            $fecini = strtotime ( '+3 month' , strtotime ( $fecini ) ) ;
-            $fecini = date ( 'Y-m-d' , $fecini);
+       // get your HTML raw content without any layouts or scripts
+       /* FUNCIONA
 
-            $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
-            $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+           $this->renderPartial('viewplan',['id'=>1,
+                                             'model'    =>$planxtri,   
+                                             'emp' => $emp,
+                                             'trimestre'=> 1,
+                                             'fectri'   =>'2016',
+                                             'msg'      => '..',
+                                             'idemp'    => $emp->idemp,
+                                             'plana'=> $planaccion,
+                                             'elementos'=> $elementos,   
+                                              ]);
+        
+        $mpdf = new mpdf;
+        $mpdf->WriteHTML($content);
+        $mpdf->Output();
+        */
+    
+
+    public function actionViewplan()
+    {
+         $msg = null;
+        if(Yii::$app->request->post())
+        {
+            $fecini  = Html::encode($_POST["fecini"]);
+            $fecfin  = Html::encode($_POST["fecfin"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $fecini = date('Y-m-d');
+            $fecfin = date('Y-m-d');
         }
 
-        if( $tr == 3){
-            $fecini = strtotime ( '+6 month' , strtotime ( $fecini ) ) ;
-            $fecini = date ( 'Y-m-d' , $fecini);
-
-            $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
-            $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
+            $idemp = Yii::$app->user->identity->idemp;
         }
 
-        if( $tr == 4){
-            $fecini = strtotime ( '+9 month' , strtotime ( $fecini ) ) ;
-            $fecini = date ( 'Y-m-d' , $fecini);
-
-            $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
-            $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
-        }
-
+     
         $sqldatostri = " SELECT * FROM paaccion p 
             WHERE
-                p.idemp = ".$id." AND
+                p.idemp = ".$idemp." AND
                 fecini >= '".$fecini."' AND
                 fecini <= '".$fecfin."' 
             UNION   
@@ -162,28 +130,70 @@ class AnalisisController extends Controller
             ORDER BY fecfin, feccre";
 
         $planaccion = Planaccion::find()
-                    ->where(['idemp' => $id])
+                    ->where(['idemp' => $idemp])
                     ->orderBy('orden')    
                     ->all();
 
-        $elementos  = Paaelemento::find()->where(['idpa' => $id])->all();
+        $connection = \Yii::$app->db;
 
         $modeltri = $connection->createCommand($sqldatostri);
         $planxtri = $modeltri->queryAll();
 
-        $emp    = Empresa::findOne(['idemp' => $id]);
+        $elementos  = Paaelemento::find()->where(['idpa' => $idemp])->all();
+
+       
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
      
         return $this->render('viewplan', [
             'model'    => $planxtri,
             'msg'      => $msg,
-            'idemp'    => $id,
+            'idemp'    => $idemp,
             'emp'      => $emp, 
             'elementos'=> $elementos,
-            'trimestre'=> $tr,  
+          //  'trimestre'=> $tr,  
             'plana'    => $planaccion,    
             'fectri'   => $fecini.' '.$fecfin, //Fechas de inicio de trimestre  
+           'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
+       ]
+        );
+    }
+
+
+public function actionVentas()
+    {
+        $msg = null;
+        if(Yii::$app->request->post())
+        {
+            $fecini  = Html::encode($_POST["fecini"]);
+            $fecfin  = Html::encode($_POST["fecfin"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $fecini = date('Y-m-d');
+            $fecfin = date('Y-m-d');
+        }
+
+        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
+            $idemp = Yii::$app->user->identity->idemp;
+        }
+
+        $model  = Facturah::find()
+                ->joinWith(['idcli0'])
+                ->where(['facturah.idemp' => $idemp ])
+//                ->joinWith(['elementos'])
+           //     ->where(['elemento.idemp' => $id])
+                ->all();
+            
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+
+        return $this->render('ventas', [
+            'model'   => $model,
+            'msg'     => $msg,
+            'idemp'   => $idemp,
+            'emp'     => $emp, 
         ]);
     }
+
 
     /**
      * Displays a single Planaccion model.

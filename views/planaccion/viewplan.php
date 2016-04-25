@@ -73,9 +73,9 @@ $this->params['breadcrumbs'][] = $title;
                 <b><?= $pa->nombre ?></b>
         </td>
     </tr>        
-  
+   <?php $suma = 0; ?>    
+           
         <?php foreach($model as $acc): ?>
-
             <?php if($acc['idpa'] == $pa->idpa){?>
                 <tr>
                     <td><?= $acc['descripcion'] ?></td>
@@ -96,11 +96,31 @@ $this->params['breadcrumbs'][] = $title;
                             </div>
                         </div>            
                     </td>
-                    <td><?= $acc['costo'] ?></td>
+                    <td align="right">
+                        <?php $costo = $acc['costo'] ?>
+                        <?php
+                        setlocale(LC_MONETARY, 'en_US.UTF-8');
+                        echo  money_format('%.2n', $costo);
+                        ?>    
+                        <?php $suma = $suma + $costo; ?>
+                    </td>
                     <td><?= $acc['estado'] ?></td>
                  </tr>
             <?php }?>     
         <?php endforeach ?>
-             
+        <tr>
+            <td colspan="5" align="right">
+                <b>Total <?= $pa->nombre ?>:</b>
+            </td>
+        
+            <td  align="right">
+                <?php
+                setlocale(LC_MONETARY, 'en_US.UTF-8');
+                $suma = money_format('%.2n', $suma);
+                ?>
+                <b><?= $suma ?></b>
+            </td>
+            <td></td>
+        </tr>  
     <?php endforeach ?>
 </table>

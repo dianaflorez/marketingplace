@@ -12,9 +12,14 @@ use yii\widgets\LinkPager;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ventas - '.$emp->nombre;
-$this->params['breadcrumbs'][] = $this->title;
+$title = 'Ventas - '.$emp->nombre;
+$this->params['breadcrumbs'][] = $title;
 ?>
+<h3>
+<a href="<?= Url::toRoute(["analisis/index",  "idemp" => $emp->idemp]) ?>">
+    <?= $title ?>
+</a>
+</h3>   
 
 <h3>
 <?php if($msg){ 
@@ -27,8 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<a class="btn btn-info" href="<?= Url::toRoute(["facturah/create", "idemp" => $idemp]) ?>">Nuevo Venta</a>
-<a class="btn btn-info" href="<?= Url::toRoute(["producto/index", "id" => $idemp]) ?>">Nuevo Producto</a>
 
 <?php $f = ActiveForm::begin([
     "method" => "get",
@@ -36,8 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
     "enableClientValidation" => true,
 ]);
 ?>
-
-<h3>Ventas <?php echo ' - '.$emp->nombre;?></h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Fecha</th>
@@ -47,38 +48,40 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>TOTAL</th>
         <th>Tipo</th>
         <th>Deuda</th>
-        <th class="action-column ">&nbsp;</th>
+      
     </tr>
+    <?php $suma = 0;?>
     <?php foreach($model as $row): ?>
     <tr>
         <td><?= $row->fecha ?></td>
         <td><?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?></td>
         <td><?= $row->refpago ?></td>
         <td><?= $row->estado ?></td>
-        <td align="right">
+         <td align="right">
             <?php $total = $row->total;
             setlocale(LC_MONETARY, 'en_US.UTF-8');
             echo  money_format('%.2n', $total);
+            $suma = $suma + $total;
             ?>
          
         </td>
         <td><?= $row->tipo ?></td>
         <td>cargar tabla de creditos</td>
-         <td>
-          
-            <!-- Update -->
-            <a href="<?= Url::toRoute(["facturah/update", "id" => $row->idfh]) ?>" title="Actualizar" aria-label="Actualizar">
-              <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-            <!--End Update-->
-        
-        </td>
-          
+       
     </tr>
     <?php endforeach ?>
+
     <tr>
-    <td>
-        
-    </td>
+         <td colspan="4" align="right"><b>TOTAL Vendido:</b></td>
+         <td align="right">
+            <?php 
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            echo  money_format('%.2n', $suma);
+            ?>
+         
+        </td>
+         <td  align="right"><b>Deuda:</b></td>
+         <td align="right">
+        </td>
     </tr>
 </table>

@@ -7,8 +7,10 @@ use yii\widgets\ActiveForm;
 use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
+use kartik\date\DatePicker;
+use yii\bootstrap\Tabs;
 
-$this->title = 'Analisis';
+$this->title = $emp->nombre.' Analisis';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -24,18 +26,76 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </h3>
 
-<?php $f = ActiveForm::begin([
-    "method" => "get",
-    "action" => Url::toRoute("empresa/index"),
-    "enableClientValidation" => true,
+<?= Html::beginForm(Url::toRoute("analisis/viewplan"), "POST") ?>
+ 
+<h3>Plan de Mercadeo</h3>
+<?php
+echo '<label>Fecha Inicio</label>';
+echo DatePicker::widget([
+    'name' => 'fecini', 
+    'value' => $fecini,
+    'options' => ['placeholder' => 'Fecha Inicial ...'],
+    'pluginOptions' => [
+        'todayHighlight' => true,
+        'autoclose'=>true,
+        'format' => 'yyyy-m-dd'
+    ]
 ]);
 ?>
+<br />
+<?php
+echo '<label>Fecha Fin</label>';
+echo DatePicker::widget([
+    'name' => 'fecfin', 
+    'value' => $fecfin,
+    'options' => ['placeholder' => 'Fecha Inicial ...'],
+    'pluginOptions' => [
+        'todayHighlight' => true,
+        'autoclose'=>true,
+        'format' => 'yyyy-m-dd'
+    ]
+]);
+?>
+<br />
+        <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+        <button type="submit" class="btn btn-primary">Mercadeo</button>
+  <?= Html::endForm() ?>
 
-<h3>Ventas</h3>
-
-<a class="btn btn-info" href="<?= Url::toRoute(["analisis/mercadeo", "idemp" => $emp->idemp]) ?>">Mercadeo</a>
 
 
-
+<?= Html::beginForm(Url::toRoute("analisis/ventas"), "POST") ?>
+ 
+<h3>Ventas Ingresos</h3>
+<?php
+echo '<label>Fecha Inicio</label>';
+echo DatePicker::widget([
+    'name' => 'fecini', 
+    'value' => $fecini,
+    'options' => ['placeholder' => 'Fecha Inicial ...'],
+    'pluginOptions' => [
+        'todayHighlight' => true,
+        'autoclose'=>true,
+        'format' => 'yyyy-m-dd'
+    ]
+]);
+?>
+<br />
+<?php
+echo '<label>Fecha Fin</label>';
+echo DatePicker::widget([
+    'name' => 'fecfin', 
+    'value' => $fecfin,
+    'options' => ['placeholder' => 'Fecha Inicial ...'],
+    'pluginOptions' => [
+        'todayHighlight' => true,
+        'autoclose'=>true,
+        'format' => 'yyyy-m-dd'
+    ]
+]);
+?>
+<br />
+        <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+        <button type="submit" class="btn btn-primary">Mercadeo</button>
+  <?= Html::endForm() ?>
 
 
