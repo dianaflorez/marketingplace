@@ -108,9 +108,10 @@ class ClienteController extends Controller
     public function actionIndex($idemp, $msg=null, $cliente='Institucional')
     {
         //Si un usuario q no es adm Solo puede crear de su propia emp 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
- 
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = Cliente::find()
           //      ->joinWith(['accions'])
                 ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
@@ -158,6 +159,10 @@ class ClienteController extends Controller
      */
     public function actionCreate($idemp, $cliente )
     {
+       if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = new Cliente();
         $model->idemp   = $idemp;
         $model->tipo    = $cliente; //tipo cliente 

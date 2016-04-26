@@ -48,9 +48,10 @@ class AnalisisController extends Controller
     {
         
         //Si un usuario q no es adm Solo puede ver su propia plan accion 
-       if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
-      
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $emp    = Empresa::findOne(['idemp' => $idemp]);
 
         //*****************************
@@ -112,10 +113,9 @@ class AnalisisController extends Controller
             $fecfin = date('Y-m-d');
         }
 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
-            $idemp = Yii::$app->user->identity->idemp;
-        }
-
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
      
         $sqldatostri = " SELECT * FROM paaccion p 
             WHERE
@@ -173,10 +173,10 @@ public function actionVentas()
             $fecfin = date('Y-m-d');
         }
 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
-            $idemp = Yii::$app->user->identity->idemp;
-        }
-
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model  = Facturah::find()
                 ->joinWith(['idcli0'])
                 ->where(['facturah.idemp' => $idemp ])
@@ -229,9 +229,10 @@ public function actionVentas()
         $model->usumod  = Yii::$app->user->identity->idusu;
 
         //Si un usuario q no es adm Solo puede crear de su propia emp 
-       if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $model->idemp = Yii::$app->user->identity->idemp;
-
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $emp = Empresa::findOne(['idemp' => $id]);
         $estado = ['En Ejecucion'=>'En Ejecucion','Ejecutado'=>'Ejecutado', 
                     'Pendiente'=>'Pendiente', 'Terminado'=>'Terminado'];  

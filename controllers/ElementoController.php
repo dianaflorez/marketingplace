@@ -68,6 +68,10 @@ class ElementoController extends Controller
      */
     public function actionCreate($idemp, $idpa)
     {
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = new Elemento();
         $model->idemp   = $idemp;
         $model->idpa    = $idpa;

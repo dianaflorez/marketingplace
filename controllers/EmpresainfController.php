@@ -93,9 +93,10 @@ class EmpresainfController extends Controller
     public function actionIndex($id)
     {
 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $id = Yii::$app->user->identity->idemp;
-
+       if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $id = Yii::$app->user->identity->idemp;
+     
         $modelemp = Empresa::findOne($id);
         $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
       

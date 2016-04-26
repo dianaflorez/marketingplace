@@ -105,19 +105,26 @@ class FacturahController extends Controller
       ];
     }
 
-
     /**
      * Lists all Facturah models.
      * @return mixed
      */
     public function actionIndex($idemp, $msg=null)
     {
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model  = Facturah::find()
                 ->joinWith(['idcli0'])
                 ->where(['facturah.idemp' => $idemp ])
 //                ->joinWith(['elementos'])
            //     ->where(['elemento.idemp' => $id])
+                ->orderBy('facturah.fecha desc')
                 ->all();
+
+        $creditos = Faccredito::find()
+                  ->where(['idemp'=>$idemp])->all();        
             
         $emp    = Empresa::findOne(['idemp' => $idemp]);
 
@@ -126,6 +133,7 @@ class FacturahController extends Controller
             'msg'     => $msg,
             'idemp'   => $idemp,
             'emp'     => $emp, 
+            'creditos'=> $creditos,
         ]);
     }
 
@@ -156,6 +164,9 @@ class FacturahController extends Controller
     }
     public function actionCreate($idemp)
     {
+       if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
        
         $model = new Facturah();
         $model->idusu   = Yii::$app->user->identity->idusu;
@@ -174,7 +185,8 @@ class FacturahController extends Controller
         $modelfd = new Facturad();
     
         //Verifica la identidad del usuario quien registra Q solo pertenezca a esta empresa
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7){
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7){
             $model->idemp        = Yii::$app->user->identity->idemp;
             $modeldf->idemp      = Yii::$app->user->identity->idemp;
             $modelcredito->idemp = Yii::$app->user->identity->idemp;
@@ -375,7 +387,7 @@ class FacturahController extends Controller
             
                 //Facturah
                 $modelfh = Facturah::findOne(['idfh' => $idfh]);
-                $modelfh->tipo     = $tipo;
+                $modelfh->tipo     = trim($tipo);
                 $modelfh->fecmod = date('Y.m.d h:i:s');
                 $modelfh->usumod = Yii::$app->user->identity->idusu;
              
@@ -406,7 +418,7 @@ class FacturahController extends Controller
                 }
                 
             }else{  //No hay datos
-                return $this->redirect(['index', 'idemp' => Yii::$app->user->identity->idemp]);
+                return $this->redirect(['index', 'idemp' => $idemp]);
 
             }
         }else echo $msg ="aqui estoy";
@@ -418,11 +430,33 @@ class FacturahController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+      if(Yii::$app->request->post()){
+        $idfh   = Html::encode($_POST["idfh"]);
+        $idemp  = Html::encode($_POST["idemp"]);
 
-        return $this->redirect(['index']);
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
+        if($idfh){
+          //Facturah
+          $modelfh = Facturah::findOne(['idfh' => $idfh]);
+          $modelfh->estado = "Anulada";
+          $modelfh->fecmod = date('Y.m.d h:i:s');
+          $modelfh->usumod = Yii::$app->user->identity->idusu;
+       
+          if($modelfh->save(false)){ 
+                 //   var_dump($modelfh->getErrors());
+
+            return $this->redirect(['index', 'idemp' => $idemp]);
+
+          }else{
+            var_dump($modelfh->getErrors());
+          }
+        }
+      }  
     }
 
     /**

@@ -67,6 +67,10 @@ class DirtelController extends Controller
      */
     public function actionCreate($idemp, $tabla, $idtabla, $idtipo,$cliente)
     {
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = new Dirtel();
         $model->idemp   = $idemp;
         $model->tabla   = $tabla;

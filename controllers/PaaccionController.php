@@ -141,6 +141,10 @@ class PaaccionController extends Controller
      */
     public function actionCreate($idpa, $idemp,$pa)
     {
+       if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = new Paaccion();
         $model->idemp   = $idemp;
         $model->idpa    = $idpa;

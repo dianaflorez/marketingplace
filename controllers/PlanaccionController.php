@@ -131,8 +131,9 @@ class PlanaccionController extends Controller
     public function actionViewplan($id, $tr = 1, $msg=null)
     {
        //Si un usuario q no es adm Solo puede ver su propia plan accion 
-       if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
+      if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
         else $idemp = $id;
 
         $connection = \Yii::$app->db;
@@ -237,6 +238,11 @@ class PlanaccionController extends Controller
      */
     public function actionCreate($id)
     {
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+        else $idemp = $id;
+
         $model = new Planaccion();
        
         $model->idemp   = $id;

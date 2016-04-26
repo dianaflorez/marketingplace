@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $f = ActiveForm::begin([
     "method" => "get",
-    "action" => Url::toRoute("planaccion/index"),
+    "action" => Url::toRoute("facturah/index"),
     "enableClientValidation" => true,
 ]);
 ?>
@@ -63,22 +63,56 @@ $this->params['breadcrumbs'][] = $this->title;
          
         </td>
         <td><?= $row->tipo ?></td>
-        <td>cargar tabla de creditos</td>
+        <td align="right">
+           <?php if(trim($row->tipo) == "Credito"){ ?>
+            <?php 
+             foreach($creditos as $cre):
+                if($cre['idfh'] == $row->idfh){
+                    $abono = $cre->abono;
+                    setlocale(LC_MONETARY, 'en_US.UTF-8');
+                    echo  money_format('%.2n', $abono)." / ";
+                }
+                endforeach;
+             ?>
+             <a  href="<?= Url::toRoute(["faccredito/create", 
+                                    "idfh"  => $row->idfh,
+                                ]) ?>">
+            Agregar Abono</a>   
+          <?php } else{ echo "$0"; } ?>  
+        </td>
          <td>
           
-            <!-- Update -->
-            <a href="<?= Url::toRoute(["facturah/update", "id" => $row->idfh]) ?>" title="Actualizar" aria-label="Actualizar">
-              <span class="glyphicon glyphicon-pencil"></span>
+              <!--Delete-->
+             <a href="#" data-toggle="modal" data-target="#idfh_<?= $row->idfh ?>" title="Eliminar" aria-label="Eliminar">
+             <span class="glyphicon glyphicon-trash">.</span>
+             </a>
+                <div class="modal fade" role="dialog" aria-hidden="true" id="idfh_<?= $row->idfh ?>">
+                      <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">Anular Factura</h4>
+                              </div>
+                              <div class="modal-body">
+                                    <p>¿Realmente deseas anular esta factura con id <?= $row->idfh ?>?</p>
+                              </div>
+                              <div class="modal-footer">
+                              <?= Html::beginForm(Url::toRoute("facturah/delete"), "POST") ?>
+                                    <input type="hidden" name="idfh" value="<?= $row->idfh ?>">
+                                    <input type="hidden" name="idemp" value="<?= $row->idemp ?>">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                              <?= Html::endForm() ?>
+                              </div>
+                            </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->            
             </a>
-            <!--End Update-->
-        
+            <!--End Delete-->
+       
         </td>
           
     </tr>
     <?php endforeach ?>
-    <tr>
-    <td>
-        
-    </td>
-    </tr>
+  
 </table>

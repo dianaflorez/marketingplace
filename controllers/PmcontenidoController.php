@@ -106,6 +106,10 @@ class PmcontenidoController extends Controller
      */
     public function actionIndex($id,$activo)
     {
+       if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $id = Yii::$app->user->identity->idemp;
+        
         $emp = Empresa::findOne(['idemp' => $id]);
         $pm1 = Planmarketing::findOne(['idemp' => $id,'orden' =>1]);
         $pm2 = Planmarketing::findOne(['idemp' => $id,'orden' =>2]);
@@ -201,6 +205,10 @@ class PmcontenidoController extends Controller
      */
     public function actionUpdate($id,$idemp, $activo)
     {
+       if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = $this->findModel($id);
         $model->fecmod = date('Y.m.d h:i:s');
         $model->usumod = Yii::$app->user->identity->idusu;

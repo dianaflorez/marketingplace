@@ -37,6 +37,10 @@ class ProductoController extends Controller
      */
     public function actionIndex($id, $msg =null)
     {
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $id = Yii::$app->user->identity->idemp;
+     
         $dataProvider = new ActiveDataProvider([
             'query' => Producto::find()->where(['idemp' => $id]),
         ]);
@@ -81,6 +85,10 @@ class ProductoController extends Controller
      */
     public function actionCreate($id)
     {
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $id = Yii::$app->user->identity->idemp;
+     
         $model = new Producto();
         $model->idemp   = $id;
         $model->iva     = 0;

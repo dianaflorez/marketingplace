@@ -67,9 +67,10 @@ class CitapedidoController extends Controller
     public function actionCreate($idemp, $idcita)
     {
         //Si un usuario q no es adm Solo puede crear de su propia emp 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
-
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $emp    = Empresa::findOne(['idemp' => $idemp]);
         
         $model = new Citapedido();

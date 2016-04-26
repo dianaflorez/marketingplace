@@ -43,9 +43,10 @@ class CitaController extends Controller
     public function actionIndex($idemp, $msg=null)
     {
         //Si un usuario q no es adm Solo puede crear de su propia emp 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
- 
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model  = Cita::find()
                     ->joinWith(['idcli0'])
                     ->where(['cita.idemp' => $idemp])
@@ -95,9 +96,10 @@ class CitaController extends Controller
     public function actionCreate($idemp)
     {
         //Si un usuario q no es adm Solo puede crear de su propia emp 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
-
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $emp    = Empresa::findOne(['idemp' => $idemp]);
  
         $model = new Cita();
@@ -130,10 +132,11 @@ class CitaController extends Controller
      */
     public function actionUpdate($id, $idemp)
     {
-               //Si un usuario q no es adm Solo puede crear de su propia emp 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $idemp = Yii::$app->user->identity->idemp;
- 
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = $this->findModel($id);
         $model->fecmod = date('Y.m.d h:i:s');
         $model->idusu  = Yii::$app->user->identity->idusu;

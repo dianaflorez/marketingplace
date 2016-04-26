@@ -134,6 +134,10 @@ class PaaelementoController extends Controller
      */
     public function actionCreate($idemp, $idpa, $idaccion, $pa)
     {
+       if(Yii::$app->user->identity->role != 4 &&   
+          Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         $model = new Paaelemento();
         $model->idemp   = $idemp;
         $model->idpa    = $idpa;
