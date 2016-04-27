@@ -7,6 +7,7 @@ use app\models\Planaccion;
 use app\models\Paaelemento;
 use app\models\Empresa;
 use app\models\Facturah;
+use app\models\Facturad;
 use app\models\elemento;
 use app\models\Accion;
 use app\models\Usuario;
@@ -395,28 +396,58 @@ public function actionIndicadores()
         if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
-     
-    $sqlpro = "SELECT c.nombre1||' '||c.apellido1 as nom,
-                      c.tipo, count(fh.idfh) as ct 
-        FROM facturah fh, cliente c
-        WHERE 
+        
+        //***********INDICADOR 1
+        $sqlin1 = "SELECT sum(total)  
+            FROM facturah fh
+            WHERE 
             fh.idemp = ".$idemp." AND
-            fh.idcli = c.idcli AND
             fh.estado = 'Activa' AND
             (fh.tipo = 'Pagada' or fh.tipo = 'Credito') AND
             fh.fecha >= '".$fecini."' AND
             fh.fecha <= '".$fecfin."'  
-        GROUP BY c.nombre1, c.apellido1, c.tipo
-        ORDER BY c.tipo, ct desc";
+             ";
 
         $connection = \Yii::$app->db;
-        $modelpro = $connection->createCommand($sqlpro);
-        $modelpro = $modelpro->queryAll();
+        $in1 = $connection->createCommand($sqlin1);
+        $in1 = $in1->queryScalar();
 
+        //***********Indicador 2 AYUDA FER
+         $sqlin2 = " SELECT sum(costo)
+            FROM paaccion p 
+            WHERE
+                p.idemp = ".$idemp." AND
+                fecini >= '".$fecini."' AND
+                fecini <= '".$fecfin."' 
+            UNION   
+            SELECT sum(costo)
+            FROM paaccion 
+            WHERE
+                fecfin >= '".$fecini."' AND
+                fecfin <= '".$fecfin."'   
+            ";
+        $in2 = $connection->createCommand($sqlin2);
+        $in2 = $in2->queryScalar();
+
+        //***********INDICADOR 3
+        $sqlin3 = "SELECT sum(idcli)  
+            FROM cliente
+            WHERE 
+                idemp = ".$idemp." AND
+                feccre >= '".$fecini."' AND
+                feccre <= '".$fecfin."'  
+             ";
+
+        $in3 = $connection->createCommand($sqlin3);
+        $in3 = $in3->queryScalar();
+        $model = new facturad;
+      
         $emp    = Empresa::findOne(['idemp' => $idemp]);
 
         return $this->render('indicadores', [
-            'model'   => $modelpro,
+            'in1'   => $in1,
+            'in3'   => $in3,
+            'model' => $model,
             'msg'     => $msg,
             'idemp'   => $idemp,
             'emp'     => $emp, 

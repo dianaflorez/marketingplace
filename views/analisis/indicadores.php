@@ -76,6 +76,9 @@ $this->params['breadcrumbs'][] = $title;
 
       
 <?= Html::endForm() ?>
+
+    <?php $form = ActiveForm::begin(); ?>
+
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
@@ -84,8 +87,8 @@ $this->params['breadcrumbs'][] = $title;
         <th>Formula</th>
         <th>Resultado</th>
     </tr>
-    <?php foreach($model as $row): ?>
-    <?php endforeach ?>    
+    <?php //foreach($model as $row): ?>
+    <?php //endforeach ?>    
     <tr>
         <td>Ventas</td>
         <td>
@@ -98,7 +101,13 @@ $this->params['breadcrumbs'][] = $title;
                 Ingreso por ventas ($)
             </p>
         </td>
-        <td>Resultado</td>
+        <td>
+            <?php $indicador1 = $in1;
+            setlocale(LC_MONETARY, 'en_US.UTF-8');
+            echo  money_format('%.2n', $indicador1);
+            ?>
+
+        </td>
     </tr>
     <!-- Segundo Indicador -->
     <tr>
@@ -126,9 +135,35 @@ $this->params['breadcrumbs'][] = $title;
         <td>
             <p>
                 (número de clientes satisfechos/número total de clientes)*100
+                
+            <?= $form->field($model, 'qty')->textInput(['maxlength' => true,
+             'value' =>1,
+             'onchange'=>'
+                  //Valida solo numeros
+                  if( isNaN( $(this).val() ) ) {
+                    $(this).val(1);
+                  }
+                  if( $(totalcli).val() == 0 || isNaN( $(totalcli).val())){
+                    $(totalcli).val(1);
+                  }
+                  $totalcli = parseInt( $(totalcli).val() );
+                  $clisatisfechos = parseInt( $(this).val() );
+                  $res = ($clisatisfechos / $totalcli) * 100;
+                  $(resin3).val($res.toFixed(2));  
+
+            '])->label('Clientes satisfechos');
+            ?>
+
+
+            <label class="control-label">Total Clientes</label>
+            <input class="form-control" type="text"  name="totalcli" value="<?= $in3; ?>" readonly />
+            
             </p>
         </td>
-        <td>Resultado</td>
+        <td valign="bottom">
+            <label class="control-label">Resultado</label>
+            <input class="form-control" type="text"  name="resin3" value="<?= $in3; ?>" readonly />
+        </td>
     </tr>
     <!-- Cuarto Indicador -->
     <tr>
@@ -141,6 +176,8 @@ $this->params['breadcrumbs'][] = $title;
         <td>
             <p>
                 número de clientes nuevos por periodo de tiempo
+            <input class="form-control" type="text"  name="totalcli" value="<?= $in3; ?>" readonly />
+
             </p>
         </td>
         <td>Resultado</td>
@@ -156,6 +193,8 @@ $this->params['breadcrumbs'][] = $title;
         <td>
             <p>
                 (clientes que repiten compra/total clientes)*100
+            <input class="form-control" type="text"  name="totalcli" value="<?= $in3; ?>" readonly />
+                
             </p>
         </td>
         <td>Resultado</td>
@@ -176,3 +215,6 @@ $this->params['breadcrumbs'][] = $title;
         <td>Resultado</td>
     </tr>
 </table>
+
+    <?php ActiveForm::end(); ?>
+
