@@ -12,7 +12,9 @@ use app\models\User;
 use app\models\Usuario;
 use app\models\Empresa;
 use app\models\Empresainf;
-
+//Clases para upload
+use app\models\FormUpload;
+use yii\web\UploadedFile;
 
 class SiteController extends Controller
 {
@@ -202,6 +204,37 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionUpload()
+    {
+         
+         $model = new FormUpload;
+         $msg = null;
+         
+         if ($model->load(Yii::$app->request->post()))
+         {
+            //PARA INPUT FILE SIMPLE
+           /* $model->file = UploadedFile::getInstance($model, 'file');
+              if ($model->file && $model->validate()) {
+            
+            $file = $model->file;
+            $file->saveAs('archivos/' . $file->baseName . '.' . $file->extension);
+            $msg = "<p><strong class='label label-info'>Siiippp, subida realizada con éxito</strong></p>";
+            print_r($file->getErrors());
+            }
+*/
+            //Para varios archivos   
+            $model->file = UploadedFile::getInstances($model, 'file');
+            
+            if ($model->file && $model->validate()) {
+               foreach ($model->file as $file) {
+                $file->saveAs('archivos/' . $file->baseName . '.' . $file->extension);
+                $msg = "<p><strong class='label label-info'>Subida realizada con éxito</strong></p>";
+               }
+            }
+              
+         }
+         return $this->render("upload", ["model" => $model, "msg" => $msg]);
+    }
 
     public function actionLogin()
     {

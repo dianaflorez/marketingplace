@@ -6,6 +6,16 @@ body{
     background-color: #fafafa;
     border-color: #ccc;
 }
+.whitefont{
+	color: #fff;
+}
+.wellazul {
+   	left: 0; 
+   	bottom: 0;
+   	color: #ddd;
+  	background-color: #073A59;
+  	border-color: #ddd;	
+}
 
 .iconos{
 	width: 70%;

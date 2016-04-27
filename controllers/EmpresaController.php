@@ -254,6 +254,20 @@ class EmpresaController extends Controller
             $modelempinf->usumod = Yii::$app->user->identity->idusu;
             $modelempinf->save();
 
+            $modelempinf = new Empresainf;
+            $modelempinf->idemp  = $model->idemp;
+            $modelempinf->idtipo = 8;  //Camara de Comercio
+            $modelempinf->inf = "Camara de Comercio";  
+            $modelempinf->usumod = Yii::$app->user->identity->idusu;
+            $modelempinf->save();
+
+            $modelempinf = new Empresainf;
+            $modelempinf->idemp  = $model->idemp;
+            $modelempinf->idtipo = 9;  //Portafolio
+            $modelempinf->inf = "Portafolio";  
+            $modelempinf->usumod = Yii::$app->user->identity->idusu;
+            $modelempinf->save();
+
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Producto";  

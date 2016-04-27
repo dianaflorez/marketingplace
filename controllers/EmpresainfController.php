@@ -15,6 +15,9 @@ use app\models\Tipo;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\filters\AccessControl;
+//Clases para upload
+use app\models\FormUpload;
+use yii\web\UploadedFile;
 
 /**
  * EmpresainfController implements the CRUD actions for Empresainf model.
@@ -98,12 +101,24 @@ class EmpresainfController extends Controller
               $id = Yii::$app->user->identity->idemp;
      
         $modelemp = Empresa::findOne($id);
-        $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
-      
+        $model    = Empresainf::find()
+                    ->where(['idemp' => $id])
+                    ->joinWith(['idtipo0'])
+                    ->orderBy('tipo.orden')
+                    ->all();
+
+        $urllogo  = Empresainf::findOne(['idemp' => $id, 'idtipo' => 10]);
+
+        if($urllogo)
+            $urllogo = $urllogo->descripcion;
+        else
+            $urllogo = "0";
+
         return $this->render('index', [
             'model'     => $model,
             'idemp'     => $id,
             'modelemp'  => $modelemp,
+            'urllogo'   => $urllogo,
         ]);
     }
 
@@ -132,9 +147,10 @@ class EmpresainfController extends Controller
         $tipo           = ArrayHelper::map($tipos, 'idtipo', 'nombre');
         $model->idemp   = $idemp;
 
-        if(!Yii::$app->user->identity->role == 4 || !Yii::$app->user->identity->role ==7)
-            $model->idemp = Yii::$app->user->identity->idemp;
-
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $model->idemp = Yii::$app->user->identity->idemp;
+     
         $modelemp   = Empresa::findOne($model->idemp);
 
         $model->usumod = Yii::$app->user->identity->idusu;
@@ -177,6 +193,66 @@ class EmpresainfController extends Controller
                 'modelemp'  => $modelemp,
             ]);
         }
+    }
+
+    public function actionLogo($idemp, $doc, $new = null)
+    {
+         $model = new FormUpload;
+         $msg = null;
+         
+         if ($model->load(Yii::$app->request->post()))
+         {
+             if(Yii::$app->user->identity->role != 4 &&   
+                Yii::$app->user->identity->role != 7)
+                $idemp = Yii::$app->user->identity->idemp;
+            
+            //Para varios archivos   
+            $model->file = UploadedFile::getInstances($model, 'file');
+            
+            $sw = 0; //Si suben mas de un arc solo guarda el primero
+            
+            if ($model->file && $model->validate()) {
+
+               foreach ($model->file as $file) {
+                $urldestino = 'archivos/' . $file->baseName . '.' . $file->extension;
+                $file->saveAs($urldestino);
+                $msg = "<p><strong class='label label-info'>Subida realizada con éxito</strong></p>";
+            if($doc == 0 && $sw == 0 && $new == null){ $sw = 1;
+                $tabla = new Empresainf;
+                $tabla->idemp = $idemp;
+                $tabla->idtipo  = 10; //De la tabla tipo = Logo
+                $tabla->inf   = "logo"; 
+                $tabla->descripcion = $urldestino;
+                $tabla->usumod      = Yii::$app->user->identity->idusu;
+                $tabla->save();
+            }elseif($doc !=0 && $sw == 0 && $new == null){
+                $sw = 1;
+                $tabla = Empresainf::findOne(['idinf' => $doc, 'idemp' => $idemp ]);
+                if($tabla){
+                    $tabla->descripcion = $urldestino;
+                    $tabla->fecmod = date('Y.m.d h:i:s');
+                    $tabla->usumod = Yii::$app->user->identity->idusu;
+                    $tabla->save();    
+                }
+            }elseif($new == 15 && $sw == 0){
+                $sw = 1;
+                $tabla = new Empresainf;  
+                $tabla->idemp = $idemp;
+                $tabla->idtipo  = 15; //De la tabla tipo = Otro
+                $tabla->inf     = $model->info; 
+                $tabla->descripcion = $urldestino;
+                $tabla->usumod      = Yii::$app->user->identity->idusu;
+                $tabla->save();
+           
+                //print_r($tabla->getErrors());
+
+            }
+                return $this->redirect(['index', 'id' => $idemp]);
+            
+               }//foreach
+            }
+         }
+         return $this->render("logo", ["model" => $model, "msg" => $msg, "new" => $new]);
     }
 
     /**
