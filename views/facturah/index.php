@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Estado</th>
         <th>TOTAL</th>
         <th>Tipo</th>
-        <th>Deuda</th>
+        <th>Credito</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
@@ -65,19 +65,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <td><?= $row->tipo ?></td>
         <td align="right">
            <?php if(trim($row->tipo) == "Credito"){ ?>
-            <?php 
+            <?php $totalabono = 0;
              foreach($creditos as $cre):
                 if($cre['idfh'] == $row->idfh){
                     $abono = $cre->abono;
                     setlocale(LC_MONETARY, 'en_US.UTF-8');
-                    echo  money_format('%.2n', $abono)." / ";
+                    echo  money_format('%.2n', $abono)."  ";
+                    $totalabono = $totalabono + $abono;
                 }
                 endforeach;
+                setlocale(LC_MONETARY, 'en_US.UTF-8');
+                $totala = money_format('%.2n', $totalabono);
+                echo " = <b>".$totala."</b><br />";
              ?>
-             <a  href="<?= Url::toRoute(["faccredito/create", 
+             <?php if($row->total > $totalabono){?>
+                        <a  href="<?= Url::toRoute(["faccredito/create", 
                                     "idfh"  => $row->idfh,
+                                    "idemp" => $row->idemp,
                                 ]) ?>">
-            Agregar Abono</a>   
+                        Agregar Abono</a>   
+                  <?php } ?> 
+
           <?php } else{ echo "$0"; } ?>  
         </td>
          <td>

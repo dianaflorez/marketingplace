@@ -60,7 +60,7 @@ echo DatePicker::widget([
 <br />
 
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button type="submit" class="btn btn-primary">Mercadeooo</button>
+        <button type="submit" class="btn btn-primary">Mercadeo</button>
   <?= Html::endForm() ?>
 
 <br />

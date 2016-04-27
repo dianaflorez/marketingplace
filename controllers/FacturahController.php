@@ -381,7 +381,8 @@ class FacturahController extends Controller
 
             $idfh   = Html::encode($_POST["idfh"]);
             $tipo   = Html::encode($_POST["tipo"]);
-            $abono   = Html::encode($_POST["abono"]);
+            $abono  = Html::encode($_POST["abono"]);
+            $idemp  = Html::encode($_POST["idemp"]);
 
             if($idfh && $tipo){
             
@@ -436,11 +437,11 @@ class FacturahController extends Controller
         $idfh   = Html::encode($_POST["idfh"]);
         $idemp  = Html::encode($_POST["idemp"]);
 
+        if($idfh){
         if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
      
-        if($idfh){
           //Facturah
           $modelfh = Facturah::findOne(['idfh' => $idfh]);
           $modelfh->estado = "Anulada";

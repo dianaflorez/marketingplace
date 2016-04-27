@@ -13,7 +13,7 @@ use kartik\date\DatePicker;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$title = 'Ventas - '.$emp->nombre;
+$title = 'Productos - '.$emp->nombre;
 $this->params['breadcrumbs'][] = $title;
 ?>
 <h3>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $title;
 ?>
 </h3>
 
-<?= Html::beginForm(Url::toRoute("analisis/ventas"), "POST") ?>
+<?= Html::beginForm(Url::toRoute("analisis/productos"), "POST") ?>
 <?php
 echo '<label>Fecha Inicio</label>';
 echo DatePicker::widget([
@@ -65,39 +65,32 @@ echo DatePicker::widget([
 <br />
 
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button type="submit" class="btn btn-primary">Ventas</button>
+        <button type="submit" class="btn btn-primary">Productos</button>
 <?= Html::endForm() ?>
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
-        <th>Fecha</th>
-        <th>Cliente</th>
-        <th>Referencia</th>
-        <th>Estado</th>
-        <th>Tipo</th>
-        <th>TOTAL</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Valor Pagado</th>
     </tr>
-    <?php $suma = 0;?>
+    <?php $suma = 0; ?>
     <?php foreach($model as $row): ?>
     <tr>
-        <td><?= $row->fecha ?></td>
-        <td><?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?></td>
-        <td><?= $row->refpago ?></td>
-        <td><?= $row->estado ?></td>
-        <td><?= $row->tipo ?></td>
+        <td><?= $row['nombre'] ?></td>
+        <td><?= $row['ctq'] ?></td>
         <td align="right">
-            <?php $total = $row->total;
+            <?php $total = $row['vlr'];
             setlocale(LC_MONETARY, 'en_US.UTF-8');
             echo  money_format('%.2n', $total);
             $suma = $suma + $total;
             ?>
-         
         </td>
     </tr>
     <?php endforeach ?>
 
     <tr>
-         <td colspan="5" align="right"><b>TOTAL Vendido:</b></td>
+         <td colspan="2" align="right"><b>TOTAL Vendido:</b></td>
          <td align="right">
             <?php 
             setlocale(LC_MONETARY, 'en_US.UTF-8');

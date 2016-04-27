@@ -10,6 +10,8 @@ use app\models\Facturah;
 use app\models\elemento;
 use app\models\Accion;
 use app\models\Usuario;
+use app\models\Cliente;
+use app\models\Dirtel;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -45,8 +47,7 @@ class AnalisisController extends Controller
      * @return mixed
      */
     public function actionIndex($idemp,$msg=null)
-    {
-        
+    {      
         //Si un usuario q no es adm Solo puede ver su propia plan accion 
         if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
@@ -70,12 +71,15 @@ class AnalisisController extends Controller
         $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
         $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
         
+        $tipo = ['En Ejecucion'=>'En Ejecucion','Ejecutado'=>'Ejecutado']; 
+
     
         return $this->render('index', [
             'msg'      => $msg,
             'emp'      => $emp, 
             'fecini'   => $fecini,
             'fecfin'   => $fecfin, 
+            'tipo'      => $tipo,
        
         ]);
     }
@@ -153,7 +157,7 @@ class AnalisisController extends Controller
           //  'trimestre'=> $tr,  
             'plana'    => $planaccion,    
             'fectri'   => $fecini.' '.$fecfin, //Fechas de inicio de trimestre  
-           'fecini'   => $fecini,
+            'fecini'   => $fecini,
             'fecfin'   => $fecfin, 
        ]
         );
@@ -179,7 +183,8 @@ public function actionVentas()
      
         $model  = Facturah::find()
                 ->joinWith(['idcli0'])
-                ->where(['facturah.idemp' => $idemp ])
+                ->where(['facturah.idemp' => $idemp, 
+                         'facturah.estado' => 'Activa' ])
 //                ->joinWith(['elementos'])
            //     ->where(['elemento.idemp' => $id])
                 ->all();
@@ -191,9 +196,234 @@ public function actionVentas()
             'msg'     => $msg,
             'idemp'   => $idemp,
             'emp'     => $emp, 
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
         ]);
     }
 
+
+public function actionProductos()
+    {
+        $msg = null;
+        if(Yii::$app->request->post())
+        {
+            $fecini  = Html::encode($_POST["fecini"]);
+            $fecfin  = Html::encode($_POST["fecfin"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $fecini = date('Y-m-d');
+            $fecfin = date('Y-m-d');
+        }
+
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
+
+
+    $sqlpro = "SELECT p.nombre as nombre,sum(qty) as ctq,sum(fd.total) as vlr 
+        FROM facturah fh, facturad fd, producto p
+        WHERE 
+            p.idemp = ".$idemp." AND
+            fh.idfh = fd.idfh AND
+            fd.idpro = p.idpro AND
+            fh.estado = 'Activa' AND
+            (fh.tipo = 'Pagada' or fh.tipo = 'Credito') AND
+            fh.fecha >= '".$fecini."' AND
+            fh.fecha <= '".$fecfin."'  
+        GROUP BY p.nombre
+        ORDER BY ctq desc";
+
+        $connection = \Yii::$app->db;
+        $modelpro = $connection->createCommand($sqlpro);
+        $modelpro = $modelpro->queryAll();
+
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+
+        return $this->render('productos', [
+            'model'   => $modelpro,
+            'msg'     => $msg,
+            'idemp'   => $idemp,
+            'emp'     => $emp, 
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
+        ]);
+    }
+
+    public function actionClientes(){
+        
+        if(Yii::$app->request->post())
+        {
+            $cliente = Html::encode($_POST["tipo"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $cliente = "Institucional";
+        }
+
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
+        $model = Cliente::find()
+                ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
+                ->all();
+        
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+        $dirtel = Dirtel::find()->where(['idemp'=> $idemp, 'tabla'=>'cliente'])->all();
+
+          return $this->render('clientes', [
+            'model'     => $model,
+            'cliente'   => $cliente,
+            'msg'       => null,
+            'emp'       => $emp,
+            'dirtel'    => $dirtel,
+        ]);
+    }
+
+public function actionClientesproductos()
+    {
+        $msg = null;
+        if(Yii::$app->request->post())
+        {
+            $fecini  = Html::encode($_POST["fecini"]);
+            $fecfin  = Html::encode($_POST["fecfin"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $fecini = date('Y-m-d');
+            $fecfin = date('Y-m-d');
+        }
+
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
+
+
+    $sqlpro = "SELECT c.nombre1||' '||c.apellido1 as nom,
+                      p.nombre as nombre, c.tipo,
+                      sum(qty) as ctq, sum(fd.total) as vlr 
+        FROM facturah fh, facturad fd, producto p,cliente c
+        WHERE 
+            p.idemp = ".$idemp." AND
+            fh.idfh = fd.idfh AND
+            fd.idpro = p.idpro AND
+            fh.idcli = c.idcli AND
+            fh.estado = 'Activa' AND
+            (fh.tipo = 'Pagada' or fh.tipo = 'Credito') AND
+            fh.fecha >= '".$fecini."' AND
+            fh.fecha <= '".$fecfin."'  
+        GROUP BY p.nombre, c.nombre1, c.apellido1, c.tipo
+        ORDER BY c.tipo, ctq desc";
+
+        $connection = \Yii::$app->db;
+        $modelpro = $connection->createCommand($sqlpro);
+        $modelpro = $modelpro->queryAll();
+
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+
+        return $this->render('clientesproductos', [
+            'model'   => $modelpro,
+            'msg'     => $msg,
+            'idemp'   => $idemp,
+            'emp'     => $emp, 
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
+        ]);
+    }
+
+
+public function actionClientesfrecuencia()
+    {
+        $msg = null;
+        if(Yii::$app->request->post())
+        {
+            $fecini  = Html::encode($_POST["fecini"]);
+            $fecfin  = Html::encode($_POST["fecfin"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $fecini = date('Y-m-d');
+            $fecfin = date('Y-m-d');
+        }
+
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
+    $sqlpro = "SELECT c.nombre1||' '||c.apellido1 as nom,
+                      c.tipo, count(fh.idfh) as ct 
+        FROM facturah fh, cliente c
+        WHERE 
+            fh.idemp = ".$idemp." AND
+            fh.idcli = c.idcli AND
+            fh.estado = 'Activa' AND
+            (fh.tipo = 'Pagada' or fh.tipo = 'Credito') AND
+            fh.fecha >= '".$fecini."' AND
+            fh.fecha <= '".$fecfin."'  
+        GROUP BY c.nombre1, c.apellido1, c.tipo
+        ORDER BY c.tipo, ct desc";
+
+        $connection = \Yii::$app->db;
+        $modelpro = $connection->createCommand($sqlpro);
+        $modelpro = $modelpro->queryAll();
+
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+
+        return $this->render('clientesfrecuencia', [
+            'model'   => $modelpro,
+            'msg'     => $msg,
+            'idemp'   => $idemp,
+            'emp'     => $emp, 
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
+        ]);
+    }
+
+public function actionIndicadores()
+    {
+        $msg = null;
+        if(Yii::$app->request->post())
+        {
+            $fecini  = Html::encode($_POST["fecini"]);
+            $fecfin  = Html::encode($_POST["fecfin"]);
+            $idemp   = Html::encode($_POST["idemp"]);
+        } else {
+            $fecini = date('Y-m-d');
+            $fecfin = date('Y-m-d');
+        }
+
+        if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
+    $sqlpro = "SELECT c.nombre1||' '||c.apellido1 as nom,
+                      c.tipo, count(fh.idfh) as ct 
+        FROM facturah fh, cliente c
+        WHERE 
+            fh.idemp = ".$idemp." AND
+            fh.idcli = c.idcli AND
+            fh.estado = 'Activa' AND
+            (fh.tipo = 'Pagada' or fh.tipo = 'Credito') AND
+            fh.fecha >= '".$fecini."' AND
+            fh.fecha <= '".$fecfin."'  
+        GROUP BY c.nombre1, c.apellido1, c.tipo
+        ORDER BY c.tipo, ct desc";
+
+        $connection = \Yii::$app->db;
+        $modelpro = $connection->createCommand($sqlpro);
+        $modelpro = $modelpro->queryAll();
+
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+
+        return $this->render('indicadores', [
+            'model'   => $modelpro,
+            'msg'     => $msg,
+            'idemp'   => $idemp,
+            'emp'     => $emp, 
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
+        ]);
+    }
 
     /**
      * Displays a single Planaccion model.
@@ -215,6 +445,7 @@ public function actionVentas()
 
         ]);
     }
+
 
     /**
      * Creates a new Planaccion model.

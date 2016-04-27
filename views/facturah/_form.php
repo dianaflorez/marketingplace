@@ -191,6 +191,7 @@ use yii\helpers\Url;
     <?php ActiveForm::end(); ?>
     <?= Html::beginForm(Url::toRoute("facturah/updateend"), "POST") ?>
           <input type="hidden" name="idfh" value="<?= $model->idfh ?>">
+          <input type="hidden" name="idemp" value="<?= $model->idemp ?>">
           <input type="hidden" name="tipo" id="tipo" value="">
           <input type="hidden" id="abono" name="abono" value="">
                                     
