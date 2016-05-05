@@ -266,10 +266,18 @@ public function actionProductos()
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
      
-        $model = Cliente::find()
-                ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
+        if($cliente == "Todos"){
+            $model = Cliente::find()
+                ->where(['cliente.idemp' => $idemp])
+                ->orderBy('tipo')
                 ->all();
         
+        }else{
+            $model = Cliente::find()
+                ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
+                ->all();
+        }
+
         $emp    = Empresa::findOne(['idemp' => $idemp]);
         $dirtel = Dirtel::find()->where(['idemp'=> $idemp, 'tabla'=>'cliente'])->all();
 

@@ -20,7 +20,7 @@ use yii\bootstrap\ActiveForm;
         ]);
     }
 ?>
-
+</h3>
 <div class="usuario-form col-md-7">
 
     <?php $form = ActiveForm::begin([

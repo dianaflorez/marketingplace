@@ -3,9 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Planmarketing */
-/* @var $form yii\widgets\ActiveForm */
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
 ?>
 
 <div class="planmarketing-form">

@@ -8,6 +8,11 @@ use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -51,8 +56,12 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>
     <?php foreach($model as $row): ?>
     <tr>
-        <td><?= $row->fecha ?></td>
-        <td><?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?></td>
+        <td><?= substr($row->fecha, 0,16) ?></td>
+        <td>
+          <?php if($row->idcli0){ ?>
+            <?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?>
+          <?php } ?>
+        </td>
         <td><?= $row->refpago ?></td>
         <td><?= $row->estado ?></td>
         <td align="right">

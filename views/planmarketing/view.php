@@ -4,6 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 $this->title = $model->nombre;
 //$this->params['breadcrumbs'][] = ['label' => 'Planmarketings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

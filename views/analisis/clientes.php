@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $title;
               <option value="Institucional">Institucional</option>
               <option value="Individual">Individual</option>
               <option value="Esporadico">Esporádico</option>
+              <option value="Todos">Todos</option>
             </select>
           </div>
           <div class="col-md-5">
@@ -35,6 +36,7 @@ $this->params['breadcrumbs'][] = $title;
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
+        <th>No</th>
         <th>Nombre</th>
         <?php if($cliente == "Institucional") {?>
             <th>Nit</th>
@@ -50,13 +52,19 @@ $this->params['breadcrumbs'][] = $title;
         <?php } ?>    
         <th>Estado</th>
     </tr>
+    <?php $ct = 1; ?>
     <?php foreach($model as $row): ?>
     <tr>
+            <td><?php echo $ct; $ct++; ?></td>
         <?php if($cliente == "Institucional") {?>
             <td><?= $row->nombre1 ?> </td>
             <td><?= $row->nit ?></td>
-        <?php }elseif($cliente == "Individual" || $cliente == "Esporadico"){ ?>
+        <?php }elseif($cliente == "Individual" || $cliente == "Esporadico" ){ ?>
             <td><?= $row->nombre1.' '.$row->nombre2.' '.$row->apellido1.' '.$row->apellido2?></td> 
+        <?php }elseif($cliente == "Todos" ){ ?>
+            <td>
+              <?= $row->tipo.' - '.$row->nombre1.' '.$row->nombre2.' '.$row->apellido1.' '.$row->apellido2?>
+            </td> 
         <?php }
        if($cliente == "Individual"){ ?>
             <td><?= $row->identificacion ?></td>

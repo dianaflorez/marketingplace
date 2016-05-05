@@ -4,9 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Facturah */
-/* @var $form yii\widgets\ActiveForm */
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
 ?>
 
 <div class="facturah-form">

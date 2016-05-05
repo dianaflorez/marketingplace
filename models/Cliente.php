@@ -55,7 +55,7 @@ class Cliente extends \yii\db\ActiveRecord
             [['email'], 'string', 'max' => 90],
             // the email attribute should be a valid email address
             ['email', 'email'],
-            [['estado'], 'string', 'max' => 8],
+            [['estado'], 'string', 'max' => 9],
             [['idtide'], 'exist', 'skipOnError' => true, 'targetClass' => Tipo::className(), 'targetAttribute' => ['idtide' => 'idtipo']],
             [['usumod'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['usumod' => 'idusu']],
         ];
@@ -73,8 +73,8 @@ class Cliente extends \yii\db\ActiveRecord
             'nombre2' => 'Nombre2',
             'apellido1' => 'Apellido',
             'apellido2' => 'Apellido2',
-            'idtide' => 'Tipo Ide.',
-            'identificacion' => 'Identificacion',
+            'idtide' => 'Tipo Identificacion',
+            'identificacion' => 'Numero',
             'fecnac' => 'Nacimiento',
             'genero' => 'Genero',
             'tipo' => 'Tipo',

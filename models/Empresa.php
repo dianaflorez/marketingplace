@@ -63,7 +63,7 @@ class Empresa extends \yii\db\ActiveRecord
      */
     public function getInfempresas()
     {
-        return $this->hasMany(Infempresa::className(), ['idemp' => 'idemp']);
+        return $this->hasMany(Empresainf::className(), ['idemp' => 'idemp']);
     }
 
     /**

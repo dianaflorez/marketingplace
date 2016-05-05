@@ -174,7 +174,9 @@ class FacturahController extends Controller
 
         $emp = Empresa::findOne(['idemp' => $model->idemp]);
 
-        $model->refpago = substr($emp->nombre,0,2).time();
+        $refpago = facturah::find()->where(['idemp'=>$idemp])->count();
+
+        $model->refpago = $refpago;//substr($emp->nombre,0,2).time();
         $model->fecmod  = date('Y.m.d h:i:s');
         $model->usumod  = Yii::$app->user->identity->idusu;
 

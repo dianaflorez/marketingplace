@@ -47,7 +47,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-              ['label' => 'Usuario', 'url' => ['/site/datos']],
+              ['label' => '', 'url' => ['/site/datos'],'options'=> ['class'=>'imgdatos']],
           //  ['label' => 'Conóscanos', 'url' => ['/site/about']],
            // ['label' => 'Contact', 'url' => ['/site/contact']],
 
@@ -58,7 +58,7 @@ AppAsset::register($this);
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    ' Salir (' . Yii::$app->user->identity->username . ')',
+                    ' '.Html::img('@web/images/iconos/exit.png' ). Yii::$app->user->identity->username . ' ',
                     ['class' => 'btn btn-link ']
                 )
                 . Html::endForm()

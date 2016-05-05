@@ -172,7 +172,7 @@ class ClienteController extends Controller
 
         $tide = ArrayHelper::map(Tipo::find(['table' => 'usuario'])->all(), 'idtipo', 'nombre');
         $genero = ['Femenino'=>'Femenino', 'Masculino'=>'Masculino'];  
-        $estado = ['Activo'=>'Activo', 'Inactivo'=>'Inactivo'];  
+        $estado = ['Activo'=>'Activo', 'Inactivo'=>'Inactivo', 'Potencial'=>'Potencial'];  
 
         $emp = Empresa::findOne(['idemp' => $idemp]);
 

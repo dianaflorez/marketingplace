@@ -11,7 +11,10 @@ use app\models\ContactForm;
 use app\models\User;
 use app\models\Usuario;
 use app\models\Empresa;
+use app\models\EmpresaSearchForm;
 use app\models\Empresainf;
+use yii\data\Pagination;
+
 //Clases para upload
 use app\models\FormUpload;
 use yii\web\UploadedFile;
@@ -122,13 +125,30 @@ class SiteController extends Controller
         $this->layout='menuizq';
         $id = Yii::$app->user->identity->idemp;
 
-        $modelemp = Empresa::findOne($id);
-        $model    = Empresainf::find()->where(['idemp' => $id])->joinWith(['idtipo0'])->all();
       
-        return $this->render('adminEmp', [
+          if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $id = Yii::$app->user->identity->idemp;
+     
+        $modelemp = Empresa::findOne($id);
+        $model    = Empresainf::find()
+                    ->where(['idemp' => $id])
+                    ->joinWith(['idtipo0'])
+                    ->orderBy('tipo.orden')
+                    ->all();
+
+        $urllogo  = Empresainf::findOne(['idemp' => $id, 'idtipo' => 10]);
+
+        if($urllogo)
+            $urllogo = $urllogo->descripcion;
+        else
+            $urllogo = "0";
+
+        return $this->render('adminemp', [
             'model'     => $model,
             'idemp'     => $id,
             'modelemp'  => $modelemp,
+            'urllogo'   => $urllogo,
         ]);
 
     }
@@ -234,6 +254,67 @@ class SiteController extends Controller
               
          }
          return $this->render("upload", ["model" => $model, "msg" => $msg]);
+    }
+
+    public function actionEmpresas($msg=null)
+    {
+     //   $searchModel = new EmpresaSearch;
+     //   $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+       // $table = new Empresa;
+        //$model = $table->find()->andWhere('idemp>1')->all();
+
+        $form = new EmpresaSearchForm;
+        $search = null;
+        if($form->load(Yii::$app->request->get()))
+        {
+             if ($form->validate())
+            {
+                $search = Html::encode($form->q);
+                $table = Empresa::find()
+                        ->andWhere('idemp>0')
+                        ->orWhere(["like", "nombre", $search])
+                        ->orWhere(["like", "nit", $search]);
+                $count = clone $table;
+                $pages = new Pagination([
+                    "pageSize" => 3,
+                    "totalCount" => $count->count()
+                ]);
+                $model = $table
+                        ->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->all();
+            }
+            else
+            {
+                $form->getErrors();
+            }
+        }else{
+                $table = Empresa::find()
+                        ->andWhere('empresa.idemp>0')
+                        ->joinWith(['infempresas'])
+                        ->where(['empresainf.idtipo'=>10]);
+                        
+                $count = clone $table;
+                $pages = new Pagination([
+                    "pageSize" => 4,
+                    "totalCount" => $count->count(),
+                ]);
+                $model = $table
+                        ->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->all();
+        }
+
+        return $this->render('empresas', [
+         //   'searchModel'   => $searchModel,
+          //  'dataProvider'  => $dataProvider,
+            'model'         => $model,
+            "form"          => $form, 
+            "search"        => $search,
+            "pages"         => $pages,
+            "msg"           => $msg,
+        ]);
     }
 
     public function actionLogin()

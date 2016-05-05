@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php if($urllogo){ 
         ?>
-          <?= Html::img($urllogo,["height"=>"70px", "class" => "img-circle"]); ?>
+          <?= Html::img($urllogo,["height"=>"70px"]); ?>
       <?php }else{ ?>
            <a href="<?= Url::toRoute(["empresainf/logo", "idemp" => $idemp, "doc" => 0]) ?>">Subir Logo</a>
     
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
   </div>  
-    <?php   echo "nit. ".$modelemp->nit; ?>
+    <?php   echo "NIT. ".$modelemp->nit; ?>
     <br /><br />
    
     <?php $ctlineas = 1; ?> 

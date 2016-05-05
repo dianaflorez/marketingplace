@@ -83,7 +83,7 @@ class EmpresaController extends Controller
      * Lists all Empresa models.
      * @return mixed
      */
-    public function actionIndex($msg)
+    public function actionIndex($msg=null)
     {
      //   $searchModel = new EmpresaSearch;
      //   $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -172,21 +172,21 @@ class EmpresaController extends Controller
             
             $modelpm = new Planmarketing();
             $modelpm->idemp  = $model->idemp;
-            $modelpm->nombre = "Analisis Situacion Externa";
+            $modelpm->nombre = "Análisis Situación Externa";
             $modelpm->orden  = 1;
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
 
             $modelpm = new Planmarketing();
             $modelpm->idemp  = $model->idemp;
-            $modelpm->nombre = "Analisis Situacion Interna";
+            $modelpm->nombre = "Análisis Situación Interna";
             $modelpm->orden  = 2;
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
 
             $modelpm = new Planmarketing();
             $modelpm->idemp  = $model->idemp;
-            $modelpm->nombre = "Diagnostico de la Situacion";
+            $modelpm->nombre = "Diagnóstico de la Situación";
             $modelpm->orden  = 3;
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
@@ -221,7 +221,7 @@ class EmpresaController extends Controller
 
             $modelpm = new Planmarketing();
             $modelpm->idemp  = $model->idemp;
-            $modelpm->nombre = "Desiciones Extrategicas";
+            $modelpm->nombre = "Desiciones Extratégicas";
             $modelpm->orden  = 4;
             $modelpm->usumod = Yii::$app->user->identity->idusu;
             $modelpm->save();
@@ -229,14 +229,14 @@ class EmpresaController extends Controller
             $modelempinf = new Empresainf;
             $modelempinf->idemp  = $model->idemp;
             $modelempinf->idtipo = 4;  //Mision
-            $modelempinf->inf = "Nuestra mision...";  
+            $modelempinf->inf = "Nuestra misión...";  
             $modelempinf->usumod = Yii::$app->user->identity->idusu;
             $modelempinf->save();
 
             $modelempinf = new Empresainf;
             $modelempinf->idemp  = $model->idemp;
             $modelempinf->idtipo = 5;  //Vision
-            $modelempinf->inf = "Nuestra vision...";  
+            $modelempinf->inf = "Nuestra visión...";  
             $modelempinf->usumod = Yii::$app->user->identity->idusu;
             $modelempinf->save();
 
@@ -271,28 +271,28 @@ class EmpresaController extends Controller
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Producto";  
-            $modelpm->orden  = 1;
+            $modelpa->orden  = 1;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();
 
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Precio";  
-            $modelpm->orden  = 2;
+            $modelpa->orden  = 2;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();
 
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Plaza";  
-            $modelpm->orden  = 3;
+            $modelpa->orden  = 3;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();        
 
             $modelpa = new Planaccion;
             $modelpa->idemp  = $model->idemp;
             $modelpa->nombre = "Publicidad y promoción";  
-            $modelpm->orden  = 4;
+            $modelpa->orden  = 4;
             $modelpa->usumod = Yii::$app->user->identity->idusu;
             $modelpa->save();
 

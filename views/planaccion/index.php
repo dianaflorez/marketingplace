@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
+use yii\bootstrap\Tabs;
+
 
 $this->title = 'Plan Accion - '.$emp->nombre;
 $this->params['breadcrumbs'][] = $this->title;
@@ -51,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach($model as $row): ?>
     <tr>
         <td colspan="7">
-            <b><?= $row->nombre ?></b>
+            <div class="letraazul"><?= $row->nombre ?></div>
         <td>
     </tr>        
     <?php $suma = 0;?>
@@ -198,3 +200,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>                    
     <?php endforeach ?>
 </table>
+
+<?php  //IMPORTANTE Sin esto no funciona el menu del logo 
+    Tabs::widget(); 
+?>
+

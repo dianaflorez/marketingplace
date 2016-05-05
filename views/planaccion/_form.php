@@ -4,9 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Modal;
 use kartik\date\DatePicker;
-/* @var $this yii\web\View */
-/* @var $model app\models\Planaccion */
-/* @var $form yii\widgets\ActiveForm */
+use yii\bootstrap\Tabs;
 ?>
 
 <div class="planaccion-form">
@@ -48,3 +46,7 @@ use kartik\date\DatePicker;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php  //IMPORTANTE Sin esto no funciona el menu del logo 
+    Tabs::widget(); 
+?>

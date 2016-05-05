@@ -1,20 +1,98 @@
 body{
 	
 }
-
-.navbar-inverse {
-    background-color: #fafafa;
-    border-color: #ccc;
+.navbar {
+	height: 77px;
 }
+
+.navbar-brand {
+	padding-top: 0px;
+}
+
+.navtop{
+	margin-top: 17px;
+}
+.navtopsalir{
+	margin-top: 4px;
+}
+
+//Inicio no collapse 
+.navbar-collapse.collapse {
+display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+margin-right: -15px !important;
+}
+
+.navbar-right {
+float: right!important;
+}
+//No collapse
+
+.navbar-textmio {
+	background-color: #f00;
+	float: left;
+	margin: 15px 0 15px 0;
+}
+
+.breadcrumb{
+	margin-top: 5px;
+}
+.navbarimglogo{
+	background: url('../images/logopeq77.png')no-repeat;
+	height: 70px;
+	width: 170px;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus ,
+.navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus,
+.navbarimglogo .dropdown .open{
+	background-color: transparent;
+}
+.navbar-nav > li > a{
+	min-height: 57px;
+	background-color: transparent;
+	margin: 0px;
+	padding-bottom: 0px;
+}
+.menuazul{
+  	background-color: #073A59;
+	color: white;	
+	padding: 7px;
+}
+
+.menuazul a{
+	color: #eeeeea;
+	margin: 7px;
+}
+.iconosd{
+	margin: 4px;
+}
+
 .whitefont{
 	color: #fff;
 }
+
+.wrap > .container {
+    padding: 87px 15px 20px;
+}
+
 .wellazul {
    	left: 0; 
    	bottom: 0;
    	color: #ddd;
   	background-color: #073A59;
   	border-color: #ddd;	
+}
+
+.imgdatos{
+	background: url('../images/iconos/people.png')no-repeat;
+	margin-top: 10px;
 }
 
 .iconos{
@@ -40,3 +118,58 @@ body{
 	width: 100px;
 	margin: 0 auto;
 }
+
+//Inicio validacion era verde ahora azul
+.has-success .control-label, .has-success .radio,
+ .has-success .checkbox, .has-success .radio-inline, .has-success .checkbox-inline, 
+ .has-success.radio label, .has-success.checkbox label, .has-success.radio-inline label, 
+ .has-success.checkbox-inline label {
+    color: #286090;
+}
+
+.has-success .help-block, .has-success .control-label, .has-success .radio, .has-success .checkbox, .has-success .radio-inline, .has-success .checkbox-inline, .has-success.radio label, .has-success.checkbox label, .has-success.radio-inline label, .has-success.checkbox-inline label {
+    color: #31708f;
+}
+
+.has-success .form-control {
+  //  border-color: #286090;
+}
+
+.letraazul{
+	font-size: 140%;
+	color: #337ab7;
+	font-style: italic;
+}
+
+//Fin validacion era verde ahora azul
+.footer {
+    height: 77px;
+}
+
+@media screen and (max-width: 767px) { 
+	.navbar-nav {
+    	margin: 4px -15px;
+	}
+	.navbar-nav .open .dropdown-menu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px;
+    margin: 2px 0 0 20px;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #073A59;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	}
+}
+

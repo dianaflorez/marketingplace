@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
 
 $this->title = $emp->nombre.' - Productos';
 $this->params['breadcrumbs'][] = $this->title;

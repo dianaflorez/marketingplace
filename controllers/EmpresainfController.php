@@ -27,6 +27,9 @@ class EmpresainfController extends Controller
     /**
      * @inheritdoc
      */
+
+   // public     $layout='menuizq';
+
      public function behaviors()
     {
       return [
@@ -218,13 +221,22 @@ class EmpresainfController extends Controller
                 $file->saveAs($urldestino);
                 $msg = "<p><strong class='label label-info'>Subida realizada con éxito</strong></p>";
             if($doc == 0 && $sw == 0 && $new == null){ $sw = 1;
-                $tabla = new Empresainf;
-                $tabla->idemp = $idemp;
-                $tabla->idtipo  = 10; //De la tabla tipo = Logo
-                $tabla->inf   = "logo"; 
-                $tabla->descripcion = $urldestino;
-                $tabla->usumod      = Yii::$app->user->identity->idusu;
-                $tabla->save();
+
+                $ctlogo = Empresainf::find()
+                                ->where(['idemp' => $idemp, 'idtipo' => 10])
+                                ->count();
+
+                if($ctlogo < 1){
+                    $tabla = new Empresainf;
+                    $tabla->idemp = $idemp;
+                    $tabla->idtipo  = 10; //De la tabla tipo = Logo
+                    $tabla->inf   = "logo"; 
+                    $tabla->descripcion = $urldestino;
+                    $tabla->usumod      = Yii::$app->user->identity->idusu;
+                    $tabla->save();
+                }
+               // echo "<br /><br /><br />";
+               // print_r($tabla->getErrors());
             }elseif($doc !=0 && $sw == 0 && $new == null){
                 $sw = 1;
                 $tabla = Empresainf::findOne(['idinf' => $doc, 'idemp' => $idemp ]);

@@ -62,7 +62,6 @@ class Facturah extends \yii\db\ActiveRecord
             [['tipo'], 'string', 'max' => 10],
             [['descripcion'], 'string', 'max' => 50],
             [['moneda'], 'string', 'max' => 3],
-            [['refpago'], 'unique'],
             [['idcli'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['idcli' => 'idcli']],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idusu'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idusu' => 'idusu']],

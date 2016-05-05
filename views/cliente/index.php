@@ -5,6 +5,11 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\bootstrap\Alert;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 $this->title = $emp->nombre.' - '.$cliente;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -21,24 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<?php if($cliente == "Institucional") { ?>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
-                                                        "idemp"     => $emp->idemp,
-                                                        "cliente"   => "Institucional"]) 
-                                                        ?>">Nuevo Cliente</a>
-<?php }elseif($cliente == "Individual") { ?>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
-                                                        "idemp"     => $emp->idemp,
-                                                        "cliente"   => "Individual"]) 
-                                                        ?>">Nuevo Cliente</a>
-
-<?php }elseif($cliente == "Esporadico") { ?>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
-                                                        "idemp"     => $emp->idemp,
-                                                        "cliente"   => "Esporadico"]) 
-                                                        ?>">Nuevo Cliente</a>
-<?php } ?>
-
 <?php if($cliente != "Institucional") { ?>
 <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
                                                         "idemp" => $emp->idemp,             
@@ -78,6 +65,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         ]) 
                                                         ?>">Agenda</a>
 
+<div class="pull-right">
+<?php if($cliente == "Institucional") { ?>
+<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                        "idemp"     => $emp->idemp,
+                                                        "cliente"   => "Institucional"]) 
+                                                        ?>">Nuevo Cliente</a>
+<?php }elseif($cliente == "Individual") { ?>
+<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                        "idemp"     => $emp->idemp,
+                                                        "cliente"   => "Individual"]) 
+                                                        ?>">Nuevo Cliente</a>
+
+<?php }elseif($cliente == "Esporadico") { ?>
+<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                        "idemp"     => $emp->idemp,
+                                                        "cliente"   => "Esporadico"]) 
+                                                        ?>">Nuevo Cliente</a>
+<?php } ?>
+
+</div>
 <br />
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">

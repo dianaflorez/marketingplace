@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
+use yii\bootstrap\Tabs;
 
 $title = 'Plan Accion '.$emp->nombre.' - trimestre '.$trimestre.' ('.$fectri.') ';
 $this->params['breadcrumbs'][] = $title;
@@ -124,3 +125,6 @@ $this->params['breadcrumbs'][] = $title;
         </tr>  
     <?php endforeach ?>
 </table>
+<?php  //IMPORTANTE Sin esto no funciona el menu del logo 
+    Tabs::widget(); 
+?>

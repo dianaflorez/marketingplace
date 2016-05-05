@@ -9,7 +9,7 @@ $this->title = 'Marketin Place';
 
 	        <p class="lead">Super Administrador</p>
 
-	        <p><a class="btn btn-lg btn-success" href="index.php?r=empresa%2Findex&msg=	">Get started with Growth</a></p>
+	        <p><a class="btn btn-lg btn-success" href="index.php?r=empresa%2Findex&msg=	">Empieza con Growth CMR</a></p>
 	    </div>
 	</div>
 </div>	
