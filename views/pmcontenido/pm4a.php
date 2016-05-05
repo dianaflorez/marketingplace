@@ -15,8 +15,12 @@ use yii\helpers\Url;
 					<p>
 					  	<?= $pmc->descripcion; ?>
 					  	<br />
-				    	<a href="<?= Url::toRoute(["pmcontenido/update", "id" => $pmc->idpmc, "idemp" => $emp->idemp, "activo" => "pm4a"]) ?>">
-				       	Editar</a>
+					  	<!--Si el usuario es Comercial no mostrar -->
+						<?php if (Yii::$app->user->identity->role != 1){ ?>
+
+					    	<a href="<?= Url::toRoute(["pmcontenido/update", "id" => $pmc->idpmc, "idemp" => $emp->idemp, "activo" => "pm4a"]) ?>">
+					       	Editar</a>
+					    <?php } ?>   	
 					</p>
 			      </div>
 			    </div>		
@@ -24,15 +28,18 @@ use yii\helpers\Url;
 		<?php } //Fin if obj ?>
 		
 <?php endforeach ?>
-	
-<br />
-	<a class="btn btn-warning" href="<?= Url::toRoute(["pmcontenido/create", 
-									"id" 	=> $pm4id, 
-									"idemp" => $emp->idemp, 
-									"activo" => "pm4a",
-									"cont"	=> "Objetivo",
-								]) ?>">
-   	Agregar Objetivo</a>
+<!--Si el usuario es Comercial no mostrar -->
+<?php if (Yii::$app->user->identity->role != 1){ ?>
+
+	<br />
+		<a class="btn btn-warning" href="<?= Url::toRoute(["pmcontenido/create", 
+										"id" 	=> $pm4id, 
+										"idemp" => $emp->idemp, 
+										"activo" => "pm4a",
+										"cont"	=> "Objetivo",
+									]) ?>">
+	   	Agregar Objetivo</a>
+<?php } ?>
 </p>
 </div>
 

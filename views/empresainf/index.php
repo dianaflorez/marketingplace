@@ -3,6 +3,12 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 $this->title = $modelemp->nombre;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -35,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="panel-body">
         <?= $row->inf ?>
         <br /><br />
+        <?php if (Yii::$app->user->identity->role != 1){ ?>
             <!-- Update -->
             <a href="<?= Url::toRoute(["empresainf/update", "id" => $row->idinf]) ?>" title="Actualizar" aria-label="Actualizar">
               <span class="glyphicon glyphicon-pencil"></span>
@@ -69,11 +76,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div><!-- /.modal -->            
             </a>
             <!--End Delete--> 
+
+         <?php } ?>   
       </div>
     </div>
     <?php } ?>
     <?php endforeach ?>
 
+    <!--Si el usuario es Comercial no mostrar -->
+    <?php if (Yii::$app->user->identity->role != 1){ ?>
           <div class="panel panel-default wellazul">
             <div class="panel-body">
                 <b class="whitefont">Documentos</b><br />
@@ -108,5 +119,5 @@ $this->params['breadcrumbs'][] = $this->title;
          
             </div>
           </div>
-
+    <?php } ?>      
 </div>

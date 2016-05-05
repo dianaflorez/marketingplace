@@ -14,8 +14,12 @@ $this->params['breadcrumbs'][] = $title;
 ?>
 
 <h3>
-<a href="<?= Url::toRoute(["planaccion/index",  "id" => $emp->idemp]) ?>">
-    <?= $title ?>
+<!--Si el usuario es Comercial no mostrar -->
+    <?php if (Yii::$app->user->identity->role != 1){ ?>
+
+        <a href="<?= Url::toRoute(["planaccion/index",  "id" => $emp->idemp]) ?>">
+        <?= $title ?>
+    <?php } ?>    
 </a>
 </h3>   
 

@@ -115,7 +115,7 @@ AppAsset::register($this);
                         if($role == "adminemp")
                             $urlpa = "index.php?r=planaccion%2Findex&id=".Yii::$app->user->identity->idemp;
                         else
-                            $urlpa = "index.php?r=planaccion%2Fviewplan&id=1&tr=1";
+                            $urlpa = "index.php?r=planaccion%2Fviewplan&id=".Yii::$app->user->identity->idemp."&tr=1";
                     ?>
                     
                     <a class="col-xs-1 col-sm-12 col-md-12" 

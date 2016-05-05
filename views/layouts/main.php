@@ -28,49 +28,21 @@ AppAsset::register($this);
 
 <?php
 
-    $validarusuario  = false;
-    $validaremp      = false;
-    $validartipo     = false;
-    $superMegaAdmin  = false;
-    $superadmin      = false;
-    $adminemp        = false;   
-    $comercial        = false;   
-    $ae_inicio       = false;
-    $com_inicio      = false;   
+    $role = "comercial";   
 
     if(!Yii::$app->user->isGuest){
-        $superMegaAdmin = Yii::$app->user->identity->isSuperMegaAdmin(Yii::$app->user->identity->idusu); 
-  
-        $superadmin     = Yii::$app->user->identity->isSuperAdmin(Yii::$app->user->identity->idusu);
-
-        $adminemp     = Yii::$app->user->identity->isAdminEmp(Yii::$app->user->identity->idusu);
-
-        $comercial    = Yii::$app->user->identity->isComercial(Yii::$app->user->identity->idusu);
-
-
-        if($superMegaAdmin){
-            $validaremp     = true;
-            $validarusuario = true;
-            $validartipo    = true;
-        } elseif($superadmin){
-            $validaremp     = true;
-            $validarusuario = true;
-            
-        }elseif ($adminemp) {
-            $ae_inicio = true;
-        }elseif ($comercial){
-            $com_inicio = true;
+        $role = Yii::$app->user->identity->role; 
+        if($role == 7){
+            $role = "supermegaadmin";
+        }elseif($role == 4){
+            $role = "superadmin";
+        }elseif($role == 2){
+            $role = "adminemp";
+        }else{
+            $role = "comercial";
         }
     }
 
-?>
-<?php 
-    $role = Yii::$app->user->identity->role; 
-    if($role == 2){
-        $role = "adminemp";
-    }else{
-        $role = "comercial";
-    }
 ?>
 
 <div class="wrap">
@@ -129,7 +101,7 @@ AppAsset::register($this);
                         if($role == "adminemp")
                             $urlpa = "index.php?r=planaccion%2Findex&id=".Yii::$app->user->identity->idemp;
                         else
-                            $urlpa = "index.php?r=planaccion%2Fviewplan&id=1&tr=1";
+                            $urlpa = "index.php?r=planaccion%2Fviewplan&id=".Yii::$app->user->identity->idemp."&tr=1";
                     ?>
                      <a href="<?=$urlpa?>">
                         <table >
@@ -172,8 +144,10 @@ AppAsset::register($this);
                             </tr>    
                         </table>   
                     </a>
-
-                    <?php $urlanalisis = ""; ?>    
+                    <?php
+                        if($role == "adminemp" || $role == "superadmin"){ ?>
+                      
+                    <?php $urlanalisis = "index.php?r=analisis%2Findex&idemp=".Yii::$app->user->identity->idemp; ?>    
                     <a href="<?= $urlanalisis ?>">
                         <table >
                             <tr>
@@ -186,7 +160,7 @@ AppAsset::register($this);
                         </table>   
                     </a>
 
-
+                    <?php } ?>
     </div>
 </div>
 
@@ -201,8 +175,30 @@ AppAsset::register($this);
     <div class="navbar-header navbar-right pull-right">
      
       <ul class="nav navbar-nav navbar-left">
-        <li><a href="/news">Home</a></li>
-        <li><a href="/Shop">About</a></li>
+        <?php if($role == "supermegaadmin"){ ?>
+            <li><a href="index.php?r=site%2Fsuperadmin">SAdm</a></li>
+            <li><a href="index.php?r=site%2Fadminemp">AEmp</a></li>
+            <li><a href="index.php?r=site%2Fcomercial">Com</a></li>
+            <li><a href="index.php?r=usuario%2Findex">Usu</a></li>
+            <li><a href="index.php?r=tipo%2Findex">Tipo</a></li>
+        
+        <?php }elseif($role == "superadmin"){ ?>
+            <li><a href="index.php?r=site%2Fsuperadmin">Inicio</a></li>
+       
+        <?php }elseif($role == "adminemp"){ ?>
+            <li><a href="index.php?r=site%2Fadminemp">Inicio</a></li>
+      
+        <?php }elseif($role == "comercial"){ ?>
+            <li><a href="index.php?r=site%2Fcomercial">Inicio</a></li>
+             
+        <?php }else{ ?>
+            <li><a href="index.php?r=site%2Findex">Inicio</a></li>
+        <?php } ?>    
+
+        <li><a href="index.php?r=site%2Fabout">Acerca de</a></li>
+        <?php if($role == "supermegaadmin" || $role == "superadmin"){ ?>
+            <li><a href="index.php?r=empresa%2Findex">Empresa</a></li>
+        <?php } ?>
       </ul>
 
       <ul class="nav pull-left">

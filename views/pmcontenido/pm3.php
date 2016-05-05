@@ -12,8 +12,12 @@ use yii\helpers\Url;
 				<p>
 				  	<?= $pm->descripcion; ?>
 				  	<br />
-			    	<a href="<?= Url::toRoute(["pmcontenido/update", "id" => $pm->idpmc, "idemp" => $emp->idemp, "activo" => "pm3"]) ?>">
-			       	Editar</a>
+				  	<!--Si el usuario es Comercial no mostrar -->
+					<?php if (Yii::$app->user->identity->role != 1){ ?>
+
+				    	<a href="<?= Url::toRoute(["pmcontenido/update", "id" => $pm->idpmc, "idemp" => $emp->idemp, "activo" => "pm3"]) ?>">
+				       	Editar</a>
+				    <?php } ?>   	
 				</p>
 		      </div>
 		    </div>		

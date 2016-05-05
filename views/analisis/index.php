@@ -8,7 +8,11 @@ use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 use kartik\date\DatePicker;
+
+//IMPORTANTE Sin esto no funciona el menu del logo 
 use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
 
 $this->title = $emp->nombre.' Analisis';
 $this->params['breadcrumbs'][] = $this->title;

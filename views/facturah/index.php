@@ -17,7 +17,7 @@ Tabs::widget();
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ventas - '.$emp->nombre;
+$this->title = $emp->nombre.' - Ventas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -33,7 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </h3>
 <a class="btn btn-info" href="<?= Url::toRoute(["facturah/create", "idemp" => $idemp]) ?>">Nuevo Venta</a>
-<a class="btn btn-info" href="<?= Url::toRoute(["producto/index", "id" => $idemp]) ?>">Nuevo Producto</a>
+<!--Si el usuario es Comercial no mostrar -->
+<?php if (Yii::$app->user->identity->role != 1){ ?>
+  <a class="btn btn-info" href="<?= Url::toRoute(["producto/index", "id" => $idemp]) ?>">Nuevo Producto</a>
+<?php } ?>
 
 <?php $f = ActiveForm::begin([
     "method" => "get",
@@ -42,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]);
 ?>
 
-<h3>Ventas <?php echo ' - '.$emp->nombre;?></h3>
+<h3><?php echo $emp->nombre.' ';?> Ventas</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Fecha</th>

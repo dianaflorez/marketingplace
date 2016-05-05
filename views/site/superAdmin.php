@@ -1,6 +1,11 @@
 <?php 
 /* @var $this yii\web\View */
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 $this->title = 'Marketin Place';
 ?>
 <div class="site-index">

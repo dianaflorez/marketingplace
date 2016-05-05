@@ -7,10 +7,14 @@ use yii\helpers\Url;
 	<div class="panel-heading">Analisis Situación Interna</div>
 	<div class="panel-body">
 		<?= $model->descripcion; ?>
-		<p>
-		    <a href="<?= Url::toRoute(["planmarketing/update", "id" => $model->idpm]) ?>">
-		       Editar</a>
-		</p>
+		<!--Si el usuario es Comercial no mostrar -->
+		<?php if (Yii::$app->user->identity->role != 1){ ?>
+
+			<p>
+			    <a href="<?= Url::toRoute(["planmarketing/update", "id" => $model->idpm]) ?>">
+			       Editar</a>
+			</p>
+		<?php } ?>	
 	</div>	
 </div>
 	

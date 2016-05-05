@@ -122,7 +122,7 @@ class SiteController extends Controller
     }
 
     public function actionAdminemp(){
-        $this->layout='menuizq';
+        $this->layout='main';
         $id = Yii::$app->user->identity->idemp;
 
       
@@ -154,7 +154,7 @@ class SiteController extends Controller
     }
 
     public function actionComercial(){
-        $this->layout='menuizq';
+        $this->layout='main';
         $id = Yii::$app->user->identity->idemp;
 
         $modelemp = Empresa::findOne($id);

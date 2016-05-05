@@ -50,6 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <th class="action-column ">&nbsp;</th>
     </tr>
 
+    <?php $total = 0;?>
+
     <?php foreach($model as $row): ?>
     <tr>
         <td colspan="7">
@@ -128,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         setlocale(LC_MONETARY, 'en_US.UTF-8');
                         echo  money_format('%.2n', $costo);
                         ?>    
-                        <?php $suma = $suma + $costo; ?>
+                        <?php $suma = $suma + $costo; ?>                        
         </td>
         <td><?= $acc->estado ?></td>
         <td>
@@ -180,11 +182,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </td>
         
             <td  align="right">
+                <?php $total = $total + $suma; ?>
                 <?php
                 setlocale(LC_MONETARY, 'en_US.UTF-8');
                 $suma = money_format('%.2n', $suma);
                 ?>
                 <b><?= $suma ?></b>
+
             </td>
             <td colspan="2"></td>
         </tr>  
@@ -199,6 +203,15 @@ $this->params['breadcrumbs'][] = $this->title;
       </td>
     </tr>                    
     <?php endforeach ?>
+    <tr>
+      <td colspan="5" align="right"><b>TOTAL PLAN ACCION</b> </td>
+      <td align="right"><b>
+             <?php
+                setlocale(LC_MONETARY, 'en_US.UTF-8');
+                echo $total = money_format('%.2n', $total);
+                ?></b>
+               </td>
+    </tr>
 </table>
 
 <?php  //IMPORTANTE Sin esto no funciona el menu del logo 

@@ -15,8 +15,11 @@ use yii\helpers\Url;
 					<p>
 					  	<?= $pmc->descripcion; ?>
 					  	<br />
-				    	<a href="<?= Url::toRoute(["pmcontenido/update", "id" => $pmc->idpmc, "idemp" => $emp->idemp, "activo" => "pm4b"]) ?>">
-				       	Editar</a>
+					  	<!--Si el usuario es Comercial no mostrar -->
+						<?php if (Yii::$app->user->identity->role != 1){ ?>
+							<a href="<?= Url::toRoute(["pmcontenido/update", "id" => $pmc->idpmc, "idemp" => $emp->idemp, "activo" => "pm4b"]) ?>">
+					       	Editar</a>
+					    <?php } ?>   	
 					</p>
 			      </div>
 			    </div>		
@@ -24,7 +27,8 @@ use yii\helpers\Url;
 		<?php }  //Cierre if Objetivo ?>	
 </p>
 <?php endforeach ?>
-
+<!--Si el usuario es Comercial no mostrar -->
+<?php if (Yii::$app->user->identity->role != 1){ ?>
 	<a class="btn btn-warning" href="<?= Url::toRoute(["pmcontenido/create", 
 									"id" 	=> $pm4id, 
 									"idemp" => $emp->idemp, 
@@ -32,6 +36,7 @@ use yii\helpers\Url;
 									"cont"	=> "Estrategia",
 								]) ?>">
    	Agregar Estrategia</a>
+<?php } ?>   	
 </div>
 
 
