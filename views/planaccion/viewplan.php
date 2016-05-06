@@ -9,7 +9,7 @@ use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 use yii\bootstrap\Tabs;
 
-$title = 'Plan Accion '.$emp->nombre.' - trimestre '.$trimestre.' ('.$fectri.') ';
+$title = $emp->nombre.' - Plan Accion - trimestre '.$trimestre.' ('.$fectri.') ';
 $this->params['breadcrumbs'][] = $title;
 ?>
 
@@ -72,6 +72,7 @@ $this->params['breadcrumbs'][] = $title;
         <th>Costo</th>
         <th>Estado</th>
     </tr>
+    <?php $total = 0; ?>
     <?php foreach($plana as $pa): ?>
     <tr>
         <td colspan="7">
@@ -92,9 +93,9 @@ $this->params['breadcrumbs'][] = $title;
                             <div class="panel-body">
                                 <?php foreach($elementos as $ele): ?>
                                     
-                                    <?php if($ele->idaccion == $acc['idaccion']) {
+                                    <?php  if($ele->idaccion == $acc['idaccion']) {
                                         echo $ele->descripcion."<br />"; 
-                                    }
+                                      }
                                     ?>
                                 
                                 <?php endforeach ?>
@@ -119,6 +120,7 @@ $this->params['breadcrumbs'][] = $title;
             </td>
         
             <td  align="right">
+                <?php $total = $total + $suma; ?>
                 <?php
                 setlocale(LC_MONETARY, 'en_US.UTF-8');
                 $suma = money_format('%.2n', $suma);
@@ -128,6 +130,15 @@ $this->params['breadcrumbs'][] = $title;
             <td></td>
         </tr>  
     <?php endforeach ?>
+    <tr>
+        <td colspan="5" align="right"><b>TOTAL PLAN ACCION</b></td>
+        <td align="right"><b> 
+            <?php
+                setlocale(LC_MONETARY, 'en_US.UTF-8');
+                echo  $total = money_format('%.2n', $total);
+            ?>
+            </b>   
+    </tr>
 </table>
 <?php  //IMPORTANTE Sin esto no funciona el menu del logo 
     Tabs::widget(); 

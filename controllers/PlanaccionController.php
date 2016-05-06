@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
 use yii\db\Query;
 use app\models\User;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -109,19 +110,37 @@ class PlanaccionController extends Controller
      */
     public function actionIndex($id,$msg=null)
     {
-        $model2 = Planaccion::find()
-                ->orderBy('planaccion.orden')
-             
-                ->joinWith(['paaccions'])
+     /*   $sqlplan = 
+            "SELECT pa.idpa, pa.idemp,pa.nombre,pa.orden,a.idaccion,a.descripcion ades,
+                    a.fecini,a.fecfin,    
+                    a.orden,responsable,costo,estado, e.idele,e.descripcion,e.orden
+            from 
+                planaccion pa,
+                paaccion a
+            LEFT OUTER JOIN
+                paaelemento e
+            ON
+                a.idaccion = e.idaccion
+            WHERE
+                pa.idemp = 2 AND
+                pa.idpa = a.idpa
+            ORDER BY pa.orden,a.orden";
+        $connection = \Yii::$app->db;
+        $modelpa = $connection->createCommand($sqlplan);
+        $model = $modelpa->queryAll();
+*/
+         $model = Planaccion::find()
                 ->where(['planaccion.idemp' => $id])
+                ->joinWith(['paaccions'])
                 ->joinWith(['paaelementos'])
-           //     ->where(['elemento.idemp' => $id])
+                ->orderBy('planaccion.orden')
                 ->all();
-            
+        //      $model = ArrayHelper::multisort($model,['paaccions.orden'],[SORT_ASC]);
+     //         $model = ArrayHelper::toArray($model);
         $emp    = Empresa::findOne(['idemp' => $id]);
 
         return $this->render('index', [
-            'model'   => $model2,
+            'model'   => $model,
             'msg'     => $msg,
             'idemp'   => $id,
             'emp'     => $emp, 
@@ -191,7 +210,7 @@ class PlanaccionController extends Controller
                     ->orderBy('orden')    
                     ->all();
 
-        $elementos  = Paaelemento::find()->where(['idpa' => $id])->all();
+        $elementos  = Paaelemento::find()->where(['idemp' => $id])->all();
 
         $modeltri = $connection->createCommand($sqldatostri);
         $planxtri = $modeltri->queryAll();
@@ -206,7 +225,7 @@ class PlanaccionController extends Controller
             'elementos'=> $elementos,
             'trimestre'=> $tr,  
             'plana'    => $planaccion,    
-            'fectri'   => $fecini.' '.$fecfin, //Fechas de inicio de trimestre  
+            'fectri'   => $fecini.' a '.$fecfin, //Fechas de inicio de trimestre  
         ]);
     }
 

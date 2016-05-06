@@ -141,6 +141,13 @@ float: right!important;
 	font-style: italic;
 }
 
+.btnvacio{
+	background: transparent;
+	border-style: none;
+	color: #337ab7;
+	margin: 0; 
+}
+
 //Fin validacion era verde ahora azul
 .footer {
     height: 77px;

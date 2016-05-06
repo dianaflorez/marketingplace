@@ -8,9 +8,10 @@ use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 use yii\bootstrap\Tabs;
+use kartik\date\DatePicker;
 
 
-$this->title = 'Plan Accion - '.$emp->nombre;
+$this->title = $emp->nombre.' - Plan Accion';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -30,23 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
 -->
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp]) ?>">Ver Plan de Accion</a>
 
-<?php $f = ActiveForm::begin([
-    "method" => "get",
-    "action" => Url::toRoute("planaccion/index"),
-    "enableClientValidation" => true,
-]);
-?>
-
-<h3>Plan de Accion <?php echo ' - '.$emp->nombre;?></h3>
+<h3><?php echo $this->title;?></h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
         <th>Inicia</th>
         <th>Fin</th>
         <th>Responsable</th>
-        <th>Elemento</th>
         <th>Costo</th>
         <th>Estado</th>
+        <th>Elemento</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
 
@@ -59,17 +53,104 @@ $this->params['breadcrumbs'][] = $this->title;
         <td>
     </tr>        
     <?php $suma = 0;?>
-    <?php foreach($row->paaccions as $acc): ?>
+    <?php 
+    //ORGANIZACION DEL ARRAY INTERNO PARA ACCIONES
+      $acciones = array();
+      foreach($row->paaccions as $acc){
+        $accele = array(
+                      'orden'   =>$acc->orden, 
+                      'idaccion'=>$acc->idaccion,
+                      'descripcion'   =>$acc->descripcion,
+                      'fecini'=>$acc->fecini,
+                      'fecfin'=>$acc->fecfin,
+                      'responsable' => $acc->responsable,
+                      'costo' => $acc->costo,
+                      'estado'=> $acc->estado);
+        array_push($acciones, $accele);
+      }
+      $tmp = Array(); 
+      foreach($acciones as &$acc) 
+          $tmp[] = &$acc["orden"]; 
+      array_multisort($tmp, $acciones); 
+    ?>
+
+    <?php foreach($acciones as &$acc): ?>
     <tr>
-        <td><?= $acc->descripcion ?></td>
-        <td><?= $acc->fecini ?></td>
-        <td><?= $acc->fecfin ?></td>
-        <td><?= $acc->responsable ?></td>
+        <td><? //$acc['orden']; ?>
+          <?= Html::beginForm(Url::toRoute("paaccion/updateplantilla"), "POST") ?>
+
+            <textarea class="form-control" name="desc"><?= $acc['descripcion'] ?>
+            </textarea>
+            <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+            <input type="hidden" name="idaccion" value="<?= $acc['idaccion'] ?>">
+            <button type="submit" class="btnvacio pull-right">Editar</button>
+      
+        </td>
         <td>
-            <div class="panel panel-default">
-                <div class="panel-body">
+          <?php
+          echo DatePicker::widget([
+          'name'  => 'fecini',
+          'type' => DatePicker::TYPE_INPUT,
+          'value'  => $acc['fecini'],
+              'options' => ['placeholder' => 'Ingrese Fecha de Inicio ...'],
+              'pluginOptions' => [
+                  'autoclose'=>true,
+                  'format' => 'yyyy-m-dd'
+              ]
+          ]);
+          ?>   
+         <button type="submit" class="btnvacio pull-right">Editar</button>
+
+        </td>
+        <td>
+          <?php
+            echo DatePicker::widget([
+            'name'  => 'fecfin',
+            'type' => DatePicker::TYPE_INPUT,
+            'value'  => $acc['fecfin'],
+                'options' => ['placeholder' => 'Ingrese Fecha de Inicio ...'],
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-m-dd'
+                ]
+            ]);
+            ?>   
+           <button type="submit" class="btnvacio pull-right">Editar</button>
+        </td>
+        <td>
+          <textarea class="form-control" name="responsable"><?= $acc['responsable'] ?></textarea>
+           <button type="submit" class="btnvacio pull-right">Editar</button>
+        </td>
+        
+        <td align="right">
+            <input type="number" class="form-control" name="costo" 
+                  max="99999999" style="text-align:right;"
+                  value="<?= $acc['costo'] ?>"   />
+            <?php 
+              $costo = $acc['costo']; 
+              setlocale(LC_MONETARY, 'en_US.UTF-8');
+              echo $costof= money_format('%.2n', $costo);
+            ?>    
+            <?php $suma = $suma + $costo; ?> 
+            <button type="submit" class="btnvacio pull-right">Editar</button>
+        </td>
+        <td>
+            <select name="estado" class="form-control">
+              <option value="En Ejecucion">En Ejecucion</option>
+              <option value="Ejecutado">Ejecutado</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Terminado">Terminado</option>
+              <option value="<?= $acc['estado'] ?>" selected="selected"> <?= $acc['estado'] ?> </option>
+            </select>
+            <button type="submit" class="btnvacio pull-right">Editar</button>
+        
+         <?= Html::endForm() ?>
+
+         <td>
+            <div class="panel panel-default" style="min-width: 140px">
+                <div class="panel-body" style="margin: -7px">
                     <?php foreach($row->paaelementos as $ele): ?>
-                      <?php if($ele->idaccion == $acc->idaccion){?>
+                      <?php if($ele->idaccion == $acc['idaccion']){?>
                         
                         <!-- Update -->
                         <a href="<?= Url::toRoute(["paaelemento/update", 
@@ -118,34 +199,25 @@ $this->params['breadcrumbs'][] = $this->title;
             <a  href="<?= Url::toRoute(["paaelemento/create", 
                                     "idpa"  => $row->idpa, 
                                     "idemp" => $row->idemp, 
-                                    "idaccion" => $acc->idaccion,
+                                    "idaccion" => $acc['idaccion'],
                                     "pa"    => $row->nombre,
                                 ]) ?>">
             Agregar Elemento</a>           
 
         </td>
-        <td align="right">
-            <?php $costo = $acc->costo ?>
-                        <?php
-                        setlocale(LC_MONETARY, 'en_US.UTF-8');
-                        echo  money_format('%.2n', $costo);
-                        ?>    
-                        <?php $suma = $suma + $costo; ?>                        
-        </td>
-        <td><?= $acc->estado ?></td>
         <td>
           
             <!-- Update -->
-            <a href="<?= Url::toRoute(["paaccion/update", "id" => $acc->idaccion]) ?>" 
+            <a href="<?= Url::toRoute(["paaccion/update", "id" => $acc['idaccion']]) ?>" 
                         title="Actualizar" aria-label="Actualizar">
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <!--End Update-->
             <!--Delete-->
-             <a href="#" data-toggle="modal" data-target="#idaccion_<?= $acc->idaccion ?>" title="Eliminar" aria-label="Eliminar">
+             <a href="#" data-toggle="modal" data-target="#idaccion_<?= $acc['idaccion'] ?>" title="Eliminar" aria-label="Eliminar">
                 <span class="glyphicon glyphicon-trash"></span>
              </a>
-                <div class="modal fade" role="dialog" aria-hidden="true" id="idaccion_<?= $acc->idaccion ?>">
+                <div class="modal fade" role="dialog" aria-hidden="true" id="idaccion_<?= $acc['idaccion'] ?>">
                       <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -154,12 +226,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <h4 class="modal-title">Eliminar Accion</h4>
                               </div>
                               <div class="modal-body">
-                                    <p>¿Realmente deseas eliminar esta accion: <?= $acc->descripcion ?>?</p>
+                                    <p>¿Realmente deseas eliminar esta accion: <?= $acc['descripcion'] ?>?</p>
                               </div>
                               <div class="modal-footer">
                               <?= Html::beginForm(Url::toRoute("paaccion/delete"), "POST") ?>
-                                    <input type="hidden" name="idaccion" value="<?= $acc->idaccion ?>">
-                                    <input type="hidden" name="idemp" value="<?= $acc->idemp ?>">
+                                    <input type="hidden" name="idaccion" value="<?= $acc['idaccion'] ?>">
+                                    <input type="hidden" name="idemp" value="<?= $idemp ?>">
                                     
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-primary">Eliminar</button>

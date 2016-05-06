@@ -144,10 +144,13 @@ class PaaccionController extends Controller
        if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
-     
+
+        $ctorden = Paaccion::find()->where(['idemp'=>$idemp,'idpa'=>$idpa])->count();    
+      
         $model = new Paaccion();
         $model->idemp   = $idemp;
         $model->idpa    = $idpa;
+        $model->orden   = $ctorden + 1;
         $model->usumod  = Yii::$app->user->identity->idusu;
 
         //Si un usuario q no es adm Solo puede crear de su propia emp 
@@ -192,12 +195,54 @@ class PaaccionController extends Controller
         $emp = Empresa::findOne(['idemp' => $model->idemp]);
       
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idaccion]);
+            return $this->redirect(['planaccion/index', 'id' => $emp->idemp]);
         } else {
             return $this->render('update', [
                 'model' => $model,
                 'estado'  => $estado, 
                 'emp'   => $emp,
+             ]);
+        }
+    }
+
+    public function actionUpdateplantilla()
+    {
+      if(Yii::$app->user->identity->role != 4 &&   
+         Yii::$app->user->identity->role !=7)
+            $idemp = Yii::$app->user->identity->idemp;
+      
+        if(Yii::$app->request->post())
+        {
+            $idaccion = Html::encode($_POST["idaccion"]);
+            $desc     = Html::encode($_POST["desc"]);
+            $fecini   = Html::encode($_POST["fecini"]);
+            $fecfin   = Html::encode($_POST["fecfin"]);
+            $responsable   = Html::encode($_POST["responsable"]);
+            $costo    = Html::encode($_POST["costo"]);
+            $estado   = Html::encode($_POST["estado"]);
+            $idemp    = Html::encode($_POST["idemp"]);
+
+            
+            $model = $this->findModel($idaccion);
+            $model->descripcion = trim($desc);
+            $model->fecini      = $fecini;
+            $model->fecfin      = $fecfin;
+            $model->responsable = trim($responsable);
+            $model->costo       = trim($costo);
+            $model->estado      = trim($estado);
+            $model->fecmod      = date('Y.m.d h:i:s');
+            $model->usumod      = Yii::$app->user->identity->idusu;
+ 
+            if ($model->save()) {
+            //  var_dump($model->getErrors());
+           //   echo $model->descripcion;
+                return $this->redirect(['planaccion/index', 'id' => $idemp]);
+            } 
+
+        } else {
+      
+            return $this->render('planaccion/index', [
+                'id'   => $idemp,
              ]);
         }
     }
