@@ -15,6 +15,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
 use app\models\User;
+//Para encode
+use yii\helpers\Html;
+use yii\data\Pagination;
 
 /**
  * CitaController implements the CRUD actions for Cita model.
@@ -46,12 +49,62 @@ class CitaController extends Controller
         if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
-     
-        $model  = Cita::find()
+        
+        if(Yii::$app->request->post())
+        {
+          //  $idemp  = Html::encode($_POST["idemp"]);
+            if($_POST["cliente_id"] || $_POST["fecini"]){
+
+                $idcli  = null;
+                $fecini = null;
+                if($_POST["cliente_id"])
+                    $idcli   = Html::encode($_POST["cliente_id"]);
+
+                if($_POST["fecini"])
+                    $fecini  = Html::encode($_POST["fecini"]);
+
+                $table = Cita::find()
+                        //->orderBy('fecha')
+                        ->joinWith(['idcli0'])
+                        ->where(['cita.idemp' => $idemp])
+                        ->andWhere(["=", 'cita.idcli', $idcli])
+                        ->orWhere([">=", 'cita.fecha', $fecini]);
+
+                                
+
+                $count = clone $table;
+                $pages = new Pagination([
+                    "pageSize" => 3,
+                    "totalCount" => $count->count()
+                ]);
+                $model = $table
+                        ->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->all();
+            }else{
+            $msg = "Cliente no encontrado";
+            $model  = Cita::find()
+                    ->joinWith(['idcli0'])
+                    ->where(['cita.idemp' => $idemp])
+                    ->all();  
+            }                 
+        }else{
+        
+            $model  = Cita::find()
                     ->joinWith(['idcli0'])
                     ->where(['cita.idemp' => $idemp])
                     ->all();
 
+        }
+
+        $data = Cliente::find()
+                ->where(['idemp' => $idemp])
+                ->select(["CONCAT(nombre1,' ',apellido1) as label", 
+                          "CONCAT(nombre1,' ',apellido1) as value",
+                          'idcli as id'])
+                ->asArray()
+                ->all();
+                     
         $emp    = Empresa::findOne(['idemp' => $idemp]);
 
         $pedidos = Citapedido::find()->where(['idemp' => $idemp])->all();
@@ -61,6 +114,8 @@ class CitaController extends Controller
             'emp'   => $emp,
             'msg'   => $msg,
             'pedidos'=> $pedidos,
+            'data'  => $data,
+       
         ]);
     }
 

@@ -4,6 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
+//Para autocomplete
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
 //IMPORTANTE Sin esto no funciona el menu del logo 
 use yii\bootstrap\Tabs;
 Tabs::widget(); 
@@ -14,7 +18,24 @@ Tabs::widget();
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php echo $form->field($model, 'idcli')->dropDownList($clientes); ?>
+    <?php
+    echo '<b>Buscar Cliente</b>' .'<br>';
+    echo AutoComplete::widget([    
+    'class'=>'form-control',
+    'clientOptions' => [
+  'class'=>'form-control',
+    'source'    => $data,
+    'minLength' => '3', 
+    'autoFill'  => true,
+    'select'    => new JsExpression("function( event, ui ) {
+                    $('#facturah-idcli').val(ui.item.id);//#cliente_id is the id of hiddenInput.
+                    $('#nombre_id').val(ui.item.value);
+                 }")],
+                 ]);
+            ?>
+    <input type="hidden" name="cliente_id" id="cliente_id" />
+    ><input type="text"  id="nombre_id" readonly />
+    <?= $form->field($model, 'idcli')->hiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'refpago')->textInput(['maxlength' => true, 'readonly' => true]) ?>
    

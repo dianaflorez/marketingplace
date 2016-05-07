@@ -197,6 +197,14 @@ class FacturahController extends Controller
         $clientes   = ArrayHelper::map(Cliente::find()
                         ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
      
+        $data = Cliente::find()
+                ->where(['idemp' => $idemp])
+                ->select(["CONCAT(nombre1,' ',apellido1) as label", 
+                          "CONCAT(nombre1,' ',apellido1) as value",
+                          'idcli as id'])
+                ->asArray()
+                ->all();
+
         $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
         
         $model->totalnormal = 0;
@@ -276,6 +284,7 @@ class FacturahController extends Controller
                 'productos' => $productos,
                 'tipo'      => $tipo,
                 'facturad'  => array(),
+                'data'      => $data,
             ]);
         }
     }

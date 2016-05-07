@@ -8,6 +8,12 @@ use yii\data\Pagination;
 use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
+use app\models\Empresa;
+
+ 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -43,7 +49,34 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $f->end() ?>
 <h3><?= $search ?></h3>
 
+<?php
+$data = Empresa::find()
+        ->select(['nombre as value', 'nombre as  label','idemp as id'])
+        ->asArray()
+        ->all();
+ 
+        echo 'Family Name' .'<br>';
+    echo AutoComplete::widget([    
+    'clientOptions' => [
+    'source' => $data,
+    'minLength'=>'3', 
+    'autoFill'=>true,
+    'select' => new JsExpression("function( event, ui ) {
+                    $('#family_name_id').val(ui.item.id);//#memberssearch-family_name_id is the id of hiddenInput.
+                 }")],
+                 ]);
+            ?>
+<input type="text" name="family_name_id" id="family_name_id" />
 
+<?php
+ AutoComplete::widget([
+    'model' => $model,
+    'attribute' => 'nombre',
+    'clientOptions' => [
+        'source' => $model,
+    ],
+]);
+?>
 <h3>Lista de Empresas</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>

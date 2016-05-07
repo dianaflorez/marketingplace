@@ -5,6 +5,12 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\bootstrap\Alert;
 
+//Para autocomplete
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
+use kartik\date\DatePicker;
+
 $this->title = $emp->nombre.' - Agenda';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -25,9 +31,57 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
+
 <div class="cita-index">
 
-    <p>
+<?= Html::beginForm(Url::toRoute(["cita/index",  "idemp" => $emp->idemp]), "POST") ?>
+<div class="row">
+   <div class="col-sm-4 col-md-5">
+  
+    <?php
+    echo '<b>Buscar Cliente</b>' .'<br>';
+    echo AutoComplete::widget([    
+    'class'=>'form-control',
+    'clientOptions' => [
+  'class'=>'form-control',
+    'source'    => $data,
+    'minLength' => '3', 
+    'autoFill'  => true,
+    'select'    => new JsExpression("function( event, ui ) {
+                    $('#cliente_id').val(ui.item.id);//#cliente_id is the id of hiddenInput.
+                    $('#nombre_id').val(ui.item.value);
+                 }")],
+                 ]);
+            ?>
+    <input type="hidden" name="cliente_id" id="cliente_id" />
+    ><input type="text" name="nombre_id" id="nombre_id" readonly />
+
+    </div>
+    <div class="col-sm-3 col-md-4">
+  
+      <?php
+        echo '<label class="control-label">Fechas</label>';
+
+        echo DatePicker::widget([
+            'name' => 'fecini',
+            'value' => date('Y-m-d'),
+            'type' => DatePicker::TYPE_RANGE,
+            'name2' => 'fecfin',
+            'value2' => date('Y-m-d'),
+            'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
+            'pluginOptions' => [
+                'autoclose'=>true,
+                'format' => 'yyyy-m-dd'
+            ]
+        ]);
+        ?>
+    </div>
+    
+        </div>
+    <button type="submit" class="btn btn-info">Buscar</button>
+<?= Html::endForm() ?>
+
+    <p class="pull-right">
         <?= Html::a('Nueva Cita', ['create',"idemp" => $emp->idemp], ['class' => 'btn btn-success']) ?>
     </p>
   <table class="table table-striped  table-bordered table-showPageSummary">

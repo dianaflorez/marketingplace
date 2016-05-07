@@ -12,9 +12,11 @@ use app\models\EmpresaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\EmpresaSearchForm;
+
+use app\models\FormSearch;
 use yii\helpers\Html;
 use yii\data\Pagination;
+
 use yii\helpers\Url;
 use app\models\Usuario;
 use app\models\Planmarketing;
@@ -91,17 +93,18 @@ class EmpresaController extends Controller
        // $table = new Empresa;
         //$model = $table->find()->andWhere('idemp>1')->all();
 
-        $form = new EmpresaSearchForm;
+        $form = new FormSearch;
         $search = null;
         if($form->load(Yii::$app->request->get()))
         {
-             if ($form->validate())
+            if ($form->validate())
             {
                 $search = Html::encode($form->q);
                 $table = Empresa::find()
-                        ->andWhere('idemp>0')
                         ->orWhere(["like", "nombre", $search])
-                        ->orWhere(["like", "nit", $search]);
+                        ->orWhere(["like", "nit", $search])
+                        ->andWhere('idemp>0');
+
                 $count = clone $table;
                 $pages = new Pagination([
                     "pageSize" => 3,

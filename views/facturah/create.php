@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $emp->nombre." - Nueva Venta";
         'productos' => $productos,
         'tipo'		=> $tipo,
         'facturad'  => $facturad,
+        'data'      => $data,
     ]) ?>
 
 </div>
