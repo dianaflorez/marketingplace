@@ -9,11 +9,17 @@ use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 use kartik\date\DatePicker;
 
+
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$title = 'Clientes Productos - '.$emp->nombre;
+$title = $emp->nombre.' - Clientes Productos';
 $this->params['breadcrumbs'][] = $title;
 ?>
 <h3>
@@ -35,37 +41,42 @@ $this->params['breadcrumbs'][] = $title;
 </h3>
 
 <?= Html::beginForm(Url::toRoute("analisis/clientesproductos"), "POST") ?>
-<?php
-echo '<label>Fecha Inicio</label>';
-echo DatePicker::widget([
-    'name' => 'fecini', 
-    'value' => $fecini,
-    'options' => ['placeholder' => 'Fecha Inicial ...'],
-    'pluginOptions' => [
-        'todayHighlight' => true,
-        'autoclose'=>true,
-        'format' => 'yyyy-m-dd'
-    ]
-]);
-?>
-<br />
-<?php
-echo '<label>Fecha Fin</label>';
-echo DatePicker::widget([
-    'name' => 'fecfin', 
-    'value' => $fecfin,
-    'options' => ['placeholder' => 'Fecha Final ...'],
-    'pluginOptions' => [
-        'todayHighlight' => true,
-        'autoclose'=>true,
-        'format' => 'yyyy-m-dd'
-    ]
-]);
-?>
-<br />
+<div class="row">
+    <div class="col-xs-7 col-md-3">
+        <?php
+            echo '<label class="control-label">Fechas</label>';
+
+            echo DatePicker::widget([
+                'name' => 'fecini',
+                'value' => $fecini,
+                'type' => DatePicker::TYPE_RANGE,
+                'name2' => 'fecfin',
+                'value2' => $fecfin,
+                'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-m-dd'
+                ]
+            ]);
+            ?>
+    </div>   
+     <div class="col-xs-2">
+        <label class="control-label">Tipo Clientes</label>
+
+            <select class="form-control" name="tipo" >
+              <option value="Todos">Todos</option>
+              <option value="Institucional">Institucional</option>
+              <option value="Individual">Individual</option>
+              <option value="Esporadico">Esporádico</option>
+            </select>
+    </div>       
+    <div class="col-xs-7 col-md-4">
+    <br />
 
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
         <button type="submit" class="btn btn-primary">Productos</button>
+    </div>
+</div>        
 <?= Html::endForm() ?>
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">

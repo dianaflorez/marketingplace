@@ -64,8 +64,8 @@ $this->params['breadcrumbs'][] = $this->title;
            ]);
            ?>
            <br />
-                   <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                   <button type="submit" class="btn btn-primary">Mercadeo</button>
+           <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+           <button name="btn" type="submit" class="btn btn-primary">Generar</button>
            <?= Html::endForm() ?>
       </div>
     </div>
@@ -106,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
          ?>
          <br />
                  <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                 <button type="submit" class="btn btn-primary">Ventas</button>
+                 <button type="submit" class="btn btn-primary">Generar</button>
            <?= Html::endForm() ?>
       </div>
      </div>
@@ -147,7 +147,7 @@ echo DatePicker::widget([
 ?>
 <br />
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button type="submit" class="btn btn-primary">Productos</button>
+        <button type="submit" class="btn btn-primary">Generar</button>
   <?= Html::endForm() ?>
 
       </div>
@@ -170,7 +170,7 @@ echo DatePicker::widget([
             </select>
             <br />
             <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-            <button type="submit" class="btn btn-primary">Ver</button>
+            <button name="btn" type="submit" class="btn btn-primary">Generar</button>
          <?= Html::endForm() ?>
     
       </div>
@@ -181,7 +181,7 @@ echo DatePicker::widget([
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientesproductos"), "POST") ?>
           
-         <h3>Compras Clientes</h3>
+         <h3>Clientes Productos</h3>
          <?php
          echo '<label>Fecha Inicio</label>';
          echo DatePicker::widget([
@@ -211,7 +211,9 @@ echo DatePicker::widget([
          ?>
          <br />
                  <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                 <button type="submit" class="btn btn-primary">Clientes Productos</button>
+                <input type="hidden" name="pro_id" id="pro_id" />
+                 <input type="hidden" name="tipo" id="tipo" />
+                 <button type="submit" class="btn btn-primary">Generar</button>
            <?= Html::endForm() ?>
     
       </div>
@@ -252,8 +254,10 @@ echo DatePicker::widget([
          ]);
          ?>
          <br />
-                 <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                 <button type="submit" class="btn btn-primary">Ventas</button>
+           <input type="hidden" name="cliente_id" id="cliente_id" />
+           <input type="hidden" name="tipo" id="tipo" />
+           <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+           <button type="submit" class="btn btn-primary">Generar</button>
            <?= Html::endForm() ?>
     
       </div>
@@ -297,7 +301,7 @@ echo DatePicker::widget([
          ?>
          <br />
                  <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                 <button type="submit" class="btn btn-primary">Indicadores</button>
+                 <button type="submit" class="btn btn-primary">Generar</button>
            <?= Html::endForm() ?>
     
       </div>

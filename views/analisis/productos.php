@@ -35,37 +35,31 @@ $this->params['breadcrumbs'][] = $title;
 </h3>
 
 <?= Html::beginForm(Url::toRoute("analisis/productos"), "POST") ?>
-<?php
-echo '<label>Fecha Inicio</label>';
-echo DatePicker::widget([
-    'name' => 'fecini', 
-    'value' => $fecini,
-    'options' => ['placeholder' => 'Fecha Inicial ...'],
-    'pluginOptions' => [
-        'todayHighlight' => true,
-        'autoclose'=>true,
-        'format' => 'yyyy-m-dd'
-    ]
-]);
-?>
-<br />
-<?php
-echo '<label>Fecha Fin</label>';
-echo DatePicker::widget([
-    'name' => 'fecfin', 
-    'value' => $fecfin,
-    'options' => ['placeholder' => 'Fecha Final ...'],
-    'pluginOptions' => [
-        'todayHighlight' => true,
-        'autoclose'=>true,
-        'format' => 'yyyy-m-dd'
-    ]
-]);
-?>
-<br />
+<div class="row">
+    <div class="col-xs-10 col-md-4">
+        <?php
+            echo '<label class="control-label">Fechas</label>';
 
+            echo DatePicker::widget([
+                'name' => 'fecini',
+                'value' => $fecini,
+                'type' => DatePicker::TYPE_RANGE,
+                'name2' => 'fecfin',
+                'value2' => $fecfin,
+                'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-m-dd'
+                ]
+            ]);
+            ?>
+    </div>        
+    <div class="col-xs-10 col-md-4">
+    <br />
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
         <button type="submit" class="btn btn-primary">Productos</button>
+    </div>
+</div>    
 <?= Html::endForm() ?>
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">

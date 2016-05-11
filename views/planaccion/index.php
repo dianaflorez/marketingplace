@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/create", "id" => $idemp]) ?>">Nuevo Plan de Accion</a>
 -->
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp]) ?>">Ver Plan de Accion</a>
+<a class="btn btn-danger" href="<?= Url::toRoute(["planaccion/verpdf", "idemp" => $idemp]) ?>">Ver PDF</a>
 
 <h3><?php echo $this->title;?></h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <tr>
         <td colspan="7">
             <div class="letraazul"><?= $row->nombre ?></div>
-        <td>
+        </td>
     </tr>        
     <?php $suma = 0;?>
     <?php 

@@ -155,6 +155,13 @@ class FaccreditoController extends Controller
         $model->usumod = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($model->saldo == 0) {
+
+              $modelfac = Facturah::findOne($model->idfh);
+              $modelfac->tipo = "PagadaCred";
+              $modelfac->save(); 
+            }
+
             return $this->redirect(['facturah/index', 'idemp' => $model->idemp]);
         } else {
             return $this->render('create', [

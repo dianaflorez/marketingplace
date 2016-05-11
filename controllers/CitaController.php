@@ -57,20 +57,51 @@ class CitaController extends Controller
 
                 $idcli  = null;
                 $fecini = null;
-                if($_POST["cliente_id"])
+                $fecfin = null;
+
+                if($_POST["cliente_id"] && $_POST["fecini"] && $_POST["fecfin"]){
+
                     $idcli   = Html::encode($_POST["cliente_id"]);
-
-                if($_POST["fecini"])
                     $fecini  = Html::encode($_POST["fecini"]);
-
-                $table = Cita::find()
-                        //->orderBy('fecha')
+                    $fecfin  = Html::encode($_POST["fecfin"]);
+                    $table = Cita::find()
                         ->joinWith(['idcli0'])
                         ->where(['cita.idemp' => $idemp])
                         ->andWhere(["=", 'cita.idcli', $idcli])
-                        ->orWhere([">=", 'cita.fecha', $fecini]);
+                        ->andWhere([">=", 'cita.fecha', $fecini])
+                        ->andwhere(["<=", 'cita.fecha', $fecfin]);
 
-                                
+                }elseif($_POST["cliente_id"]){
+
+                    $idcli   = Html::encode($_POST["cliente_id"]);
+                    $table = Cita::find()
+                        ->joinWith(['idcli0'])
+                        ->where(['cita.idemp' => $idemp])
+                        ->andWhere(["=", 'cita.idcli', $idcli]);
+
+                }elseif($_POST["fecini"] && $_POST["fecfin"] ){
+                    $fecini  = Html::encode($_POST["fecini"]);
+                    $fecfin  = Html::encode($_POST["fecfin"]);
+                    $msg = "Resultados con fecha inicial ".$fecini." y fecha final ".$fecfin;
+                    $table = Cita::find()
+                        ->joinWith(['idcli0'])
+                        ->where(['cita.idemp' => $idemp])
+                        ->andWhere([">=", 'cita.fecha', $fecini])
+                        ->andWhere(["<=", 'cita.fecha', $fecfin]);
+                
+                }elseif($_POST["fecini"]){
+                    $fecini  = Html::encode($_POST["fecini"]);
+                    $msg = "Resultados con fecha inicial ".$fecini;
+                    $table = Cita::find()
+                        ->joinWith(['idcli0'])
+                        ->where(['cita.idemp' => $idemp])
+                        ->andWhere([">=", 'cita.fecha', $fecini]);
+            
+                }else{
+                    $table = Cita::find()
+                        ->joinWith(['idcli0'])
+                        ->where(['cita.idemp' => $idemp]);
+                }                          
 
                 $count = clone $table;
                 $pages = new Pagination([
@@ -80,20 +111,40 @@ class CitaController extends Controller
                 $model = $table
                         ->offset($pages->offset)
                         ->limit($pages->limit)
+                        ->orderBy('fecha desc')
                         ->all();
             }else{
-            $msg = "Cliente no encontrado";
-            $model  = Cita::find()
+               $table  = Cita::find()
                     ->joinWith(['idcli0'])
-                    ->where(['cita.idemp' => $idemp])
-                    ->all();  
+                    ->where(['cita.idemp' => $idemp]);
+                   
+                $count = clone $table;
+                $pages = new Pagination([
+                        "pageSize" => 3,
+                        "totalCount" => $count->count()
+                    ]);
+                $model = $table
+                  ->offset($pages->offset)
+                  ->limit($pages->limit)
+                  ->orderBy('fecha desc')
+                  ->all();
             }                 
         }else{
         
-            $model  = Cita::find()
+            $table  = Cita::find()
                     ->joinWith(['idcli0'])
-                    ->where(['cita.idemp' => $idemp])
-                    ->all();
+                    ->where(['cita.idemp' => $idemp]);
+               
+            $count = clone $table;
+            $pages = new Pagination([
+                    "pageSize" => 3,
+                    "totalCount" => $count->count()
+                ]);
+            $model = $table
+              ->offset($pages->offset)
+              ->limit($pages->limit)
+              ->orderBy('fecha desc')
+              ->all();
 
         }
 
@@ -115,7 +166,8 @@ class CitaController extends Controller
             'msg'   => $msg,
             'pedidos'=> $pedidos,
             'data'  => $data,
-       
+            "pages"         => $pages,
+            
         ]);
     }
 

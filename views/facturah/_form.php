@@ -34,7 +34,8 @@ Tabs::widget();
                  ]);
             ?>
     <input type="hidden" name="cliente_id" id="cliente_id" />
-    ><input type="text"  id="nombre_id" readonly />
+    <?php $client = ""; if(isset($cliente->nombre1)) $client =$cliente->nombre1.' '.$cliente->apellido1; ?>
+    ><input type="text"  id="nombre_id" value="<?= $client ?>" readonly />
     <?= $form->field($model, 'idcli')->hiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'refpago')->textInput(['maxlength' => true, 'readonly' => true]) ?>

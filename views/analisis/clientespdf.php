@@ -5,39 +5,19 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\bootstrap\Alert;
 
-$title = $emp->nombre.' - '.$cliente;
+$title = $emp->nombre.' - Cliente '.$cliente;
 $this->params['breadcrumbs'][] = $title;
 ?>
 <h3>
-<a href="<?= Url::toRoute(["analisis/index",  "idemp" => $emp->idemp]) ?>">
-    <?= $title ?>
-</a>
+  <?= $title ?>
 </h3>   
 
  <?= Html::beginForm(Url::toRoute("analisis/clientes"), "POST") ?>
     <h3>Clientes</h3>
-      <div class="row">
-         <div class="col-md-4">
-            <select class="form-control" name="tipo" >
-              <option value="Institucional">Institucional</option>
-              <option value="Individual">Individual</option>
-              <option value="Esporadico">Esporádico</option>
-              <option value="Todos">Todos</option>
-            </select>
-          </div>
-          <div class="col-md-5">
-            <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-            <button type="submit" class="btn btn-primary">Generar</button>
-            <button name="btn" value="2" type="submit" class="btn btn-danger"
-                onclick="document.this.form.target='_blank'"
-                >Ver Pdf</button>
-          </div>
-      </div>      
-         <?= Html::endForm() ?>
-    
+     
 <br />
-<br />
-<table class="table table-striped  table-bordered table-showPageSummary">
+<table border="1" cellspacing=0 cellpadding=2 bordercolor="#cc0000" align="center">
+
     <tr>
         <th>No</th>
         <th>Nombre</th>

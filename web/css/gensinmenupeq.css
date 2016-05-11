@@ -1,0 +1,35 @@
+body{
+	margin: 0px;
+	top: 0;
+
+	background: #fff url('../images/fondopeq.png')no-repeat;
+	background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+ 
+}
+
+.iconos{
+	width: 70%;
+}
+
+.logo{
+	margin-top: -70px;
+}
+
+.about{
+	margin: 2%;
+}
+.table th{
+	color: #337ab7;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #eeeeea;
+}
+
+.fixcolumoperation{
+	width: 100px;
+	margin: 0 auto;
+}

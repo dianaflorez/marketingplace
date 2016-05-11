@@ -65,10 +65,7 @@ AppAsset::register($this);
  <div class="row" >
             <div class="wellr col-xs-10 col-sm-12 col-md-12" >
                     <?php
-                        if($role == "adminemp")
-                            $urlinicio = "index.php?r=site%2Fadminemp";
-                        else
-                            $urlinicio = "index.php?r=site%2Fcomercial";
+    $urlinicio = "index.php?r=empresainf%2Findex&id=".Yii::$app->user->identity->idemp;
                     ?>
 
                     <a href="<?=$urlinicio?>">
@@ -179,6 +176,7 @@ AppAsset::register($this);
             <li><a href="index.php?r=site%2Fsuperadmin">SAdm</a></li>
             <li><a href="index.php?r=site%2Fadminemp">AEmp</a></li>
             <li><a href="index.php?r=site%2Fcomercial">Com</a></li>
+            <li><a href="index.php?r=site%2Fempresas">Todas</a></li>
             <li><a href="index.php?r=usuario%2Findex">Usu</a></li>
             <li><a href="index.php?r=tipo%2Findex">Tipo</a></li>
         

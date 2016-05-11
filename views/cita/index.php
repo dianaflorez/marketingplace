@@ -11,6 +11,10 @@ use yii\web\JsExpression;
 
 use kartik\date\DatePicker;
 
+//Pagination
+use yii\widgets\LinkPager;
+
+
 $this->title = $emp->nombre.' - Agenda';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -43,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
     echo AutoComplete::widget([    
     'class'=>'form-control',
     'clientOptions' => [
-  'class'=>'form-control',
+    'class'=>'form-control',
     'source'    => $data,
     'minLength' => '3', 
     'autoFill'  => true,
@@ -64,10 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         echo DatePicker::widget([
             'name' => 'fecini',
-            'value' => date('Y-m-d'),
+            //'value' => date('Y-m-d'),
             'type' => DatePicker::TYPE_RANGE,
             'name2' => 'fecfin',
-            'value2' => date('Y-m-d'),
+           // 'value2' => date('Y-m-d'),
             'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
             'pluginOptions' => [
                 'autoclose'=>true,
@@ -133,4 +137,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>        
     <?php endforeach?>
     </table>    
+
+<?= LinkPager::widget([
+    "pagination" => $pages,
+]); ?>
 </div>

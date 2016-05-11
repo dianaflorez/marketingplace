@@ -317,8 +317,17 @@ class FacturahController extends Controller
                         ->where(['idfh' => $model->idfh])
                         ->all();
 
-        $clientes   = ArrayHelper::map(Cliente::find()
-                        ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
+        //Clientes                  
+        $data = Cliente::find()
+                ->where(['idemp' => $model->idemp])
+                ->select(["CONCAT(nombre1,' ',apellido1) as label", 
+                          "CONCAT(nombre1,' ',apellido1) as value",
+                          'idcli as id'])
+                ->asArray()
+                ->all();
+
+        $cliente   = Cliente::findOne(['idcli' =>$model->idcli]);
+
         $emp        = Empresa::findOne(['idemp' => $model->idemp]);
         $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
         $tipo = ['En Proceso'=> 'En Proceso','Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
@@ -374,11 +383,12 @@ class FacturahController extends Controller
                 'model'     => $model,
                 'modelfd'   => $modelfd,
                 'modelcredito' => $modelcredito,
-                'clientes'  => $clientes,
                 'emp'       => $emp,
                 'productos' => $productos,
                 'tipo'      => $tipo,
                 'facturad'  => $facturad,  
+                'data'      => $data,
+                'cliente'   => $cliente,
             ]);
         }
     }

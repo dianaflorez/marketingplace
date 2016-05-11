@@ -14,7 +14,7 @@ use app\models\Empresainf;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Empresas';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <h3>
@@ -35,14 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
     "enableClientValidation" => true,
 ]);
 ?>
-<?php /*
-<div class="form-group">
-    <?= $f->field($form, "q")->input("search") ?>
-</div>
-<?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
-<?php $f->end() ?>
-<h3><?= $search ?></h3>
-*/?>
 
 <h3>Lista de Empresas</h3>
 <div class="row">
@@ -50,15 +42,19 @@ $this->params['breadcrumbs'][] = $this->title;
      <div class="col-md-4"> 
       <div class="panel panel-default">
         <div class="panel-body">
-           <?php $urllogo = Empresainf::findOne(['idemp' => $row->idemp, 'idtipo' =>10]); ?>
-
-        <?php if($urllogo['descripcion']){ ?>
-          <?= Html::img($urllogo['descripcion'],["height"=>"70px", "class" => "img-circle"]); ?>
+        <a href="index.php?r=site%2Fcontact&id=<?=$row->idemp?>">
+           <?php foreach($row->infempresas as $log) {
+              if($log->idemp == $row->idemp && $log->idtipo ==10){
+                if($log->descripcion)
+                echo Html::img($log->descripcion,["height"=>"70px"]);
+              }
+            } 
+           ?>
           <br />
-        <?php }?> 
-
+        
           <?= $row->nombre ?><br />
           <?= $row->nit ?>
+          </a>
         </div>
       </div>
       </div>

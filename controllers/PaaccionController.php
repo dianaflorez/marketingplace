@@ -222,7 +222,8 @@ class PaaccionController extends Controller
             $estado   = Html::encode($_POST["estado"]);
             $idemp    = Html::encode($_POST["idemp"]);
 
-            
+            if(strtotime($fecfin) < strtotime($fecini)) $fecfin = $fecini;
+
             $model = $this->findModel($idaccion);
             $model->descripcion = trim($desc);
             $model->fecini      = $fecini;

@@ -19,11 +19,12 @@ $this->params['breadcrumbs'][] = $emp->nombre." - Nueva Venta agregando producto
         	'model' => $model,
             'modelfd'   => $modelfd,
         'modelcredito'  => $modelcredito,
-            'clientes'  => $clientes,
+            'cliente'  => $cliente,
             'emp'       => $emp,
             'productos' => $productos,
             'tipo'      => $tipo,
             'facturad'	=> $facturad,
+            'data'      => $data,
     ]) ?>
 
 </div>

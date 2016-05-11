@@ -18,6 +18,8 @@ use app\models\User;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
+use mPDF;
+
 
 /**
  * PlanaccionController implements the CRUD actions for Planaccion model.
@@ -199,8 +201,9 @@ class PlanaccionController extends Controller
                 fecini >= '".$fecini."' AND
                 fecini <= '".$fecfin."' 
             UNION   
-            SELECT * FROM paaccion 
+            SELECT * FROM paaccion p
             WHERE
+                p.idemp = ".$id." AND
                 fecfin >= '".$fecini."' AND
                 fecfin <= '".$fecfin."'   
             ORDER BY fecfin, feccre";
@@ -227,6 +230,28 @@ class PlanaccionController extends Controller
             'plana'    => $planaccion,    
             'fectri'   => $fecini.' a '.$fecfin, //Fechas de inicio de trimestre  
         ]);
+    }
+
+  public function actionVerpdf($idemp)
+    {
+        
+        $model = Planaccion::find()
+                ->where(['planaccion.idemp' => $idemp])
+                ->joinWith(['paaccions'])
+                ->joinWith(['paaelementos'])
+                ->orderBy('planaccion.orden')
+                ->all();
+        $emp    = Empresa::findOne(['idemp' => $idemp]);
+
+       $content = $this->renderPartial('verpdf',[
+                                            'model'   => $model,
+                                            'idemp'   => $idemp,
+                                            'emp'     => $emp, 
+                                        ]);
+        
+        $mpdf = new mpdf('c', 'A4-L');
+        $mpdf->WriteHTML($content);
+        $mpdf->Output();
     }
 
     /**

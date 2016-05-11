@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 $this->title = $modelemp->nombre;
 ?>
 <div class="empresainf-index">

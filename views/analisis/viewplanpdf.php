@@ -13,11 +13,6 @@ $title = 'Ventas Plan Accion '.$emp->nombre.' - Fecha ('.$fectri.') ';
 $this->params['breadcrumbs'][] = $title;
 ?>
 <h3>
-<a href="<?= Url::toRoute(["analisis/index",  "idemp" => $emp->idemp]) ?>">
-    <?= $title ?>
-</a>
-</h3>   
-<h3>
 <?php if($msg){ 
         echo Alert::widget([
             'options' => [
@@ -29,13 +24,11 @@ $this->params['breadcrumbs'][] = $title;
 ?>
 </h3>
 
- <?= Html::beginForm( Url::toRoute("analisis/viewplan"), "POST") ?>
-
+<h2><?=$emp->nombre." ";?>Plan de Accion</h2>
 <div class="row">
     <div class="col-xs-10 col-md-4">
+        <?= Html::beginForm(Url::toRoute("analisis/viewplan"), "POST") ?>
         <?php
-            echo '<label class="control-label">Fechas</label>';
-
             echo DatePicker::widget([
                 'name' => 'fecini',
                 'value' => $fecini,
@@ -52,17 +45,11 @@ $this->params['breadcrumbs'][] = $title;
     </div>        
     <div class="col-xs-10 col-md-4">
         <br />
-        <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button name="btn" value="1" type="submit" class="btn btn-primary">Generar</button>
-        <button name="btn" value="2" type="submit" class="btn btn-danger"
-                onclick="document.this.form.target='_blank'"
-                >Ver Pdf</button>
     </div>
 </div>
-<?= Html::endForm() ?>
 
-<h3>Plan de Accion <?php echo ' - '.$emp->nombre;?></h3>
-<table class="table table-striped  table-bordered table-showPageSummary">
+<table border="1" cellspacing=0 cellpadding=2 bordercolor="#cc0000" align="center">
+
     <tr>
         <th>Nombre</th>
         <th>Inicia</th>
@@ -84,12 +71,12 @@ $this->params['breadcrumbs'][] = $title;
 
             <?php if($acc['idpa'] == $pa->idpa){?>
                 <tr>
-                    <td><?= $acc['descripcion'] ?></td>
-                    <td><?= $acc['fecini'] ?></td>
-                    <td><?= $acc['fecfin'] ?></td>
-                    <td><?= $acc['responsable'] ?></td>
-                    <td><?= $acc['estado'] ?></td>
-                    <td>
+                    <td valign="top"><?= $acc['descripcion'] ?></td>
+                    <td valign="top"><?= $acc['fecini'] ?></td>
+                    <td valign="top"><?= $acc['fecfin'] ?></td>
+                    <td valign="top"><?= $acc['responsable'] ?></td>
+                    <td valign="top" width="20%"><?= "*".$acc['estado'] ?></td>
+                    <td valign="top">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <?php foreach($elementos as $ele): ?>
@@ -103,7 +90,7 @@ $this->params['breadcrumbs'][] = $title;
                             </div>
                         </div>            
                     </td>
-                    <td align="right">
+                    <td valign="top" align="right">
                         <?php $costo = $acc['costo'] ?>
                         <?php
                         setlocale(LC_MONETARY, 'en_US.UTF-8');

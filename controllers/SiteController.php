@@ -19,6 +19,9 @@ use yii\data\Pagination;
 use app\models\FormUpload;
 use yii\web\UploadedFile;
 
+//Para encode
+use yii\helpers\Html;
+
 class SiteController extends Controller
 {
     public $layout='/sinmenu';
@@ -258,42 +261,13 @@ class SiteController extends Controller
 
     public function actionEmpresas($msg=null)
     {
-     //   $searchModel = new EmpresaSearch;
-     //   $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-       // $table = new Empresa;
-        //$model = $table->find()->andWhere('idemp>1')->all();
+    
+        $this->layout='sinmenupeq';
 
-        $form = new EmpresaSearchForm;
-        $search = null;
-        if($form->load(Yii::$app->request->get()))
-        {
-             if ($form->validate())
-            {
-                $search = Html::encode($form->q);
-                $table = Empresa::find()
-                        ->andWhere('idemp>0')
-                        ->orWhere(["like", "nombre", $search])
-                        ->orWhere(["like", "nit", $search]);
-                $count = clone $table;
-                $pages = new Pagination([
-                    "pageSize" => 3,
-                    "totalCount" => $count->count()
-                ]);
-                $model = $table
-                        ->offset($pages->offset)
-                        ->limit($pages->limit)
-                        ->all();
-            }
-            else
-            {
-                $form->getErrors();
-            }
-        }else{
-                $table = Empresa::find()
-                        ->andWhere('empresa.idemp>0')
+        $table = Empresa::find()
                         ->joinWith(['infempresas'])
-                        ->where(['empresainf.idtipo'=>10]);
+                        ->andWhere([">", 'empresa.idemp', 0])
+                        ->andWhere(["=", 'empresainf.idtipo', 10]);
                         
                 $count = clone $table;
                 $pages = new Pagination([
@@ -304,14 +278,10 @@ class SiteController extends Controller
                         ->offset($pages->offset)
                         ->limit($pages->limit)
                         ->all();
-        }
+        
 
         return $this->render('empresas', [
-         //   'searchModel'   => $searchModel,
-          //  'dataProvider'  => $dataProvider,
             'model'         => $model,
-            "form"          => $form, 
-            "search"        => $search,
             "pages"         => $pages,
             "msg"           => $msg,
         ]);
@@ -381,17 +351,34 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function actionContact()
+    public function actionContact($id)
     {
+        $this->layout='sinmenupeq';
+        
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+            if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
+                return $this->refresh();
+            }
+
+        $ver = is_numeric(Html::encode($id));
+
+        if($ver == 1) {
+            $idemp = $id;
+            $emp = Empresa::findOne($idemp);
+
+             return $this->render('contact', [
+                'model' => $model,
+                'emp' => $emp,
+            ]);
+
+        }else {
+            return $this->render('contact', [
+                'model' => $model,
+               
+            ]);
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
     }
 
     public function actionAbout()
