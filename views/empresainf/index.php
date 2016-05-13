@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
             <!--Delete-->
              <a href="#" data-toggle="modal" data-target="#idinf_<?= $row->idinf ?>" title="Eliminar" aria-label="Eliminar">
-             <span class="glyphicon glyphicon-trash">.</span>
+             <span class="glyphicon glyphicon-trash"></span>
              </a>
                 <div class="modal fade" role="dialog" aria-hidden="true" id="idinf_<?= $row->idinf ?>">
                       <div class="modal-dialog">
@@ -94,20 +94,29 @@ $this->params['breadcrumbs'][] = $this->title;
               
                 if($ctlineas > 4 && $row->inf != "logo"){  
                   $ctlineas ++; 
+                  ?>
+                    <div class="cajita">
+                     <p class="cuadroblanco"><?=$row->inf?></p>
+                  <?php
                   if($row->descripcion){
-                    echo Html::img('@web/images/iconos/lito.png',["height"=>"20px"]);
+                    echo Html::img('@web/images/iconos/lito.png',["height"=>"20px", "class"=>"estado"]);
                   }else{ ?>
-                    <a href="<?= Url::toRoute(["empresainf/logo", 
+                    <a class="estado" href="<?= Url::toRoute(["empresainf/logo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => $row->idinf,
                                      ]) ?>">
                       <?=Html::img('@web/images/iconos/add.png',["height"=>"27px"])?>
                     </a>
-            <?php } echo $row->inf."<br />"; 
-                } ?>
+            <?php } ?>
+                     <br />
+                    </div>
+               <?php } ?>
 
         <?php endforeach ?>
          <br />
+         <br />
+         <br />
+
          <a href="<?= Url::toRoute(["empresainf/logo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => 0,

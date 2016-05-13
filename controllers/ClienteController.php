@@ -138,7 +138,7 @@ class ClienteController extends Controller
         $emp    = Empresa::findOne(['idemp' => $idemp]);
         $dirtel = Dirtel::find()->where(['idemp'=> $idemp, 'tabla'=>'cliente'])->all();
 
-         $data = Cliente::find()
+        $data = Cliente::find()
                 ->where(['idemp' => $idemp])
                 ->select(["CONCAT(nombre1,' ',apellido1) as label", 
                           "CONCAT(nombre1,' ',apellido1) as value",

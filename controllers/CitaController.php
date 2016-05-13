@@ -105,7 +105,7 @@ class CitaController extends Controller
 
                 $count = clone $table;
                 $pages = new Pagination([
-                    "pageSize" => 3,
+                    "pageSize" => 10,
                     "totalCount" => $count->count()
                 ]);
                 $model = $table
@@ -120,7 +120,7 @@ class CitaController extends Controller
                    
                 $count = clone $table;
                 $pages = new Pagination([
-                        "pageSize" => 3,
+                        "pageSize" => 10,
                         "totalCount" => $count->count()
                     ]);
                 $model = $table
@@ -137,7 +137,7 @@ class CitaController extends Controller
                
             $count = clone $table;
             $pages = new Pagination([
-                    "pageSize" => 3,
+                    "pageSize" => 10,
                     "totalCount" => $count->count()
                 ]);
             $model = $table
@@ -218,7 +218,14 @@ class CitaController extends Controller
         
         $clientes   = ArrayHelper::map(Cliente::find()
                         ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
-     
+        $data = Cliente::find()
+                ->where(['idemp' => $idemp])
+                ->select(["CONCAT(nombre1,' ',apellido1) as label", 
+                          "CONCAT(nombre1,' ',apellido1) as value",
+                          'idcli as id'])
+                ->asArray()
+                ->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcita]);
         } else {
@@ -226,7 +233,7 @@ class CitaController extends Controller
                 'model' => $model,
                 'emp'   => $emp,
                 'estado'=> $estado,
-                'clientes' => $clientes,
+                'data' => $data,
             ]);
         }
     }

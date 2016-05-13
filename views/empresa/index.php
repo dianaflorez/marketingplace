@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
             <!--Delete-->
              <a href="#" data-toggle="modal" data-target="#idemp_<?= $row->idemp ?>" title="Eliminar" aria-label="Eliminar">
-             <span class="glyphicon glyphicon-trash">.</span>
+             <span class="glyphicon glyphicon-trash"></span>
              </a>
                 <div class="modal fade" role="dialog" aria-hidden="true" id="idemp_<?= $row->idemp ?>">
                       <div class="modal-dialog">

@@ -47,6 +47,8 @@ AppAsset::register($this);
 
 <div class="wrap">
 
+
+
 <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
  
   <div class="container">
@@ -160,16 +162,22 @@ AppAsset::register($this);
                     <?php } ?>
     </div>
 </div>
-
+<!--FIN MENU -->
           </ul>
         </li>
-
-
-
       </ul>
    </div>
 
-    <div class="navbar-header navbar-right pull-right">
+    <button type="button" class="navbar-toggle" data-toggle="collapse"
+            data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Desplegar navegación</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+
+    <div class="navbar-header navbar-right pull-right 
+                collapse navbar-collapse navbar-ex1-collapse">
      
       <ul class="nav navbar-nav navbar-left">
         <?php if($role == "supermegaadmin"){ ?>
@@ -181,36 +189,48 @@ AppAsset::register($this);
             <li><a href="index.php?r=tipo%2Findex">Tipo</a></li>
         
         <?php }elseif($role == "superadmin"){ ?>
-            <li><a href="index.php?r=site%2Fsuperadmin">Inicio</a></li>
-            <li><a href="index.php?r=usuario%2Findex">Usu</a></li>
+            <li><a href="index.php?r=site%2Fsuperadmin" title="Inicio">
+                    <img src="images/iconos/home.png" >
+                </a></li>
+            <li><a href="index.php?r=usuario%2Findex">Usuarios</a></li>
             
         <?php }elseif($role == "adminemp"){ ?>
-            <li><a href="index.php?r=site%2Fadminemp">Inicio</a></li>
+            <li><a href="index.php?r=site%2Fadminemp" title="Inicio">
+                    <img src="images/iconos/home.png" >
+                </a></li>
       
         <?php }elseif($role == "comercial"){ ?>
-            <li><a href="index.php?r=site%2Fcomercial">Inicio</a></li>
+            <li><a href="index.php?r=site%2Fcomercial" title="Inicio">
+                    <img src="images/iconos/home.png" >
+                </a></li>
              
         <?php }else{ ?>
-            <li><a href="index.php?r=site%2Findex">Inicio</a></li>
+            <li><a href="index.php?r=site%2Findex" title="Inicio">
+                    <img src="images/iconos/home.png" >
+                </a></li>
         <?php } ?>    
 
-        <li><a href="index.php?r=site%2Fabout">Acerca de</a></li>
+        <li><a href="index.php?r=site%2Fabout" title="Acerca de">
+                <img src="images/iconos/about.png" >
+            </a></li>
         <?php if($role == "supermegaadmin" || $role == "superadmin"){ ?>
-            <li><a href="index.php?r=empresa%2Findex">Empresa</a></li>
+            <li><a href="index.php?r=empresa%2Findex" title="Empresas">
+                <img src="images/iconos/empresas.png" >
+            </a></li>
         <?php } ?>
       </ul>
 
       <ul class="nav pull-left">
         
-        <li class="navbar-text pull-left">
-            <a href="index.php?r=site%2Fdatos">
-                <img src="images/iconos/people.png">
+        <li class="navbar-ppal pull-left">
+            <a href="index.php?r=site%2Fdatos" title="Mis Datos">
+                <img src="images/iconos/datos.png">
             </a>
         </li>
         <?php if(Yii::$app->user->isGuest){
-            echo '<li class="navbar-text pull-left">Login</li>';
+            echo '<li class="navbar-ppal pull-left">Login</li>';
         }else{         
-        echo '<li class="navbar-text pull-left">'
+        echo '<li class="navbar-ppal pull-left">'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     ' '.Html::img('@web/images/iconos/exit.png' ). Yii::$app->user->identity->username . ' ',
@@ -223,9 +243,15 @@ AppAsset::register($this);
       </ul>
 
 
+
      </div>
+
   </div>
+
 </nav>
+
+
+
 <?/**
     <?php 
     NavBar::begin([

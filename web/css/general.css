@@ -1,6 +1,26 @@
 body{
 	
 }
+
+.estado{
+	width: 33px;
+	float: left;
+}
+.cuadroblanco{
+	background: #FFF;
+	width: 220px;
+	color: #073A59;
+	float: left;
+	padding: 2px;
+	margin: 2px;
+}
+
+.cajita{
+	margin: 2px;
+	float: left;
+	width: 98%;
+}
+
 .navbar {
 	height: 77px;
 }
@@ -19,6 +39,7 @@ body{
 //Inicio no collapse 
 .navbar-collapse.collapse {
 display: block!important;
+
 }
 
 .navbar-nav>li, .navbar-nav {
@@ -31,8 +52,15 @@ margin-right: -15px !important;
 
 .navbar-right {
 float: right!important;
+background: #e7e7e7;
 }
 //No collapse
+.navbar-ppal{
+	background-color: #f09;
+	margin-top: 30px;
+	margin-right: 0px;
+    margin-left: 0px;
+}
 
 .navbar-textmio {
 	background-color: #f00;

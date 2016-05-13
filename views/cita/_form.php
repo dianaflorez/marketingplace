@@ -4,6 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use kartik\time\TimePicker;
+
+//Para autocomplete
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Cita */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,8 +18,29 @@ use kartik\time\TimePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php echo $form->field($model, 'idcli')->dropDownList($clientes); ?>
-  
+      <label class="control-label">Buscar Cliente</label>
+        <br />
+        <?php
+        echo AutoComplete::widget([    
+        'class'=>'form-control',
+        'clientOptions' => [
+        'class'=>'form-control',
+        'source'    => $data,
+        'minLength' => '3', 
+        'autoFill'  => true,
+        'select'    => new JsExpression("function( event, ui ) {
+                        $('#cliente_id').val(ui.item.id);//#cliente_id is the id of hiddenInput.
+                        $('#nombre_id').val(ui.item.value);
+                        $('#cita-idcli').val( ui.item.id );
+                     }")],
+                     ]);
+                ?>
+        <input type="hidden" name="cliente_id" id="cliente_id" />
+        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly />
+        </b>
+         <?php echo $form->field($model, 'idcli')->hiddenInput()->label(false);?>
+
+
     <?php
     echo $form->field($model, 'fecha')->widget(DatePicker::classname(), [
         'options' => ['placeholder' => 'Ingrese Fecha de Inicio ...'],
@@ -35,20 +61,6 @@ use kartik\time\TimePicker;
         ]
 ]); ?>
 
-
-<?php /*
-    echo '<label class="control-label">Set Time</label>';
-echo DateTimePicker::widget([
-    'name' => 'datetime_400',
-    'value' => '01/04/2005 08:17',
-    'removeButton' => false,
-    'pickerButton' => ['icon' => 'time'],
-    'pluginOptions' => [
-        'autoclose' => true,
-        'format' => 'mm/dd/yyyy hh:ii'
-    ]
-]);*/
-?>
     <?php echo $form->field($model, 'estado')->dropDownList($estado); ?>
    
     <?= $form->field($model, 'observacion')->textarea(['rows' => 6]) ?>

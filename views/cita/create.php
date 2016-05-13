@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = "Nuevo";
         'model' => $model,
         'emp'	=> $emp,
         'estado'=> $estado,
-        'clientes' => $clientes,
+        'data' =>  $data,
     ]) ?>
 
 </div>
