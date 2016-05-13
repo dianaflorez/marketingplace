@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <!-- Analisis -->
             <a href="<?= Url::toRoute(["analisis/index", "idemp" => $row->idemp]) ?>" title="Analisis" aria-label="Analisis">
-              / Analisis
+              / Evaluación
             </a>
             <!--End -->
         </td>

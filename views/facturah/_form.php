@@ -217,7 +217,10 @@ Tabs::widget();
           <input type="hidden" name="idemp" value="<?= $model->idemp ?>">
           <input type="hidden" name="tipo" id="tipo" value="">
           <input type="hidden" id="abono" name="abono" value="">
-                                    
+        
+          <label class="control-label">Crear Cita</label>
+          <input type="checkbox" id="cita" name="cita" value="1">
+                         
           <button type="submit" class="btn btn-primary">Pagar Factura</button>
     <?= Html::endForm() ?>
   <?php } ?>

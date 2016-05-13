@@ -14,6 +14,11 @@ use kartik\date\DatePicker;
 //Pagination
 use yii\widgets\LinkPager;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 
 $this->title = $emp->nombre.' - Agenda';
 $this->params['breadcrumbs'][] = $this->title;
@@ -113,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
                 foreach($pedidos as $cp):
                     if($cp->idcita == $row->idcita)
-                        echo $cp->pedido."<br />";
+                        echo $cp->cant." ".$cp->pedido."<br />";
                 endforeach ?>
                 </div>
             </div>

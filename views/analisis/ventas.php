@@ -13,7 +13,7 @@ use kartik\date\DatePicker;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$title = 'Ventas - '.$emp->nombre;
+$title = $emp->nombre.' - Ingresos por ventas';
 $this->params['breadcrumbs'][] = $title;
 ?>
 <h3>
@@ -77,7 +77,9 @@ $this->params['breadcrumbs'][] = $title;
     <?php foreach($model as $row): ?>
     <tr>
         <td><?= substr($row->fecha,0,10) ?></td>
-        <td><?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?></td>
+        <td>
+            <?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?>
+        </td>
         <td><?= $row->refpago ?></td>
         <td><?= $row->estado ?></td>
         <td><?= $row->tipo ?></td>

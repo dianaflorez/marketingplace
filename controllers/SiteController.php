@@ -171,7 +171,7 @@ class SiteController extends Controller
     }
 
     public function actionDatos($msg = null){
-        $this->layout='menuizq';
+        $this->layout='main';
 
         $model = Usuario::findOne(Yii::$app->user->identity->idusu);
         $model->clave        = ""; 

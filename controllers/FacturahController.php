@@ -114,19 +114,44 @@ class FacturahController extends Controller
         if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
-     
-        $model  = Facturah::find()
+
+        if(Yii::$app->request->post())
+        {
+          $idcli = Html::encode($_POST["cliente_id"]);
+          if($idcli){
+             $model  = Facturah::find()
                 ->joinWith(['idcli0'])
-                ->where(['facturah.idemp' => $idemp ])
-//                ->joinWith(['elementos'])
-           //     ->where(['elemento.idemp' => $id])
+                ->where(['facturah.idemp' => $idemp , 'cliente.idcli' => $idcli])
                 ->orderBy('facturah.fecha desc')
                 ->all();
-
+          }else{
+              $model  = Facturah::find()
+                ->joinWith(['idcli0'])
+                ->where(['facturah.idemp' => $idemp ])
+                ->orderBy('facturah.fecha desc')
+                ->all();
+          }
+        }else{
+       
+          $model  = Facturah::find()
+                ->joinWith(['idcli0'])
+                ->where(['facturah.idemp' => $idemp ])
+                ->orderBy('facturah.fecha desc')
+                ->all();
+        }
+                
         $creditos = Faccredito::find()
                   ->where(['idemp'=>$idemp])->all();        
             
         $emp    = Empresa::findOne(['idemp' => $idemp]);
+  
+        $data = Cliente::find()
+                ->where(['idemp' => $idemp])
+                ->select(["CONCAT(nombre1,' ',apellido1) as label", 
+                          "CONCAT(nombre1,' ',apellido1) as value",
+                          'idcli as id'])
+                ->asArray()
+                ->all();
 
         return $this->render('index', [
             'model'   => $model,
@@ -134,6 +159,7 @@ class FacturahController extends Controller
             'idemp'   => $idemp,
             'emp'     => $emp, 
             'creditos'=> $creditos,
+            'data'    => $data,
         ]);
     }
 
@@ -186,14 +212,14 @@ class FacturahController extends Controller
         //Factura detalle
         $modelfd = new Facturad();
     
-        //Verifica la identidad del usuario quien registra Q solo pertenezca a esta empresa
+        /*Verifica la identidad del usuario quien registra Q solo pertenezca a esta empresa
          if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7){
             $model->idemp        = Yii::$app->user->identity->idemp;
-            $modeldf->idemp      = Yii::$app->user->identity->idemp;
-            $modelcredito->idemp = Yii::$app->user->identity->idemp;
+            $modeldf->idemp      = $idemp;//Yii::$app->user->identity->idemp;
+            $modelcredito->idemp = $idemp; //Yii::$app->user->identity->idemp;
         }
-
+*/
         $clientes   = ArrayHelper::map(Cliente::find()
                         ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
      
@@ -399,11 +425,15 @@ class FacturahController extends Controller
         //$msg  = "Exito!!!";  
         if(Yii::$app->request->post())
         {
-
+            $cita   = null;
             $idfh   = Html::encode($_POST["idfh"]);
             $tipo   = Html::encode($_POST["tipo"]);
             $abono  = Html::encode($_POST["abono"]);
             $idemp  = Html::encode($_POST["idemp"]);
+
+            if(isset($_POST["cita"])){
+              $cita = Html::encode($_POST["idemp"]);
+            }
 
             if($idfh && $tipo){
             
@@ -427,13 +457,23 @@ class FacturahController extends Controller
                         $modelcredito->usumod   = Yii::$app->user->identity->idusu;
                  
                         if($modelcredito->save()){
-             return $this->redirect(['facturah/index', 'idemp' => $modelfh->idemp]);
-        
+
+                          if($cita == 1){
+                            return $this->redirect(['cita/index', 'idemp' => $modelfh->idemp]);
+                          }else{
+                            return $this->redirect(['facturah/index', 'idemp' => $modelfh->idemp]);
+                          }
+
                         }else{
                             print_r($modelcredito->getErrors());
                         }
-                    }  
-                    return $this->redirect(['index', 'idemp' => $modelfh->idemp]);
+                    }
+
+                    if($cita == 1){
+                      return $this->redirect(['cita/create', 'idemp' => $modelfh->idemp]);
+                    }else{  
+                      return $this->redirect(['index', 'idemp' => $modelfh->idemp]);
+                    }
 
                 } else{
                     print_r($model->getErrors());

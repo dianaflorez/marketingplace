@@ -13,6 +13,10 @@ use yii\bootstrap\Tabs;
 Tabs::widget(); 
 //FIN
 
+//Para autocomplete
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -32,19 +36,55 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<a class="btn btn-info" href="<?= Url::toRoute(["facturah/create", "idemp" => $idemp]) ?>">Nuevo Venta</a>
-<!--Si el usuario es Comercial no mostrar -->
-<?php if (Yii::$app->user->identity->role != 1){ ?>
-  <a class="btn btn-info" href="<?= Url::toRoute(["producto/index", "id" => $idemp]) ?>">Nuevo Producto</a>
-<?php } ?>
+<div class="row">
+  <div class="col-xs-10 col-sm-5">
+    <br />
+    <a class="btn btn-info" href="<?= Url::toRoute(["facturah/create", "idemp" => $idemp]) ?>">Nuevo Venta</a>
+    <!--Si el usuario es Comercial no mostrar -->
+    <?php if (Yii::$app->user->identity->role != 1){ ?>
+      <a class="btn btn-info" href="<?= Url::toRoute(["producto/index", "id" => $idemp]) ?>">Nuevo Producto</a>
+    <?php } ?>
 
-<?php $f = ActiveForm::begin([
-    "method" => "get",
-    "action" => Url::toRoute("facturah/index"),
-    "enableClientValidation" => true,
-]);
-?>
+   
+  </div>
+    
+<?= Html::beginForm(Url::toRoute(["facturah/index","idemp"=>$emp->idemp]), "POST") ?>
+  <div class="col-xs-5 col-sm-3 col-md-2">
+        <label class="control-label">Buscar Cliente</label>
+        <br />
+        <?php
+        echo AutoComplete::widget([    
+        'class'=>'form-control',
+        'clientOptions' => [
+        'class'=>'form-control',
+        'source'    => $data,
+        'minLength' => '3', 
+        'autoFill'  => true,
+        'select'    => new JsExpression("function( event, ui ) {
+                        $('#cliente_id').val(ui.item.id);//#cliente_id is the id of hiddenInput.
+                        $('#nombre_id').val(ui.item.value);
+                     }")],
+                     ]);
+                ?>
+        <input type="hidden" name="cliente_id" id="cliente_id" />
+        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly /></b>
 
+    </div>
+    <div class="col-xs-1 col-md-1">
+    <br />
+
+        <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+        <button type="submit" class="btn btn-primary">Generar</button>
+    </div>
+<?= Html::endForm() ?>
+</div>
+
+ <?php $f = ActiveForm::begin([
+        "method" => "get",
+        "action" => Url::toRoute("facturah/index"),
+        "enableClientValidation" => true,
+    ]);
+    ?>
 <h3><?php echo $emp->nombre.' ';?> Ventas</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
@@ -76,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </td>
         <td><?= $row->tipo ?></td>
         <td align="right">
-           <?php if(trim($row->tipo) == "Credito"){ ?>
+           <?php if(trim($row->tipo) == "Credito" || trim($row->tipo) == "PagadaCred" ){ ?>
             <?php $totalabono = 0;
              foreach($creditos as $cre):
                 if($cre['idfh'] == $row->idfh){

@@ -78,7 +78,7 @@ Tabs::widget();
                 </a>    
             </div>
             <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-3" align="center">
-                <a href="index.php?r=facturah%2Findex&idemp=<?=$idemp?>">
+                <a href="index.php?r=analisis%2Findex&idemp=<?=$idemp?>">
                     <img class="iconos" src="images/arrow.png"> <br />    
                     Evaluación
                 </a>

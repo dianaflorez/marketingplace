@@ -177,17 +177,13 @@ class PlanaccionController extends Controller
 
             $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
             $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
-        }
-
-        if( $tr == 3){
+        }elseif( $tr == 3){
             $fecini = strtotime ( '+6 month' , strtotime ( $fecini ) ) ;
             $fecini = date ( 'Y-m-d' , $fecini);
 
             $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));
             $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
-        }
-
-        if( $tr == 4){
+        }elseif( $tr == 4){
             $fecini = strtotime ( '+9 month' , strtotime ( $fecini ) ) ;
             $fecini = date ( 'Y-m-d' , $fecini);
 
@@ -195,18 +191,30 @@ class PlanaccionController extends Controller
             $fecfin = date('Y-m-d', strtotime("{$fecfin} - 1 day"));
         }
 
-        $sqldatostri = " SELECT * FROM paaccion p 
-            WHERE
-                p.idemp = ".$id." AND
-                fecini >= '".$fecini."' AND
-                fecini <= '".$fecfin."' 
-            UNION   
-            SELECT * FROM paaccion p
-            WHERE
-                p.idemp = ".$id." AND
-                fecfin >= '".$fecini."' AND
-                fecfin <= '".$fecfin."'   
-            ORDER BY fecfin, feccre";
+        if( $tr >= 2 ){
+            $sqldatostri = "SELECT idaccion, idemp, idpa, descripcion, orden, fecini, fecfin,responsable,costo,estado
+                FROM paaccion p 
+                WHERE
+                p.idemp = 1 AND
+                fecini <= '".$fecfin."' AND
+                fecfin >= '".$fecini."'
+                ORDER BY fecfin, feccre";
+        }else{
+            $sqldatostri = " SELECT idaccion, idemp, idpa, descripcion, orden, fecini, fecfin,responsable,costo,estado,feccre
+                FROM paaccion p 
+                WHERE
+                    p.idemp = ".$id." AND
+                    fecini >= '".$fecini."' AND
+                    fecini <= '".$fecfin."' 
+                UNION   
+                SELECT idaccion, idemp, idpa, descripcion, orden, fecini, fecfin,responsable,costo,estado,feccre 
+                FROM paaccion p
+                WHERE
+                    p.idemp = ".$id." AND
+                    fecfin >= '".$fecini."' AND
+                    fecfin <= '".$fecfin."'   
+                ORDER BY fecfin, feccre";
+        }
 
         $planaccion = Planaccion::find()
                     ->where(['idemp' => $id])
@@ -228,7 +236,8 @@ class PlanaccionController extends Controller
             'elementos'=> $elementos,
             'trimestre'=> $tr,  
             'plana'    => $planaccion,    
-            'fectri'   => $fecini.' a '.$fecfin, //Fechas de inicio de trimestre  
+            'fecini'   => $fecini,
+            'fecfin'   => $fecfin, 
         ]);
     }
 

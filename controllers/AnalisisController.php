@@ -284,9 +284,11 @@ public function actionProductos()
         
         if(Yii::$app->request->post())
         {
+            if(isset($_POST["btn"])) $btn     = Html::encode($_POST["btn"]);
+            else $btn = 0;
             $cliente = Html::encode($_POST["tipo"]);
             $idemp   = Html::encode($_POST["idemp"]);
-            $btn     = Html::encode($_POST["btn"]);
+            
 
         } else {
             $cliente = "Institucional";
@@ -300,12 +302,13 @@ public function actionProductos()
         if($cliente == "Todos"){
             $model = Cliente::find()
                 ->where(['cliente.idemp' => $idemp])
-                ->orderBy('tipo')
+                ->orderBy('tipo,estado desc')
                 ->all();
         
         }else{
             $model = Cliente::find()
                 ->where(['cliente.idemp' => $idemp, 'tipo' => $cliente])
+                ->orderBy('tipo,estado desc')
                 ->all();
         }
 

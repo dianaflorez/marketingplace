@@ -9,6 +9,18 @@ use yii\bootstrap\Alert;
 use yii\widgets\LinkPager;
 use yii\bootstrap\Tabs;
 
+ $mes = date("m",strtotime( $fecini)); 
+ $anio = date("Y",strtotime( $fecini)); 
+ $dia = date("d",strtotime( $fecini)); 
+
+ $mesfin = date("m",strtotime( $fecfin)); 
+ $aniofin = date("Y",strtotime( $fecfin)); 
+ $diafin = date("d",strtotime( $fecfin)); 
+
+$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"); 
+
+$fectri = $dia." ".$meses[$mes-1]." ".$anio." a ".$diafin." ".$meses[$mesfin-1]." ".$aniofin; 
+
 $title = $emp->nombre.' - Plan Accion - trimestre '.$trimestre.' ('.$fectri.') ';
 $this->params['breadcrumbs'][] = $title;
 ?>
@@ -95,7 +107,7 @@ $this->params['breadcrumbs'][] = $title;
                                     
                                     <?php  if($ele->idaccion == $acc['idaccion']) {
                                         echo $ele->descripcion."<br />"; 
-                                      }
+                                    }
                                     ?>
                                 
                                 <?php endforeach ?>

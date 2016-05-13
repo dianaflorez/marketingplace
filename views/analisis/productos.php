@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $title;
     <tr>
         <th>Producto</th>
         <th>Cantidad</th>
-        <th>Valor Pagado</th>
+        <th>Ingresos Generados</th>
     </tr>
     <?php $suma = 0; ?>
     <?php foreach($model as $row): ?>

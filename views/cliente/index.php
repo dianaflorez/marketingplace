@@ -10,6 +10,10 @@ use yii\bootstrap\Tabs;
 Tabs::widget(); 
 //FIN
 
+//Para autocomplete
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
 $this->title = $emp->nombre.' - '.$cliente;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -26,66 +30,101 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
-<?php if($cliente != "Institucional") { ?>
-<a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
-                                                        "idemp" => $emp->idemp,             
-                                                        "cliente"   => "Institucional"]) 
-                                                        ?>">Clientes Institucionales</a>
-<?php }else{ ?>
-<a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
-                                                        "idemp" => $emp->idemp,             
-                                                        "cliente"   => "Institucional"]) 
-                                                        ?>">Clientes Institucionales</a>
-<?php } ?>
-<?php if($cliente != "Individual") { ?>
-<a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
-                                                        "idemp" => $emp->idemp,             
-                                                        "cliente"   => "Individual"]) 
-                                                        ?>">Clientes Individuales</a>
-<?php }else{ ?>
-<a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
-                                                        "idemp" => $emp->idemp,             
-                                                        "cliente"   => "Individual"]) 
-                                                        ?>">Clientes Individuales</a>
-<?php } ?>
+<div class="row">
+  <div class="col-sm-8 col-md-6">
+    <br />
+      <?php if($cliente != "Institucional") { ?>
+      <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
+                                                              "idemp" => $emp->idemp,             
+                                                              "cliente"   => "Institucional"]) 
+                                                              ?>">Institucionales</a>
+      <?php }else{ ?>
+      <a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
+                                                              "idemp" => $emp->idemp,             
+                                                              "cliente"   => "Institucional"]) 
+                                                              ?>">Institucionales</a>
+      <?php } ?>
+      <?php if($cliente != "Individual") { ?>
+      <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
+                                                              "idemp" => $emp->idemp,             
+                                                              "cliente"   => "Individual"]) 
+                                                              ?>">Individuales</a>
+      <?php }else{ ?>
+      <a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
+                                                              "idemp" => $emp->idemp,             
+                                                              "cliente"   => "Individual"]) 
+                                                              ?>">Individuales</a>
+      <?php } ?>
 
-<?php if($cliente != "Esporadico") { ?>
-<a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
-                                                        "idemp" => $emp->idemp, 
-                                                        "cliente"   => "Esporadico"]) 
-                                                        ?>">Clientes Esporadicos</a>
-<?php }else{ ?>
-<a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
-                                                        "idemp" => $emp->idemp, 
-                                                        "cliente"   => "Esporadico"]) 
-                                                        ?>">Clientes Esporadicos</a>
-<?php } ?>
-<a class="btn btn-danger" href="<?= Url::toRoute(["cita/index", 
-                                                        "idemp" => $emp->idemp
-                                                        ]) 
-                                                        ?>">Agenda</a>
+      <?php if($cliente != "Esporadico") { ?>
+      <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
+                                                              "idemp" => $emp->idemp, 
+                                                              "cliente"   => "Esporadico"]) 
+                                                              ?>">Esporadicos</a>
+      <?php }else{ ?>
+      <a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
+                                                              "idemp" => $emp->idemp, 
+                                                              "cliente"   => "Esporadico"]) 
+                                                              ?>">Esporadicos</a>
+      <?php } ?>
+      <a class="btn btn-danger" href="<?= Url::toRoute(["cita/index", 
+                                                              "idemp" => $emp->idemp
+                                                              ]) 
+                                                              ?>">Agenda</a>
 
-<div class="pull-right">
-<?php if($cliente == "Institucional") { ?>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
-                                                        "idemp"     => $emp->idemp,
-                                                        "cliente"   => "Institucional"]) 
-                                                        ?>">Nuevo Cliente</a>
-<?php }elseif($cliente == "Individual") { ?>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
-                                                        "idemp"     => $emp->idemp,
-                                                        "cliente"   => "Individual"]) 
-                                                        ?>">Nuevo Cliente</a>
+  </div>
 
-<?php }elseif($cliente == "Esporadico") { ?>
-<a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
-                                                        "idemp"     => $emp->idemp,
-                                                        "cliente"   => "Esporadico"]) 
-                                                        ?>">Nuevo Cliente</a>
-<?php } ?>
+<?= Html::beginForm(Url::toRoute(["cliente/index","idemp"=>$emp->idemp]), "POST") ?>
+  <div class="col-sm-2 col-md-2">
+        <label class="control-label">Buscar Cliente</label>
+        <br />
+        <?php
+        echo AutoComplete::widget([    
+        'class'=>'form-control',
+        'clientOptions' => [
+        'class'=>'form-control',
+        'source'    => $data,
+        'minLength' => '3', 
+        'autoFill'  => true,
+        'select'    => new JsExpression("function( event, ui ) {
+                        $('#cliente_id').val(ui.item.id);//#cliente_id is the id of hiddenInput.
+                        $('#nombre_id').val(ui.item.value);
+                     }")],
+                     ]);
+                ?>
+        <input type="hidden" name="cliente_id" id="cliente_id" />
+        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly /></b>
 
+    </div>
+    <div class="col-xs-1 col-md-1">
+    <br />
+
+        <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+        <button type="submit" class="btn btn-primary">Generar</button>
+    </div>
+<?= Html::endForm() ?>
+
+  <div class="pull-right">
+  <br />
+    <?php if($cliente == "Institucional") { ?>
+    <a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                            "idemp"     => $emp->idemp,
+                                                            "cliente"   => "Institucional"]) 
+                                                            ?>">Nuevo Cliente</a>
+    <?php }elseif($cliente == "Individual") { ?>
+    <a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                            "idemp"     => $emp->idemp,
+                                                            "cliente"   => "Individual"]) 
+                                                            ?>">Nuevo Cliente</a>
+
+    <?php }elseif($cliente == "Esporadico") { ?>
+    <a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
+                                                            "idemp"     => $emp->idemp,
+                                                            "cliente"   => "Esporadico"]) 
+                                                            ?>">Nuevo Cliente</a>
+    <?php } ?>
+  </div>
 </div>
-<br />
 <br />
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>

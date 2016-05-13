@@ -5,6 +5,11 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\bootstrap\Alert;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 $title = $emp->nombre.' - '.$cliente;
 $this->params['breadcrumbs'][] = $title;
 ?>
@@ -28,7 +33,7 @@ $this->params['breadcrumbs'][] = $title;
           <div class="col-md-5">
             <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
             <button type="submit" class="btn btn-primary">Generar</button>
-            <button name="btn" value="2" type="submit" class="btn btn-danger"
+            <button id="btn" name="btn" value="2" type="submit" class="btn btn-danger"
                 onclick="document.this.form.target='_blank'"
                 >Ver Pdf</button>
           </div>

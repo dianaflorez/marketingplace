@@ -152,7 +152,7 @@ AppAsset::register($this);
                               <img class="iconosd" src="images/arrowmenu.png">     
                             </td>
                             <td align="center">
-                                Analisis
+                                Evaluacion
                             </tr>    
                         </table>   
                     </a>
@@ -182,7 +182,8 @@ AppAsset::register($this);
         
         <?php }elseif($role == "superadmin"){ ?>
             <li><a href="index.php?r=site%2Fsuperadmin">Inicio</a></li>
-       
+            <li><a href="index.php?r=usuario%2Findex">Usu</a></li>
+            
         <?php }elseif($role == "adminemp"){ ?>
             <li><a href="index.php?r=site%2Fadminemp">Inicio</a></li>
       

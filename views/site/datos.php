@@ -5,9 +5,11 @@ use yii\helpers\Html;
 use yii\bootstrap\Alert;
 use yii\bootstrap\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Usuario */
-/* @var $form yii\widgets\ActiveForm */
+
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
 ?>
 
 <h3>
