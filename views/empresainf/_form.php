@@ -14,9 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'idtipo')->dropDownList($tipo); ?>
 
-    <?= $form->field($model, 'inf')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'inf')->textarea(['rows' => 1])->label('Asunto') ?>
 
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'descripcion')->textarea(['rows' => 1])->label('link') ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Nueva' : 'Editar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

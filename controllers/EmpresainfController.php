@@ -170,11 +170,14 @@ class EmpresainfController extends Controller
      
         $modelemp   = Empresa::findOne($model->idemp);
 
-        $model->usumod = Yii::$app->user->identity->idusu;
+        $model->idtipo    = 16;  //Tipo Link
+        $model->usumod  = Yii::$app->user->identity->idusu;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->idemp]);
         } else {
+
+print_r($model->getErrors());
             return $this->render('create', [
                 'model'     => $model,
                 'tipo'      => $tipo,

@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach($model as $row): 
                   $ctlineas ++; 
               
-                if($ctlineas > 4 && $row->inf != "logo"){  
+                if($ctlineas > 4 && $row->inf != "logo" && $row->inf != "link"){  
                   $ctlineas ++; 
                   ?>
                     <div class="cajita">
@@ -123,6 +123,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                      "new"    => 15, 
                                      ]) ?>">
             <?=Html::img('@web/images/iconos/add.png',["height"=>"27px"])?>Nuevo Documento
+          </a>
+     
+      <br />
+
+         <a href="<?= Url::toRoute(["empresainf/create", 
+                                     "idemp"  => $idemp
+                                     ]) ?>">
+            <?=Html::img('@web/images/iconos/add.png',["height"=>"27px"])?>Nuevo Link
           </a>
      
          
