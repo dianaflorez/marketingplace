@@ -116,7 +116,7 @@ class SiteController extends Controller
 
     public function actionSuperadmin(){
         $this->layout='main';
-        return $this->render('superadmin');
+        return $this->render('superAdmin');
     }
 
     public function actionSupermegaadmin(){
