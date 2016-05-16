@@ -1,6 +1,8 @@
 <?php
  
 namespace app\models;
+
+use Yii;
 use yii\base\model;
  
 class FormUpload extends model{
