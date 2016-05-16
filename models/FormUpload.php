@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use yii\base\model;
+use yii\base\Model;
  
 class FormUpload extends model{
   
