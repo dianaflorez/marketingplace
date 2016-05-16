@@ -250,97 +250,6 @@ AppAsset::register($this);
 
 </nav>
 
-
-
-<?/**
-    <?php 
-    NavBar::begin([
-        'brandLabel' => Html::img('@web/images/logopeq77.png', ['alt'=>Yii::$app->name]),
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-default navbar-fixed-top',
-        ],
-       ]);
-         /*
-        echo Nav::widget([
-
-                'options' => ['class' => 'navbar-nav navbar-left'],
-                'items' => [
-         
-                            ['label' => '  ', 
-
-                            'items' => [
-                            ['label' => 'Action', 'url' => '#'],
-                            ['label' => 'Another action', 'url' => '#'],
-                            ['label' => 'Something else here', 'url' => '#'],
-                            ],
-                            'options' => ['class' => 'navbarimglogo',
-                            'style' => 'display: block!important;'],
-                        ],
-         
-                    ],
-     
-        ]); */ 
-        /*
-             echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right navtop'],
-        'items' => [
-              ['label' => 'Home', 'url' => ['/site/index'],'visible' => $validartipo],
-              ['label' => 'About', 'url' => ['/site/about'],'visible' => $validartipo],
-           // ['label' => 'Contact', 'url' => ['/site/contact']],
-
-            [
-            'label' => 'Inicio',
-            'url' => ['site/adminemp'],
-            'visible' => $ae_inicio
-            ],
-
-            [
-            'label' => 'Inicio',
-            'url' => ['site/comercial'],
-            'visible' => $com_inicio
-            ],
-
-//DF      
-            [
-            'label' => 'Empresas',
-            'url' => ['empresa/index', 'msg' => ''],
-            'visible' => $validaremp
-            ],
-             [
-            'label' => 'Usuarios',
-            'url' => ['usuario/index'],
-            'visible' => $validarusuario
-            ],
-            [
-            'label' => 'Tipos',
-            'url' => ['tipo/index'],
-            'visible' => $validartipo
-            ],
-         
-
-            ['label' => '', 'url' => ['/site/datos'],'options'=> ['class'=>'imgdatos']],
-            
-//DFend
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : 
-            (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    ''.Html::img('@web/images/iconos/exit.png' ). Yii::$app->user->identity->username . '',
-                    ['class' => 'btn btn-link navtopsalir']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-
-        ],
-    ]);
-    NavBar::end();
-  */  ?>
-
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -349,7 +258,7 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<footer id="footer" class="footer">
     <div class="container" align="center" >
         <p >
             &copy;wwww.growthmipymes.com <?= date('Y') ?>
