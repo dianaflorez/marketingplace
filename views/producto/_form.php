@@ -26,7 +26,7 @@ Tabs::widget();
 
     <?= $form->field($model, 'vlrsiniva')->textInput() ?>
 
-    <? if(!$model->estado) $model->estado = 'Activo';
+    <?php if(!$model->estado) $model->estado = 'Activo';
     echo $form->field($model, 'estado')->radioList(array('Activo'=>'Activo','Inactivo'=>'Inactivo'),
                                                   array('selected' => 'Activo')      
                                      ); ?>
