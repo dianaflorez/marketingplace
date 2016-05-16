@@ -182,7 +182,7 @@ background: #f8f8f8;
     background: #300;
 }
 //Fin validacion era verde ahora azul
-
+		
 @media screen and (max-width: 767px) { 
 	.navbar-nav {
     	margin: 4px -15px;
