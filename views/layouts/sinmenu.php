@@ -43,6 +43,11 @@ AppAsset::register($this);
         <img class="logo" src="images/logo.png">
 
         <?= $content ?>
+
+        <script language="JavaScript"> 
+document.writeln(screen.width + " x " + screen.height) 
+</script>
+
     </div>
 </div>
 
