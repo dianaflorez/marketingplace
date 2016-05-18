@@ -3,6 +3,11 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
