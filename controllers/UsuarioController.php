@@ -222,13 +222,13 @@ class UsuarioController extends Controller
                          $body .= "<a href='http://yii.local/index.php?r=site/confirm&id=".$id."&authkey=".$authkey."'>Confirmar</a>";
                           
                          //Enviamos el correo
-                         Yii::$app->mailer->compose()
+                      /*   Yii::$app->mailer->compose()
                          ->setTo($user->email)
                          ->setFrom([Yii::$app->params["adminEmail"] => Yii::$app->params["title"]])
                          ->setSubject($subject)
                          ->setHtmlBody($body)
                          ->send();
-                         
+                       */  
                          $model->nombre1 = null;
                          $model->apellido1 = null;
                          $model->clave = null;

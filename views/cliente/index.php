@@ -71,6 +71,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                               "idemp" => $emp->idemp
                                                               ]) 
                                                               ?>">Agenda</a>
+      <a class="btn btn-danger" href="<?= Url::toRoute(["envioemail/create", 
+                                                              "id" => $emp->idemp
+                                                              ]) 
+                                                              ?>">Formulario</a>
 
   </div>
 
