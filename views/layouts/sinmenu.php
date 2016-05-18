@@ -41,10 +41,12 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <img class="logo" src="images/logo.png">
-<script language="JavaScript"> 
-document.writeln(screen.width + " x " + screen.height) 
-</script>
-
+        
+        <!--IMPRIMIR RESOLUSION DEL DISPOSITIVO
+        <script language="JavaScript"> 
+        document.writeln(screen.width + " x " + screen.height) 
+        </script>
+        -->
         <?= $content ?>
     </div>
 </div>
