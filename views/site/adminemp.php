@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
 $this->title = $modelemp->nombre;
-//$this->params['breadcrumbs'][] = $this->title;
+
 //IMPORTANTE Sin esto no funciona el menu del logo 
 use yii\bootstrap\Tabs;
 Tabs::widget(); 
