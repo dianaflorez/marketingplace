@@ -43,9 +43,9 @@ body{
 	}
 }
 
-@media screen and (max-width: 470px) { 
+@media only screen and (max-width: 470px) and (min-width: 300px)  { 
 	.container {
-    	width: 400px;
+    	width: 359px;
 	}
 	.logo{
 		margin-top:   14%;
