@@ -21,11 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="alert alert-success">
             Gracias por contactarnos. Responderemos tan pronto como sea posible.
+
         </div>
+        
+        <a class="btn btn-info pull-right" href="index.php?r=site%2Fempresas">Regresar</a>
 
         <p>
-            Note that if you turn on the Yii debugger, you should be able
-            to view the mail message on the mail panel of the debugger.
             <?php if (Yii::$app->mailer->useFileTransport): ?>
                 Because the application is in development mode, the email is not sent but saved as
                 a file under <code><?= Yii::getAlias(Yii::$app->mailer->fileTransportPath) ?></code>.
@@ -48,6 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= $form->field($model, 'email') ?>
 
+                    <?= $form->field($model, 'emailemp')->textInput(['readonly' => true, 'value' => $emp->email]) ?>
+
                     <?= $form->field($model, 'subject') ?>
 
                     <?= $form->field($model, 'body')->textArea(['rows' => 6]) ?>
@@ -57,7 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 
+                                                'name' => 'contact-button']) ?>
+
 <a class="btn btn-info pull-right" href="javascript:history.back(1)">Regresar</a>
                         
                     </div>

@@ -177,7 +177,8 @@ class EmpresainfController extends Controller
             return $this->redirect(['index', 'id' => $model->idemp]);
         } else {
 
-print_r($model->getErrors());
+            print_r($model->getErrors());
+            
             return $this->render('create', [
                 'model'     => $model,
                 'tipo'      => $tipo,

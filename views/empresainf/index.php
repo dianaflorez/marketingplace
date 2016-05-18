@@ -19,9 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-xs-offset-1 col-md-4" align="right">  
 
-    <?php if($urllogo){ 
-        ?>
+    <?php if($urllogo){  ?>
           <?= Html::img($urllogo,["height"=>"70px"]); ?>
+
+            <!-- Update -->
+            <a href="<?= Url::toRoute(["empresainf/logo", "idemp" => $idemp, "doc" => 0]) ?>" title="Actualizar" aria-label="Actualizar">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <!--End Update-->
+        
       <?php }else{ ?>
            <a href="<?= Url::toRoute(["empresainf/logo", "idemp" => $idemp, "doc" => 0]) ?>">Subir Logo</a>
     
@@ -48,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </a>
             <!--End Update-->
         
-            <!--Delete-->
+            <!--Delete--
              <a href="#" data-toggle="modal" data-target="#idinf_<?= $row->idinf ?>" title="Eliminar" aria-label="Eliminar">
              <span class="glyphicon glyphicon-trash"></span>
              </a>
@@ -71,9 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <button type="submit" class="btn btn-primary">Eliminar</button>
                               <?= Html::endForm() ?>
                               </div>
-                            </div><!-- /.modal-content -->
-                      </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->            
+                            </div><!-- /.modal-content --
+                      </div><!-- /.modal-dialog --
+                </div><!-- /.modal --            
             </a>
             <!--End Delete--> 
 

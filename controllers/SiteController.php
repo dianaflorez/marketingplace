@@ -354,12 +354,20 @@ class SiteController extends Controller
     public function actionContact($id)
     {
         $this->layout='sinmenupeq';
+
+        $emaildondeseenvia = Yii::$app->params['adminEmail'];
         
         $model = new ContactForm();
-            if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('contactFormSubmitted');
+            if ($model->load(Yii::$app->request->post())){
+                
+                //Si es para una empresa entonces seleccionamos el email de la empresa     
+                if($model->emailemp) $emaildondeseenvia = $model->emailemp;
 
-                return $this->refresh();
+                if($model->contact($emaildondeseenvia)) {
+
+                    Yii::$app->session->setFlash('contactFormSubmitted');
+                    return $this->refresh();
+                }
             }
 
         $ver = is_numeric(Html::encode($id));
@@ -375,8 +383,7 @@ class SiteController extends Controller
 
         }else {
             return $this->render('contact', [
-                'model' => $model,
-               
+                'model' => $model,            
             ]);
         }
     }

@@ -36,9 +36,10 @@ class Empresa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre'], 'required'],
+            [['nombre','email'], 'required'],
             [['feccre', 'fecmod'], 'safe'],
             [['usumod'], 'integer'],
+            ['email', 'email'],
             [['nombre', 'nit'], 'string', 'max' => 30],
         ];
     }
