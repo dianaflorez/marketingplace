@@ -33,7 +33,20 @@ body{
 }
 
 
+@media screen and (max-width: 767px) and (min-width: 470px) { 
+	.container {
+    	width: 480px;
+	}
+	.logo{
+		margin-top:   170px;
+		width: 200px;
+	}
+}
+
 @media screen and (max-width: 470px) { 
+	.container {
+    	width: 400px;
+	}
 	.logo{
 		margin-top:   170px;
 		width: 200px;
