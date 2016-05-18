@@ -47,12 +47,12 @@ AppAsset::register($this);
 </div>
 
 <footer class="footer">
-    <div class="container">
-        <p class="pull-left">
+    <div class="container" align="center">
+         <p >
             &copy;wwww.growthmipymes.com <?= date('Y') ?>
+            <br />
+            Desarrollado por <a href="http://www.ideartics.com" target="_blank"> IdearTics </a>
         </p>
-        <p class="pull-right"> Desarrollado por <a href="http://www.ideartics.com" target="_blank"> IdearTics </a></p>
-       
     </div>
 </footer>
 
