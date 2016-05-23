@@ -12,3 +12,5 @@ web/archivos/
 conf/
 config/
 config.zip
+chatphp
+.gitignore
