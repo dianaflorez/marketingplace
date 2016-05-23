@@ -158,7 +158,7 @@ class PaaccionController extends Controller
             $model->idemp = Yii::$app->user->identity->idemp;
 
         $emp = Empresa::findOne(['idemp' => $model->idemp]);
-        $estado = ['En Ejecucion'=>'En Ejecucion','Ejecutado'=>'Ejecutado', 
+        $estado = ['En Ejecución'=>'En Ejecución','Ejecutado'=>'Ejecutado', 
                     'Pendiente'=>'Pendiente', 'Terminado'=>'Terminado'];  
 
         $fecha = date('Y.m.d');

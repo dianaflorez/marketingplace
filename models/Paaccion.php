@@ -61,16 +61,16 @@ class Paaccion extends \yii\db\ActiveRecord
             'idaccion' => 'Idaccion',
             'idemp' => 'Idemp',
             'idpa' => 'Idpa',
-            'descripcion' => 'Descripcion',
+            'descripcion' => 'Descripción',
             'orden' => 'Orden',
-            'fecini' => 'Fecini',
-            'fecfin' => 'Fecfin',
+            'fecini' => 'Fecha de inicio',
+            'fecfin' => 'Fecha de finalización',
             'responsable' => 'Responsable',
             'costo' => 'Costo',
             'estado' => 'Estado',
-            'feccre' => 'Feccre',
-            'fecmod' => 'Fecmod',
-            'usumod' => 'Usumod',
+            'feccre' => 'Creacion',
+            'fecmod' => 'Modificación',
+            'usumod' => 'Quien modificó',
         ];
     }
 
