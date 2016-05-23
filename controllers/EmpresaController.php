@@ -99,9 +99,9 @@ class EmpresaController extends Controller
         {
             if ($form->validate())
             {
-                $search = Html::encode($form->q);
+                $search = strtoupper(Html::encode($form->q));
                 $table = Empresa::find()
-                        ->orWhere(["like", "nombre", $search])
+                        ->orWhere(["like", "upper(nombre)", $search])
                         ->orWhere(["like", "nit", $search])
                         ->andWhere('idemp>0');
 
