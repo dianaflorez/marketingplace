@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->idemp], ['class' => 'btn btn-primary']) ?>
+<a class="btn btn-info pull-right" href="javascript:history.back(1)">Regresar</a>
 
     </p>
 

@@ -9,15 +9,15 @@ elseif(Yii::$app->user->identity->role == 2)
 	$this->params['breadcrumbs'][] = ['label' => 'Empresa', 'url' => ['site/adminemp']];
 
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
+<a class="btn btn-info pull-right" href="javascript:history.back(1)">Regresar</a>
+
 <div class="empresainf-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'tipo'	=> $tipo,
         'modelemp'	=> $modelemp,
     ]) ?>
 

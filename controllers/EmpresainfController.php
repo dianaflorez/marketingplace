@@ -160,8 +160,6 @@ class EmpresainfController extends Controller
     {
         $model = new Empresainf();
        
-        $tipos          = Tipo::find()->where(['tabla' => 'empresainf'])->all();
-        $tipo           = ArrayHelper::map($tipos, 'idtipo', 'nombre');
         $model->idemp   = $idemp;
 
         if(Yii::$app->user->identity->role != 4 &&   
@@ -181,7 +179,6 @@ class EmpresainfController extends Controller
             
             return $this->render('create', [
                 'model'     => $model,
-                'tipo'      => $tipo,
                 'modelemp'  => $modelemp,
             ]);
         }
@@ -197,8 +194,7 @@ class EmpresainfController extends Controller
     {
         $model = $this->findModel($id);
 
-        $tipos          = Tipo::find()->where(['tabla' => 'empresainf'])->all();
-        $tipo           = ArrayHelper::map($tipos, 'idtipo', 'nombre');
+        $tipo         = Tipo::findOne($model->idtipo);
 
         $modelemp   = Empresa::findOne($model->idemp);
         

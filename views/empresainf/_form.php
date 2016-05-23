@@ -16,7 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'inf')->textarea(['rows' => 1])->label('Asunto') ?>
 
-    <?= $form->field($model, 'descripcion')->textarea(['rows' => 1])->label('link') ?>
+<? $lbl = "Descripcion"; if($model->idtipo >7) $lbl = "link"; ?>
+    <?= $form->field($model, 'descripcion')->textarea(['rows' => 1])->label($lbl) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Nueva' : 'Editar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
