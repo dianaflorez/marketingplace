@@ -11,7 +11,7 @@ use yii\helpers\Url;
 $this->title = 'Ingresar';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
+<div class="site-login col-xs-offset-1 col-xs-10 col-sm-offset-4 col-sm-5" align="center">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Por favor llene los siguientes campos para ingresar:</p>
@@ -20,8 +20,8 @@ $this->title = 'Ingresar';
         'id' => 'login-form',
         'options' => ['class' => 'form-horizontal'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+           // 'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'labelOptions' => ['class' => 'col-sm-1 control-label'],
         ],
     ]); ?>
 

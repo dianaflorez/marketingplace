@@ -57,7 +57,7 @@ class EnvioemailController extends Controller
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
      
-        $emp    = Empresa::findOne(['idemp' => $idemp]);
+        $emp    = Empresa::findOne(['idemp' => $idemp ]);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
