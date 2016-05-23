@@ -282,22 +282,25 @@ public function actionProductos()
 
     public function actionClientes(){
         
+      //Si un usuario q no es adm Solo puede crear de su propia emp 
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
         if(Yii::$app->request->post())
         {
-            if(isset($_POST["btn"])) $btn     = Html::encode($_POST["btn"]);
+            if(isset($_POST["btn"])) 
+                $btn  = Html::encode($_POST["btn"]);
             else $btn = 0;
+
             $cliente = Html::encode($_POST["tipo"]);
             $idemp   = Html::encode($_POST["idemp"]);
             
 
         } else {
-            $cliente = "Institucional";
+            $cliente = "Todos";
         }
 
-        //Si un usuario q no es adm Solo puede crear de su propia emp 
-         if(Yii::$app->user->identity->role != 4 &&   
-           Yii::$app->user->identity->role !=7)
-              $idemp = Yii::$app->user->identity->idemp;
      
         if($cliente == "Todos"){
             $model = Cliente::find()

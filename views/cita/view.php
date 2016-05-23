@@ -14,6 +14,10 @@ $this->title = "Cita";
 $this->params['breadcrumbs'][] = ['label' => 'Citas', 'url' => ['index','idemp' => $emp->idemp]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<a class="btn btn-info pull-right" href="<?= Url::toRoute(["cita/index",  "idemp" => $model->idemp]) ?>"> Regresar
+</a>
+
 <div class="cita-view">
 
     <p>

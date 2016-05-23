@@ -14,6 +14,10 @@ $this->title = $model->nombre;
 //$this->params['breadcrumbs'][] = ['label' => 'Productos', 'url' => ['index'], 'id' => $model->idemp];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<a class="btn btn-info pull-right" href="<?= Url::toRoute(["producto/index",  "id" => $model->idemp]) ?>">
+    Regresar
+</a>
+
 <div class="producto-view">
 
     <p>

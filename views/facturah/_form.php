@@ -221,7 +221,7 @@ Tabs::widget();
           <label class="control-label">Crear Cita</label>
           <input type="checkbox" id="cita" name="cita" value="1">
                          
-          <button type="submit" class="btn btn-primary">Pagar Factura</button>
+          <button type="submit" class="btn btn-primary">Guardar Factura</button>
     <?= Html::endForm() ?>
   <?php } ?>
       </td>

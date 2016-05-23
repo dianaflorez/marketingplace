@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
            <br />
            <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-           <button name="btn" type="submit" class="btn btn-primary">Generar</button>
+           <button name="btn" type="submit" class="btn btn-primary">Buscar</button>
            <?= Html::endForm() ?>
       </div>
     </div>
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
          <br />
                  <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                 <button type="submit" class="btn btn-primary">Generar</button>
+                 <button type="submit" class="btn btn-primary">Buscar</button>
            <?= Html::endForm() ?>
       </div>
      </div>
@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
 <br />
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button type="submit" class="btn btn-primary">Generar</button>
+        <button type="submit" class="btn btn-primary">Buscar</button>
   <?= Html::endForm() ?>
 
       </div>
@@ -128,17 +128,18 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientes"), "POST") ?>
           
-         <h3>Clientesd</h3>
+         <h3>Clientes</h3>
          
             <select name="tipo" class="form-control">
               <option value="Institucional">Institucional</option>
               <option value="Individual">Individual</option>
               <option value="Esporadico">Esporádico</option>
+              <option value="Todos">Todos</option>
             </select>
             <br />
             <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
             <input type="hidden" id="btn" name="btn" value="<?= $emp->idemp ?>">
-            <button type="submit" class="btn btn-primary">Generar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
          <?= Html::endForm() ?>
     
       </div>
@@ -170,7 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
                  <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
                 <input type="hidden" name="pro_id" id="pro_id" />
                  <input type="hidden" name="tipo" id="tipo" />
-                 <button type="submit" class="btn btn-primary">Generar</button>
+                 <button type="submit" class="btn btn-primary">Buscar</button>
            <?= Html::endForm() ?>
     
       </div>
@@ -203,7 +204,7 @@ $this->params['breadcrumbs'][] = $this->title;
            <input type="hidden" name="cliente_id" id="cliente_id" />
            <input type="hidden" name="tipo" id="tipo" />
            <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-           <button type="submit" class="btn btn-primary">Generar</button>
+           <button type="submit" class="btn btn-primary">Buscar</button>
            <?= Html::endForm() ?>
     
       </div>
@@ -236,7 +237,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
          <br />
                  <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-                 <button type="submit" class="btn btn-primary">Generar</button>
+                 <button type="submit" class="btn btn-primary">Buscar</button>
            <?= Html::endForm() ?>
     
       </div>

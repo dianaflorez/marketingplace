@@ -28,11 +28,12 @@ $this->params['breadcrumbs'][] = $title;
               <option value="Individual">Individual</option>
               <option value="Esporadico">Esporádico</option>
               <option value="Todos">Todos</option>
+              <option value="<?= $cliente ?>" selected="selected"> <?= $cliente ?> </option>
             </select>
           </div>
           <div class="col-md-5">
             <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-            <button type="submit" class="btn btn-primary">Generar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
             <button id="btn" name="btn" value="2" type="submit" class="btn btn-danger"
                 onclick="document.this.form.target='_blank'"
                 >Ver Pdf</button>

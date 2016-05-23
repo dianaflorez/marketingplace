@@ -75,7 +75,7 @@ class Cliente extends \yii\db\ActiveRecord
             'apellido2' => 'Apellido2',
             'idtide' => 'Tipo Identificacion',
             'identificacion' => 'Numero',
-            'fecnac' => 'Nacimiento',
+            'fecnac' => 'Fecha Nacimiento',
             'genero' => 'Genero',
             'tipo' => 'Tipo',
             'estado' => 'Estado',
