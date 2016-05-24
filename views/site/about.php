@@ -24,24 +24,28 @@ El proyecto se desarrollo con el apoyo de la Gobernación de Nariño, la Fundaci
         <div class=" col-xs-10 col-xs-offset-1 
                      col-sm-10 col-md-offset-1">
             
-            <div class="col-xs-5 col-sm-2">
+            <div class="col-xs-5 col-sm-2" align="center">
                 <img  src="images/about/gobernacion.jpg">     
             </div>
-            <div class="col-xs-3 col-sm-2 col-sm-offset-1" align="center">
+            <div 
+            class="col-xs-5 col-xs-offset-2 col-sm-2 col-sm-offset-1" align="center">
                 <img src="images/about/unimar.png">        
 			</div>
-            <div class="col-xs-offset-3 col-xs-8 col-sm-2 col-sm-offset-1" >
+
+            <div class="col-xs-6 col-sm-2 col-sm-offset-1" >
                 <img src="images/about/grupoinv.jpg">     
             </div>
-            <div class="col-xs-offset-1 col-xs-3 col-sm-2 col-sm-offset-1 " style="top:20px">
-                <img src="images/about/ceiba.png">     
+            <div class="col-xs-5 col-sm-2 col-sm-offset-1 " style="margin-top:20px; align="center">
+                <img  src="images/about/ceiba.png">     
             </div>
            
         </div>
+
     </div>
-
-
-<a class="btn btn-info pull-right" href="javascript:history.back(1)">Regresar</a>
 
     <br />
 </div>
+
+<a class="btn btn-info pull-right" style="margin-right: 27px" href="javascript:history.back(1)">Regresar</a>
+
+

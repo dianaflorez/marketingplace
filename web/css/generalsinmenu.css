@@ -44,7 +44,7 @@ body{
  }
 
 	.container {
-    	width: 480px;
+    	width: 277px;
 	}
 	.logo{
 		margin-top:   -5%;
@@ -61,11 +61,11 @@ body{
     -webkit-background-size: contain;
     -o-background-size: contain;
  }
- .container {
-    	width: 359px;
+ 	.container {
+    	width: 357px;
 	}
 	.logo{
 		margin-top:   -7%;
-		width: 47%;
+		width: 42%;
 	}
 }
