@@ -171,7 +171,7 @@ AppAsset::register($this);
     <button type="button" class="navbar-toggle" data-toggle="collapse"
             data-target=".navbar-ex1-collapse">
       <span class="sr-only">Desplegar navegación</span>
-      <span class="icon-bar">dd</span>
+      <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
@@ -189,45 +189,87 @@ AppAsset::register($this);
             <li><a href="index.php?r=tipo%2Findex">Tipo</a></li>
         
         <?php }elseif($role == "superadmin"){ ?>
-            <li><a href="index.php?r=site%2Fsuperadmin" title="Inicio">
-                    <img src="images/iconos/home.png" >
-                </a></li>
-            <li><a href="index.php?r=usuario%2Findex">
-                    <img src="images/iconos/usuarios.png" >
-                
-            </a></li>
+            <li>
+                <a href="index.php?r=site%2Fsuperadmin" title="Inicio">
+                    <table><tr>
+                        <td>
+                            <img src="images/iconos/home.png" >
+                        </td>
+                        <td><div class="menutitle">Inicio</div></td>
+                    </tr></table>
+                </a>
+            </li>
+            <li>
+                <a href="index.php?r=usuario%2Findex">
+                    <table>
+                        <tr>
+                            <td><img src="images/iconos/usuarios.png" ></td>
+                            <td><div class="menutitle">Usuarios</div></td>
+                        </tr>
+                    </table>
+                </a>
+            </li>
             
         <?php }elseif($role == "adminemp"){ ?>
-            <li><a href="index.php?r=site%2Fadminemp" title="Inicio">
-                    <img src="images/iconos/home.png" >
-                </a></li>
+            <li>
+                <a href="index.php?r=site%2Fadminemp" title="Inicio">
+                    <table>
+                        <tr>
+                            <td><img src="images/iconos/home.png" ></td>
+                            <td><div class="menutitle">Inicio</div></td>
+                        </tr>
+                    </table>
+                </a>
+            </li>
       
         <?php }elseif($role == "comercial"){ ?>
             <li><a href="index.php?r=site%2Fcomercial" title="Inicio">
-                    <img src="images/iconos/home.png" >
+                    <table>
+                        <tr>
+                            <td><img src="images/iconos/home.png" ></td>
+                            <td><div class="menutitle">Inicio</div></td>
+                        </tr>
+                    </table>
                 </a></li>
              
         <?php }else{ ?>
             <li><a href="index.php?r=site%2Findex" title="Inicio">
-                    <img src="images/iconos/home.png" >
+                    <table>
+                        <tr>
+                            <td><img src="images/iconos/home.png" ></td>
+                            <td><div class="menutitle">Inicio</div></td>
+                        </tr>
+                    </table>
                 </a></li>
         <?php } ?>    
 
         <li><a href="index.php?r=site%2Fabout" title="Acerca de">
-                <img src="images/iconos/about.png" >
+                <table>
+                        <tr>
+                            <td><img src="images/iconos/about.png" ></td>
+                            <td><div class="menutitle">Acerca de</div></td>
+                        </tr>
+                    </table>
             </a></li>
         <?php if($role == "supermegaadmin" || $role == "superadmin"){ ?>
             <li><a href="index.php?r=empresa%2Findex" title="Empresas">
-                <img src="images/iconos/empresas.png" >
+                <table>
+                        <tr>
+                            <td><img src="images/iconos/empresas.png" ></td>
+                            <td><div class="menutitle">Empresas</div></td>
+                        </tr>
+                    </table>
             </a></li>
         <?php } ?>
-      </ul>
-
-      <ul class="nav pull-left">
-        
-        <li class="navbar-ppal pull-left navarusu">
+     
+        <li class="navbar-ppal pull-left">
             <a href="index.php?r=site%2Fdatos" title="Mis Datos">
-                <img src="images/iconos/datos.png">
+                <table>
+                        <tr>
+                            <td><img src="images/iconos/datos.png" ></td>
+                            <td><div class="menutitle">Datos</div></td>
+                        </tr>
+                    </table>
             </a>
         </li>
         <?php if(Yii::$app->user->isGuest){
@@ -237,17 +279,14 @@ AppAsset::register($this);
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     ' '.Html::img('@web/images/iconos/exit.png' ). Yii::$app->user->identity->username . ' ',
-                    ['class' => 'btn btn-link navarmia ']
+                    ['class' => 'btn btn-link navbarusu']
                 )
                 . Html::endForm()
                 . '</li>';
        } ?>
 
       </ul>
-
-
-
-     </div>
+    </div>
 
   </div>
 

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Usuario;
+use app\models\User;
 use app\models\Empresa;
 use app\models\Tipo;
 use app\models\UsuarioSearch;
@@ -11,6 +12,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 
 /**

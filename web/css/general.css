@@ -30,8 +30,8 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-top: 7px;
 }
 
-.navarusu {
-	margin-top: 4px;
+.navbarusu {
+	margin-top: 7px;
 }
 
 .navbar {
@@ -67,6 +67,11 @@ margin-right: -15px !important;
 float: right!important;
 background: #f8f8f8;
 }
+
+.menutitle{
+	display: none;
+}
+
 //No collapse
 .navbar-ppal{
 	background-color: #f09;
@@ -220,5 +225,25 @@ background: #f8f8f8;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 	}
+
+	.menutitle{
+		display: block;
+		width: 100px;
+		text-align: center;
+	}
+	
+	.navarmia {
+    	position: absolute;
+    	right: 27px;
+    	top: 70px;
+   		width: 187px;
+		border: 1px solid #ccc;
+	    border: 1px solid rgba(0, 0, 0, .15);
+	    border-radius: 4px;
+	    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+		
+	}
+
 }
 

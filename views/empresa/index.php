@@ -13,6 +13,10 @@ use yii\web\JsExpression;
 
 use app\models\Empresa;
 
+//IMPORTANTE Sin esto no funciona el menu del logo 
+use yii\bootstrap\Tabs;
+Tabs::widget(); 
+//FIN
  
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EmpresaSearch */
