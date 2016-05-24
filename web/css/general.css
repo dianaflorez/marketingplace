@@ -26,6 +26,13 @@ input[type=number]::-webkit-outer-spin-button {
 	float: left;
 	width: 98%;
 }
+.navarmia {
+	margin-top: 7px;
+}
+
+.navarusu {
+	margin-top: 4px;
+}
 
 .navbar {
 	height: 77px;

@@ -171,12 +171,12 @@ AppAsset::register($this);
     <button type="button" class="navbar-toggle" data-toggle="collapse"
             data-target=".navbar-ex1-collapse">
       <span class="sr-only">Desplegar navegación</span>
-      <span class="icon-bar"></span>
+      <span class="icon-bar">dd</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
 
-    <div class="navbar-header navbar-right pull-right 
+    <div class="navarmia navbar-header navbar-right pull-right 
                 collapse navbar-collapse navbar-ex1-collapse">
      
       <ul class="nav navbar-nav navbar-left">
@@ -192,7 +192,10 @@ AppAsset::register($this);
             <li><a href="index.php?r=site%2Fsuperadmin" title="Inicio">
                     <img src="images/iconos/home.png" >
                 </a></li>
-            <li><a href="index.php?r=usuario%2Findex">Usuarios</a></li>
+            <li><a href="index.php?r=usuario%2Findex">
+                    <img src="images/iconos/usuarios.png" >
+                
+            </a></li>
             
         <?php }elseif($role == "adminemp"){ ?>
             <li><a href="index.php?r=site%2Fadminemp" title="Inicio">
@@ -222,7 +225,7 @@ AppAsset::register($this);
 
       <ul class="nav pull-left">
         
-        <li class="navbar-ppal pull-left">
+        <li class="navbar-ppal pull-left navarusu">
             <a href="index.php?r=site%2Fdatos" title="Mis Datos">
                 <img src="images/iconos/datos.png">
             </a>
@@ -234,7 +237,7 @@ AppAsset::register($this);
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     ' '.Html::img('@web/images/iconos/exit.png' ). Yii::$app->user->identity->username . ' ',
-                    ['class' => 'btn btn-link ']
+                    ['class' => 'btn btn-link navarmia ']
                 )
                 . Html::endForm()
                 . '</li>';

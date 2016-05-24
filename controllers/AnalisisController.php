@@ -31,17 +31,69 @@ class AnalisisController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+   public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+      return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['index', 'create', 'update','view'],
+            'rules' => [
+                [
+                    //El administrador tiene permisos sobre las siguientes acciones
+                    'actions' => ['index',  'create', 'update','view'],
+                    //Esta propiedad establece que tiene permisos
+                    'allow' => true,
+                    //Usuarios autenticados, el signo ? es para invitados
+                    'roles' => ['@'],
+                    //Este método nos permite crear un filtro sobre la identidad del usuario
+                    //y así establecer si tiene permisos o no
+                    'matchCallback' => function ($rule, $action) {
+                        //Llamada al método que comprueba si es un administrador
+                        return User::isSuperMegaAdmin(Yii::$app->user->identity->id);
+                    },
                 ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isSuperAdmin(Yii::$app->user->identity->id);
+                  },
+               ],
+                [
+                   //Los usuarios simples tienen permisos sobre las siguientes acciones
+                   'actions' => ['index', 'create', 'update','view'],
+                   //Esta propiedad establece que tiene permisos
+                   'allow' => true,
+                   //Usuarios autenticados, el signo ? es para invitados
+                   'roles' => ['@'],
+                   //Este método nos permite crear un filtro sobre la identidad del usuario
+                   //y así establecer si tiene permisos o no
+                   'matchCallback' => function ($rule, $action) {
+                      //Llamada al método que comprueba si es un usuario simple
+                      return User::isAdminEmp(Yii::$app->user->identity->id);
+                  },
+               ],
+                
             ],
-        ];
+        ],
+         //Controla el modo en que se accede a las acciones, en este ejemplo a la acción logout
+         //sólo se puede acceder a través del método post
+        'verbs' => [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'logout' => ['post'],
+            ],
+        ],
+      ];
     }
+
 
     /**
      * Lists all Planaccion models.
@@ -243,6 +295,7 @@ public function actionProductos()
         } else {
             $fecini = date('Y-m-d');
             $fecfin = date('Y-m-d');
+            return $this->redirect('site/index');
         }
 
         if(Yii::$app->user->identity->role != 4 &&   
@@ -282,11 +335,6 @@ public function actionProductos()
 
     public function actionClientes(){
         
-      //Si un usuario q no es adm Solo puede crear de su propia emp 
-         if(Yii::$app->user->identity->role != 4 &&   
-           Yii::$app->user->identity->role !=7)
-              $idemp = Yii::$app->user->identity->idemp;
-     
         if(Yii::$app->request->post())
         {
             if(isset($_POST["btn"])) 
@@ -299,8 +347,14 @@ public function actionProductos()
 
         } else {
             $cliente = "Todos";
+            return $this->redirect(["site/index"]);
         }
-
+ 
+        //Si un usuario q no es adm Solo puede crear de su propia emp 
+         if(Yii::$app->user->identity->role != 4 &&   
+           Yii::$app->user->identity->role !=7)
+              $idemp = Yii::$app->user->identity->idemp;
+     
      
         if($cliente == "Todos"){
             $model = Cliente::find()

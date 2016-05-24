@@ -27,35 +27,35 @@ $this->title = 'MarketingPlace';
                             col-sm-offset-1 col-sm-10 col-md-offset-1" align="center">
                 <h4><b>6</b> Modulos para mejorar la Planeación, gestión y control de tu mercado y clientes</h4>
                 
-                <div class="col-xs-3 col-sm-2" align="center">
+                <div class="col-xs-5 col-sm-2" align="center">
                 
                        <img class="iconos" src="images/suitcase.png">     
                         Información Empresa
                     
                 </div>
-                <div class="col-xs-3 col-sm-2" align="center">
+                <div class="col-xs-5 col-sm-2" align="center">
                        <img class="iconos" src="images/location.png" > <br />    
                         Plan de Mercadeo
                     
                     
                 </div>
-                <div class="col-xs-3 col-sm-2" align="center">
+                <div class="col-xs-5 col-sm-2" align="center">
                         <img class="iconos" src="images/calendar.png"> <br />    
    
                         Plan de Accion
                 
                 </div>
-                <div class="col-xs-3 col-sm-2" align="center">
+                <div class="col-xs-5 col-sm-2" align="center">
                         <img class="iconos" src="images/people.png"> <br />    
                         Gestion de Clientes
                     
                 </div>
-                <div class="col-xs-3 col-sm-2" align="center">
+                <div class="col-xs-5 col-sm-2" align="center">
                         <img class="iconos" src="images/coins.png"> <br />    
                         Ventas
                     
                 </div>
-                <div class="col-xs-3 col-sm-2" align="center">
+                <div class="col-xs-5 col-sm-2" align="center">
                         <img class="iconos" src="images/arrow.png"> <br />    
                         Evaluación
                     
