@@ -32,10 +32,10 @@ El proyecto se desarrollo con el apoyo de la Gobernación de Nariño, la Fundaci
                 <img src="images/about/unimar.png">        
 			</div>
 
-            <div class="col-xs-6 col-sm-2 col-sm-offset-1" >
+            <div class="col-xs-5 col-sm-2 col-sm-offset-1" >
                 <img src="images/about/grupoinv.jpg">     
             </div>
-            <div class="col-xs-6 col-sm-3 col-sm-offset-1 " style="margin-top:20px;" align="center">
+            <div class="col-xs-offset-1 col-xs-6 col-sm-3 col-sm-offset-1 " style="margin-top:20px;" align="center">
                 <img width="100%" src="images/about/ceiba.png">     
             </div>
            
