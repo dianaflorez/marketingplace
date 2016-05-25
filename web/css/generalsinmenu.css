@@ -41,7 +41,7 @@ body{
     -moz-background-size: contain;
     -webkit-background-size: contain;
     -o-background-size: contain;
- }
+ 	}
 
 	.container {
     	width: 90%;
@@ -64,7 +64,7 @@ body{
     -moz-background-size: contain;
     -webkit-background-size: contain;
     -o-background-size: contain;
- }
+ 	}
  	.container {
     	width: 357px;
 	}

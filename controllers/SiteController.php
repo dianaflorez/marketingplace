@@ -262,8 +262,6 @@ class SiteController extends Controller
     public function actionEmpresas($msg=null)
     {
     
-        $this->layout='sinmenupeq';
-
         $table = Empresa::find()
                         ->joinWith(['infempresas'])
                         ->andWhere([">", 'empresa.idemp', 0])
