@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </h3>
 <div class="row">
-   <div class="col-xs-5 col-sm-4 col-md-4">
+   <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4 col-md-4">
       <div class="panel panel-default">
          <div class="panel-body">
            <?= Html::beginForm(Url::toRoute("analisis/viewplan"), "POST") ?>
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
     </div>
    </div>
-   <div class="col-xs-5 col-sm-4 col-md-4">
+   <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4 col-md-4">
     <div class="panel panel-default">
       <div class="panel-body">
   
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
      </div>
    </div>
-   <div class="col-xs-5 col-sm-4 col-md-4">
+   <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4 col-md-4">
       <div class="panel panel-default">
          <div class="panel-body">
 
@@ -123,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="row">
-   <div class="col-xs-5 col-sm-4">
+   <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4">
     <div class="panel panel-default">
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientes"), "POST") ?>
@@ -145,7 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
     </div>
    </div>
-   <div class="col-xs-5 col-sm-4">
+   <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4">
     <div class="panel panel-default">
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientesproductos"), "POST") ?>
@@ -178,7 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
    </div>
 
-   <div class="col-xs-5 col-sm-4">
+   <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4">
     <div class="panel panel-default">
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientesfrecuencia"), "POST") ?>
@@ -213,7 +213,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>   
 
 <div class="row">
- <div class="col-xs-5 col-sm-4">
+ <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4">
     <div class="panel panel-default">
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/indicadores"), "POST") ?>

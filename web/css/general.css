@@ -187,6 +187,10 @@ background: #f8f8f8;
 	font-style: italic;
 }
 
+.btn{
+		margin-bottom: 4px;
+}
+
 .btnvacio{
 	background: transparent;
 	border-style: none;

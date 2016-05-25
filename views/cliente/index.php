@@ -17,7 +17,7 @@ use yii\web\JsExpression;
 $this->title = $emp->nombre.' - '.$cliente;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<h1><?= Html::encode($this->title) ?></h1>
+<h3><?= Html::encode($this->title) ?></h3>
 
 <h3>
 <?php if($msg){ 
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </h3>
 <div class="row">
-  <div class="col-sm-8 col-md-6">
+  <div class="col-sm-12 col-md-7" >
     <br />
       <?php if($cliente != "Institucional") { ?>
       <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
 
 <?= Html::beginForm(Url::toRoute(["cliente/index","idemp"=>$emp->idemp]), "POST") ?>
-  <div class="col-sm-2 col-md-2">
+  <div class="col-xs-5 col-sm-3 col-md-2" >
         <label class="control-label">Buscar Cliente</label>
         <br />
         <?php
@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly /></b>
 
     </div>
-    <div class="col-xs-1 col-md-1">
+    <div class="col-xs-1 col-md-1" >
     <br />
 
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 <?= Html::endForm() ?>
 
-  <div class="pull-right">
+  <div class="pull-right col-sm-2 col-md-2" >
   <br />
     <?php if($cliente == "Institucional") { ?>
     <a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
