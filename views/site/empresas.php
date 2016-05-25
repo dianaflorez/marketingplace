@@ -41,25 +41,26 @@ $this->title = 'Empresas';
 
 <div class="row">
     <?php foreach($model as $row): ?>
-     <div class="col-md-4"> 
+    <div class="col-md-4"> 
       <div class="panel panel-default">
         <div class="panel-body">
-        <a href="index.php?r=site%2Fcontact&id=<?=$row->idemp?>">
-           <?php foreach($row->infempresas as $log) {
+          <a href="index.php?r=site%2Fcontact&id=<?=$row->idemp?>">
+            <?php 
+            foreach($row->infempresas as $log) {
               if($log->idemp == $row->idemp && $log->idtipo ==10){
                 if($log->descripcion)
-                echo Html::img($log->descripcion,["height"=>"70px"]);
+                  echo Html::img($log->descripcion,["height"=>"70px"]);
               }
             } 
-           ?>
-          <br />
+            ?>
+            <br />
         
-          <?= $row->nombre ?><br />
-          <?= $row->nit ?>
+            <?= $row->nombre ?><br />
+            <?= $row->nit ?>
           </a>
         </div>
       </div>
-      </div>
+    </div>
     <?php endforeach ?>
 </div>
 
