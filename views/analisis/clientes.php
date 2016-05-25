@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $title;
 </a>
 </h3>   
 
- <?= Html::beginForm(Url::toRoute("analisis/clientes"), "POST") ?>
+ <?= $f=Html::beginForm(Url::toRoute("analisis/clientes"), "POST", ['name'=>"formpdf"]) ?>
     <h3>Clientes</h3>
       <div class="row">
          <div class="col-md-4">
@@ -33,9 +33,11 @@ $this->params['breadcrumbs'][] = $title;
           </div>
           <div class="col-md-5">
             <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
+            <input type="hidden" id="btn" name="btn" value="10">
+
             <button type="submit" class="btn btn-primary">Buscar</button>
-            <button id="btn" name="btn" value="2" type="submit" class="btn btn-danger"
-                onclick="document.this.form.target='_blank'"
+            <button type="submit" class="btn btn-danger"
+                onclick='$("#btn").val("pdf"); '
                 >Ver Pdf</button>
           </div>
       </div>      

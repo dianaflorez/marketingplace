@@ -348,8 +348,6 @@ class EmpresaController extends Controller
             $ctu    = Usuario::find()->where(['idemp' => $idemp])->count();
             $ctpm   = Planmarketing::find()->where(['idemp' => $idemp])->count();
 
-            $form = new EmpresaSearchForm;
-
             if((int) $idemp && $cte == 0 && $ctu == 0 && $ctpm ==0)
             {
                 if(Empresa::deleteAll("idemp=:idemp", [":idemp" => $idemp]))

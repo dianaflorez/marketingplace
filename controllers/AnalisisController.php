@@ -372,7 +372,7 @@ public function actionProductos()
         $emp    = Empresa::findOne(['idemp' => $idemp]);
         $dirtel = Dirtel::find()->where(['idemp'=> $idemp, 'tabla'=>'cliente'])->all();
 
-        if($btn == 2){
+        if($btn == "pdf"){
 
           $content = $this->renderPartial('clientespdf', [
                 'model'     => $model,
@@ -384,7 +384,7 @@ public function actionProductos()
             $mpdf = new mpdf();
             $mpdf->addPage('p','Letter');
             $mpdf->WriteHTML($content);
-            $mpdf->Output();
+            $mpdf->Output('clientes.pdf','D');
         }
 
           return $this->render('clientes', [

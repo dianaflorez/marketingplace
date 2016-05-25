@@ -1,8 +1,29 @@
-The Yii framework is free software. It is released under the terms of
+Marketingplance Growthmipymes is free software. It is released under the terms of
 the following BSD License.
+ 
+TGNU Public License (GPL), these are based on the 4 freedoms:
 
-Copyright © 2008 by Yii Software LLC (http://www.yiisoft.com)
-All rights reserved.
+The freedom to run the program, for any purpose (freedom 0).
+The freedom to study how the program works, and adapt it to your needs (freedom 1). Access to the source code is a precondition for this.
+The freedom to redistribute copies so you can help your neighbor (freedom 2).
+The freedom to improve the program and release the improvements to others, so that the whole community benefits. (Freedom 3). Access to the source code is a prerequisite for this.
+Or seen another way, the GPL (Linux):
+
+* Allows you to copy, modify and redistribute software.
+
+* Provides guarantee user rights to copy, modify and redistribute software.
+
+* As no cost, no guarantees.
+
+* Can be sold and can charge for services on software (charge for services on software, NOT FOR THE LICENSE OR THE PRODUCT AS IS) ..
+
+* Any patent on it must be licensed for everyone's benefit.
+
+* The software must not be modified license fee.
+
+* You must include the source code.
+
+* Changes in the license must maintain certain general terms.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -14,19 +35,3 @@ are met:
    notice, this list of conditions and the following disclaimer in
    the documentation and/or other materials provided with the
    distribution.
- * Neither the name of Yii Software LLC nor the names of its
-   contributors may be used to endorse or promote products derived
-   from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
