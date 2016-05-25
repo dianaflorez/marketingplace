@@ -102,21 +102,24 @@ Tabs::widget();
             </td>
             <td>
             <?= $form->field($modelfd, 'valor')->textInput(['maxlength' => true,
-            'onchange'=>'
-
+          //  'onkeyup'=>"format(this)", 
+            'onkeyup'=>'
                   //Valida solo numeros
                   if( isNaN( $(this).val() ) ) {
                     $(this).val(0);
                   }
 
-                  $totalfd = parseInt($(this).val());
+                  $totalfd = $(this).val();
+                  $totalfd = $totalfd.replace(".","");
+                  $totalfd = parseInt( $totalfd );
+           
                   $totalfh = $totalfd + parseInt($("#totalant").val());
                   $( "#facturad-total" ).val( $totalfd );
                   $( "#facturad-qty" ).val( 1 );
                   $( "#facturah-total" ).val( $totalfh);
                   $( "#faccredito-saldo" ).val($totalfh);
                   $( "#faccredito-abono" ).val(0);
-
+                  format(this);
             ']);  ?>
 
             <?= $form->field($modelfd, 'vlr1')->textInput(['maxlength' => true])->hiddenInput()->label(false);?>
@@ -130,18 +133,22 @@ Tabs::widget();
                     $(this).val(1);
                   }
 
-                $.get( "index.php?r=facturah/calprice&qty="+$(this).val()+"&vlr="+$("#facturad-valor").val(), function( data ) {
-                 
-                  $totalfd = data;
-                  //Quede aqui.........XXXXXXXX  
+                  $qty = $(this).val();
+
+                  $totalfd = $("#facturad-valor").val();
+                  $totalfd = $totalfd.replace(".","");
+                  $totalfd = parseInt( $totalfd );
+                   
+                  $totalfd = $totalfd * $qty;
+                   
                   $totalfh = parseInt($totalfd) + parseInt($("#totalant").val());
                   
-                  $( "#facturad-total" ).val( data );
+                  $( "#facturad-total" ).val( $totalfd );
                   $( "#facturah-total" ).val( $totalfh);
                   $( "#faccredito-saldo" ).val($totalfh);
                   $( "#faccredito-abono" ).val(0);
 
-                });
+
             ']); 
 
                  ?>
@@ -227,3 +234,19 @@ Tabs::widget();
       </td>
   </table>
 </div>
+
+<script type="text/javascript">
+  function format(input)
+{
+var num = input.value.replace(/\./g,'');
+if(!isNaN(num)){
+num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+num = num.split('').reverse().join('').replace(/^[\.]/,'');
+input.value = num;
+}
+ 
+else{ alert('Solo se permiten numeros');
+input.value = input.value.replace(/[^\d\.]*/g,'');
+}
+}
+</script>

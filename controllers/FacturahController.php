@@ -184,7 +184,7 @@ class FacturahController extends Controller
         $data = Producto::findOne(['idpro' => $id]);
         return $data->vlrsiniva;
     }
-     public function actionCalprice($qty,$vlr) {
+    public function actionCalprice($qty,$vlr) {
         $data = $qty*$vlr;
         return $data;
     }
@@ -254,9 +254,9 @@ class FacturahController extends Controller
 
                 $modelfd->vlr1   = $modelfd->vlr1;  //Vlr del producto 
                 $modelfd->qty    = $modelfd->qty;
-                $modelfd->vlr2   = $modelfd->valor;   //vlr en el que se lo vendio realmente
+                $modelfd->vlr2   = str_replace(".","",$modelfd->valor);//vlr en el que se lo vendio realmente
 
-                $modelfd->valor  = $modelfd->valor;
+                $modelfd->valor  = str_replace(".","",$modelfd->valor);
 
                 $modelfd->descuento  = (Int)$modelfd->vlr1-(Int)$modelfd->vlr2;  
 

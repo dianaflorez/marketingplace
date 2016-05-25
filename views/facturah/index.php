@@ -129,6 +129,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 setlocale(LC_MONETARY, 'en_US.UTF-8');
                 $totala = money_format('%.2n', $totalabono);
                 echo " = <b>".$totala."</b><br />";
+                $saldo = $total - $totalabono;
+                
+                $letracolor = "<font color='#900'>";
+                if($saldo == 0 ) $letracolor = "<font color='#090'>";
+               
+                $saldo = money_format('%.2n', $saldo);
+                echo $letracolor."<b>Saldo = ".$saldo."</b></font>";
              ?>
              <?php if($row->total > $totalabono){?>
                         <a  href="<?= Url::toRoute(["faccredito/create", 

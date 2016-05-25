@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $title;
     <div class="col-xs-10 col-md-4">
     <br />
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button type="submit" class="btn btn-primary">Productos</button>
+        <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
 </div>    
 <?= Html::endForm() ?>
