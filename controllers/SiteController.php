@@ -261,11 +261,34 @@ class SiteController extends Controller
 
     public function actionEmpresas($msg=null)
     {
-    
-        $table = Empresa::find()
+        $this->layout = "sinmenupeq";
+
+        if(Yii::$app->request->post())
+        {
+          $idemp = Html::encode($_POST["cliente_id"]);
+          if($idemp){
+            $table = Empresa::find()
+                  ->where(['idemp' => $idemp]);
+          }else{
+            $table = Empresa::find()
                         ->joinWith(['infempresas'])
                         ->andWhere([">", 'empresa.idemp', 0])
                         ->andWhere(["=", 'empresainf.idtipo', 10]);
+          }
+        }else{
+            $table = Empresa::find()
+                        ->joinWith(['infempresas'])
+                        ->andWhere([">", 'empresa.idemp', 0])
+                        ->andWhere(["=", 'empresainf.idtipo', 10]);
+        }     
+
+        $data = Empresa::find()
+                ->select(["CONCAT(nombre,' ',nit) as label", 
+                          "CONCAT(nombre,' ',nit) as value",
+                          'idemp as id'])
+                ->andWhere([">", 'empresa.idemp', 0])
+                ->asArray()
+                ->all();
                         
                 $count = clone $table;
                 $pages = new Pagination([
@@ -282,6 +305,7 @@ class SiteController extends Controller
             'model'         => $model,
             "pages"         => $pages,
             "msg"           => $msg,
+            "data"          => $data,
         ]);
     }
 

@@ -13,6 +13,10 @@ use app\models\Empresainf;
 /* @var $searchModel app\models\EmpresaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+//Para autocomplete
+use yii\jui\AutoComplete;
+use yii\web\JsExpression;
+
 $this->title = 'Empresas';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,15 +33,40 @@ $this->title = 'Empresas';
 ?>
 </h3>
 
-<?php $f = ActiveForm::begin([
-    "method" => "get",
-    "action" => Url::toRoute("empresa/index"),
-    "enableClientValidation" => true,
-]);
-?>
+<div class="row">
+
+<?= Html::beginForm(Url::toRoute(["site/empresas"]), "POST") ?>
+  <div class="col-sm-2 col-md-2">
+        <label class="control-label">Buscar Cliente</label>
+        <br />
+        <?php
+        echo AutoComplete::widget([    
+        'class'=>'form-control',
+        'clientOptions' => [
+        'class'=>'form-control',
+        'source'    => $data,
+        'minLength' => '3', 
+        'autoFill'  => true,
+        'select'    => new JsExpression("function( event, ui ) {
+                        $('#cliente_id').val(ui.item.id);//#cliente_id is the id of hiddenInput.
+                        $('#nombre_id').val(ui.item.value);
+                     }")],
+                     ]);
+                ?>
+        <input type="hidden" name="cliente_id" id="cliente_id" />
+        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly /></b>
+
+    </div>
+    <div class="col-xs-1 col-md-1">
+    <br />
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+<?= Html::endForm() ?>
+
 <a class="btn btn-info pull-right" style="margin-right: 27px" href="javascript:history.back(1)">Regresar</a>
 
-<h3>Lista de Empresas</h3>
+<br />
+</div>
 
 <div class="row">
     <?php foreach($model as $row): ?>

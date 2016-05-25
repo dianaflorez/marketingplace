@@ -40,7 +40,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <img class="logo" src="images/logopeq.png">
+        <img class="logo" src="images/logo.png">
         
         <!--IMPRIMIR RESOLUSION DEL DISPOSITIVO
         <script language="JavaScript"> 
