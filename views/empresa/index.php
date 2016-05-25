@@ -61,15 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>
             Nombre
         </th>
-        <th>Nit</th>
         <th class="action-column ">&nbsp;</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
     <tr>
         <td><?= $row->idemp ?></td>
-        <td><?= $row->nombre ?></td>
-        <td><?= $row->nit ?></td>
+        <td><?= $row->nombre ?> NIT.<?= $row->nit ?></td>
         <td>
               <!-- Inf. -->
             <a href="<?= Url::toRoute(["empresainf/index", "id" => $row->idemp]) ?>" title="Informacion" aria-label="Informacion">

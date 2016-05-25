@@ -35,8 +35,10 @@ $this->title = 'Empresas';
     "enableClientValidation" => true,
 ]);
 ?>
+<a class="btn btn-info pull-right" style="margin-right: 27px" href="javascript:history.back(1)">Regresar</a>
 
 <h3>Lista de Empresas</h3>
+
 <div class="row">
     <?php foreach($model as $row): ?>
      <div class="col-md-4"> 
