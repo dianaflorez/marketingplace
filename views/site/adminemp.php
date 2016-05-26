@@ -37,22 +37,23 @@ Tabs::widget();
                   col-sm-offset-1 col-sm-10 col-md-offset-1" align="center">
           <div class="row">
             
-            <div class="col-xs-3 col-sm-3" align="center">
+            <div class="col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=empresainf%2Findex&id=<?=$idemp?>">
-                   <img class="iconos" src="images/suitcase.png">     
+                   <img class="iconos" src="images/suitcase.png">  
+                    <br />   
                     Información Empresa
                 </a>    
                 
             </div>
-            <div class="col-xs-offset-1 col-xs-3 col-sm-3 " align="center">
+            <div class="col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=pmcontenido%2Findex&id=<?=$idemp?>&activo=pm1">
 
                    <img class="iconos" src="images/location.png" > <br />    
                     Plan de Mercadeo
-                </a>
-                
+                    <br />
+                </a>        
             </div>
-            <div class="col-xs-offset-2 col-xs-3  col-sm-3 col-sm-offset-1" align="center">
+            <div class="col-xs-5  col-sm-3 btninicio" align="center">
 
                 <a href="index.php?r=planaccion%2Findex&id=<?=$idemp?>">
                     <img class="iconos" src="images/calendar.png"> <br />    
@@ -60,24 +61,20 @@ Tabs::widget();
                     Plan de Accion
                 </a>    
             </div>
-          </div>
-
-          <br /><br />
-
-          <div class="row" >
-            <div class=" col-xs-3 col-sm-3" align="center">
+       
+            <div class=" col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=cliente%2Findex&idemp=<?=$idemp?>">
                     <img class="iconos" src="images/people.png"> <br />    
                     Gestion de Clientes
                 </a>
             </div>
-            <div class="col-xs-offset-1 col-xs-3 col-sm-3" align="center">
+            <div class="col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=facturah%2Findex&idemp=<?=$idemp?>">
                     <img class="iconos" src="images/coins.png"> <br />    
                     Ventas
                 </a>    
             </div>
-            <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-3" align="center">
+            <div class="col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=analisis%2Findex&idemp=<?=$idemp?>">
                     <img class="iconos" src="images/arrow.png"> <br />    
                     Evaluación
@@ -87,3 +84,4 @@ Tabs::widget();
        
       </div>
 </div> 
+</div>
