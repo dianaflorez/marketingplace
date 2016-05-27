@@ -68,6 +68,7 @@ $this->params['breadcrumbs'][] = $title;
     <?php $form = ActiveForm::begin(); ?>
 
 <br />
+<div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>No.</th>
@@ -340,6 +341,6 @@ $this->params['breadcrumbs'][] = $title;
         </td>
     </tr>
 </table>
-
+</div>
     <?php ActiveForm::end(); ?>
 

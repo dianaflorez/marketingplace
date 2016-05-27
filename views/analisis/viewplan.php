@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $title;
 <?= Html::endForm() ?>
 
 <h3>Plan de Accion <?php echo ' - '.$emp->nombre;?></h3>
+<div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
@@ -146,3 +147,4 @@ $this->params['breadcrumbs'][] = $title;
             <td></td>
         </tr>
 </table>
+</div>

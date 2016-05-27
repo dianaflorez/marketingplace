@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $title;
 </div>    
 <?= Html::endForm() ?>
 <br />
+<div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Producto</th>
@@ -93,3 +94,4 @@ $this->params['breadcrumbs'][] = $title;
         </td>
     </tr>
 </table>
+</div>

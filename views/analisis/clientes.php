@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $title;
     
 <br />
 <br />
+<div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>No</th>
@@ -114,3 +115,4 @@ $this->params['breadcrumbs'][] = $title;
       </tr>
     <?php endforeach ?>
 </table>
+</div>
