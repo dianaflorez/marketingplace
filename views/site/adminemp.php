@@ -16,10 +16,10 @@ Tabs::widget();
     <div class="col-xs-7">
       <h2><?= Html::encode($this->title) ?></h2>
     </div>
-<br />
+    <br />
     <div class="col-xs-offset-1 col-md-4" align="right">  
 
-    <?php if($urllogo){ 
+      <?php if($urllogo){ 
         ?>
           <?= Html::img($urllogo,["height"=>"70px"]); ?>
       <?php }else{ ?>
@@ -27,7 +27,6 @@ Tabs::widget();
     
       <?php  } ?>  
     </div>
-
   </div>  
     <?php   echo "NIT. ".$modelemp->nit; ?>
     <br /><br />
@@ -83,5 +82,6 @@ Tabs::widget();
           </div>
        
       </div>
-</div> 
+    </div> 
+  </div>  
 </div>

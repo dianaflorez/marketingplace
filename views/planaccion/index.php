@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <a class="btn btn-danger" href="<?= Url::toRoute(["planaccion/verpdf", "idemp" => $idemp]) ?>">Ver PDF</a>
 
 <h3><?php echo $this->title;?></h3>
+
+<div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
@@ -49,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php foreach($model as $row): ?>
     <tr>
-        <td colspan="7">
+        <td colspan="8">
             <div class="letraazul"><?= $row->nombre ?></div>
         </td>
     </tr>        
@@ -286,7 +288,7 @@ $this->params['breadcrumbs'][] = $this->title;
                </td>
     </tr>
 </table>
-
+</div>
 <?php  //IMPORTANTE Sin esto no funciona el menu del logo 
     Tabs::widget(); 
 ?>
