@@ -13,9 +13,15 @@ $this->params['breadcrumbs'][] = $title;
 ?>
 
 <h2>
-<a href="<?= Url::toRoute(["envioemail/create",  "id" => $emp->idemp]) ?>">
-    <?php echo $emp->nombre." - Envio Email"; ?>
-</a>
+<?php if($idinf){ ?>
+    <a href="<?= Url::toRoute(["envioemail/create",  "id" => $emp->idemp, "idinf" => $idinf]) ?>">
+        <?php echo $emp->nombre." - Envio Email"; ?>
+    </a>
+<? }else{ ?>
+    <a href="<?= Url::toRoute(["envioemail/create",  "id" => $emp->idemp]) ?>">
+        <?php echo $emp->nombre." - Envio Email"; ?>
+    </a>
+<?php }?>
 </h2>   
 
 <div class="envioemail-view">

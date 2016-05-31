@@ -5,11 +5,16 @@ namespace app\controllers;
 use Yii;
 use app\models\Envioemail;
 use app\models\Cliente;
+use app\models\Empresainf;
 use app\models\Empresa;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use yii\filters\AccessControl;
+use app\models\User;
+
 
 /**
  * EnvioemailController implements the CRUD actions for Envioemail model.
@@ -116,7 +121,7 @@ class EnvioemailController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id, $idemp)
+    public function actionView($id, $idemp, $idinf=null)
     {
          if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
@@ -127,6 +132,7 @@ class EnvioemailController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'emp'   => $emp,
+            'idinf' => $idinf,
         ]);
     }
 
@@ -135,7 +141,7 @@ class EnvioemailController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
+    public function actionCreate($id, $idinf = null)
     {
         $msg = null;
         //Si un usuario q no es adm Solo puede crear de su propia emp 
@@ -158,19 +164,52 @@ class EnvioemailController extends Controller
                 ->asArray()
                 ->all();
 
+        $swatt = 0;
+        if($idinf != null) {
+          $datos = Empresainf::findOne($idinf);
+          $model->asunto = $datos->inf;
+          if($datos->idtipo == 9 || $datos->idtipo == 15 || $datos->idtipo == 8){
+            $model->contenido = $datos->inf;
+            $ruta = $datos->descripcion;
+            $swatt = 1;
+          }else{
+            $model->contenido = $datos->descripcion;
+          }  
+        }        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $subject = $model->asunto;
              $body = $model->contenido;
               
-             //Enviamos el correo
-             Yii::$app->mailer->compose()
-             ->setTo($model->email)
-             ->setFrom([Yii::$app->params["adminEmail"] => Yii::$app->params["title"]])
-             ->setSubject($subject)
-             ->setHtmlBody($body)
-             ->send();
-            return $this->redirect(['view', 'id' => $model->idenv, 'idemp' => $emp->idemp]);
+            if($swatt == 1){
+                 //Enviamos el correo
+               Yii::$app->mailer->compose()
+               ->setTo($model->email)
+               ->setFrom([Yii::$app->params["adminEmail"] => $emp->nombre])
+               ->setSubject($subject)
+               ->setHtmlBody($body)
+               ->attach($ruta)
+               ->send();  
+            } else{
+               //Enviamos el correo
+               Yii::$app->mailer->compose()
+               ->setTo($model->email)
+               ->setFrom([Yii::$app->params["adminEmail"] => $emp->nombre])
+               ->setSubject($subject)
+               ->setHtmlBody($body)
+               ->send();
+            }   
+
+            if($idinf != null) {
+              return $this->redirect(['view', 'id'    => $model->idenv, 
+                                              'idemp' => $emp->idemp,
+                                              'idinf' => $idinf]);
+            }else{
+              return $this->redirect(['view', 'id'    => $model->idenv, 
+                                              'idemp' => $emp->idemp,
+                                              'idinf' => null]);
+            }
 
         } else {
             return $this->render('create', [
@@ -178,6 +217,7 @@ class EnvioemailController extends Controller
                 'data'  => $data,
                 'emp'   => $emp,
                 'msg'   => $msg,
+                'idinf' => $idinf,
             ]);
         }
     }

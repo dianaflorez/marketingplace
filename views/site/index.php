@@ -67,7 +67,7 @@ $this->title = 'MarketingPlace';
 
                 <p >Si quieres entrar en contacto con las empresas de Growth marketing y CRM, puedes hacerlo aqui! 
                 </p>
-                <div class="col-xs-offset-3 col-xs-7  col-sm-4  col-md-3" align="center">
+                <div class="col-xs-offset-3 col-xs-7  col-sm-offset-4 col-sm-4  col-md-offset-5 col-md-3" align="center">
                     <a class="btn btn-block btn-success" href="index.php?r=site%2Fempresas"> Buscar Empresa</a>
                 </div>
             </div>    

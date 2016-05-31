@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach($model as $row): 
                   $ctlineas ++; 
               
-                if($ctlineas > 4 && $row->inf != "logo" && $row->inf != "link"){  
+                if($ctlineas > 4 && $row->inf != "logo" && $row->idtipo != 16){  
                   $ctlineas ++; 
                   ?>
                     <div class="cajita">
@@ -106,7 +106,14 @@ $this->params['breadcrumbs'][] = $this->title;
                   <?php
                   if($row->descripcion){
                     echo Html::img('@web/images/iconos/lito.png',["height"=>"20px", "class"=>"estado"]);
-                  }else{ ?>
+                    ?>
+                     <a class="estado" href="<?= Url::toRoute(["envioemail/create", 
+                                     "id"  => $idemp, 
+                                     "idinf"    => $row->idinf,
+                                     ]) ?>">
+                      <?=Html::img('@web/images/iconos/enviar.png',["height"=>"27px"])?>
+                    </a>
+                  <?php }else{ ?>
                     <a class="estado" href="<?= Url::toRoute(["empresainf/logo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => $row->idinf,
@@ -132,6 +139,43 @@ $this->params['breadcrumbs'][] = $this->title;
           </a>
      
       <br />
+      <br />
+          <b class="whitefont">Link</b><br />
+                <?php $ctlineas = 0; ?>
+                <?php foreach($model as $row): 
+                  $ctlineas ++; 
+              
+                if($ctlineas > 4 && $row->inf != "logo" && $row->idtipo == 16){  
+                  $ctlineas ++; 
+                  ?>
+                    <div class="cajita">
+                     <p class="cuadroblanco"><?=$row->inf?>dd</p>
+                  <?php
+                  if($row->descripcion){
+                    echo Html::img('@web/images/iconos/lito.png',["height"=>"20px", "class"=>"estado"]);
+                     ?>
+                              
+                    <a class="estado" href="<?= Url::toRoute(["envioemail/create", 
+                                     "id"  => $idemp, 
+                                     "idinf"    => $row->idinf,
+                                     ]) ?>">
+                      <?=Html::img('@web/images/iconos/enviar.png',["height"=>"27px"])?>
+                    </a>
+                      
+                  <?}else{ ?>
+                    <a class="estado" href="<?= Url::toRoute(["empresainf/logo", 
+                                     "idemp"  => $idemp, 
+                                     "doc"    => $row->idinf,
+                                     ]) ?>">
+                      <?=Html::img('@web/images/iconos/add.png',["height"=>"27px"])?>
+                    </a>
+            <?php } ?>
+                     <br />
+                    </div>
+               <?php } ?>
+
+        <?php endforeach ?>
+         <br />
 
          <a href="<?= Url::toRoute(["empresainf/create", 
                                      "idemp"  => $idemp

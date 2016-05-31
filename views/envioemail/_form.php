@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-
 //Para autocomplete
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
@@ -48,7 +47,7 @@ use yii\web\JsExpression;
                      ]);
                 ?>
         <input type="hidden" name="cliente_id" id="cliente_id" />
-        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly />
+        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0; width: 200px" readonly />
         </b>
          <?php echo $form->field($model, 'idcli')->hiddenInput()->label(false);?>
 
