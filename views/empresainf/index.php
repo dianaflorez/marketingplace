@@ -165,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <?=Html::img('@web/images/iconos/enviar.png',["height"=>"27px"])?>
                     </a>
                       
-                  <?}else{ ?>
+                  <?php }else{ ?>
                     <a class="estado" href="<?= Url::toRoute(["empresainf/subirarchivo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => $row->idinf,
