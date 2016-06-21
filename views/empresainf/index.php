@@ -23,7 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
           <?= Html::img($urllogo,["height"=>"70px"]); ?>
 
             <!-- Update -->
-            <a href="<?= Url::toRoute(["empresainf/logo", "idemp" => $idemp, "doc" => 0]) ?>" title="Actualizar" aria-label="Actualizar">
+            <a href="<?= Url::toRoute(["empresainf/logo", "idemp" => $idemp, 
+                                                          "doc" => 0, 
+                                                          "actualizarlogo" => 1]) ?>" 
+                    title="Actualizar" aria-label="Actualizar">
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <!--End Update-->

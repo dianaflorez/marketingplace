@@ -213,7 +213,7 @@ class EmpresainfController extends Controller
         }
     }
 
-    public function actionLogo($idemp, $doc, $new = null)
+    public function actionLogo($idemp, $doc, $new = null, $actualizarlogo = null)
     {
          $model = new FormUploadlogo;
          $msg = null;
@@ -235,6 +235,7 @@ class EmpresainfController extends Controller
                 $urldestino = 'archivos/' . $file->baseName . '.' . $file->extension;
                 $file->saveAs($urldestino);
                 $msg = "<p><strong class='label label-info'>Subida realizada con éxito</strong></p>";
+
             if($doc == 0 && $sw == 0 && $new == null){ $sw = 1;
 
                 $ctlogo = Empresainf::find()
@@ -249,30 +250,13 @@ class EmpresainfController extends Controller
                     $tabla->descripcion = $urldestino;
                     $tabla->usumod      = Yii::$app->user->identity->idusu;
                     $tabla->save();
-                }
-               // echo "<br /><br /><br />";
-               // print_r($tabla->getErrors());
-            }elseif($doc !=0 && $sw == 0 && $new == null){
-                $sw = 1;
-                $tabla = Empresainf::findOne(['idinf' => $doc, 'idemp' => $idemp ]);
-                if($tabla){
+                }elseif($actualizarlogo == 1 ){
+                    $tabla = Empresainf::findOne(['idemp' => $idemp, 'idtipo' => 10]);
                     $tabla->descripcion = $urldestino;
-                    $tabla->fecmod = date('Y.m.d h:i:s');
-                    $tabla->usumod = Yii::$app->user->identity->idusu;
-                    $tabla->save();    
+                    $tabla->usumod      = Yii::$app->user->identity->idusu;
+                    $tabla->save();
                 }
-            }elseif($new == 15 && $sw == 0){
-                $sw = 1;
-                $tabla = new Empresainf;  
-                $tabla->idemp = $idemp;
-                $tabla->idtipo  = 15; //De la tabla tipo = Otro
-                $tabla->inf     = $model->info; 
-                $tabla->descripcion = $urldestino;
-                $tabla->usumod      = Yii::$app->user->identity->idusu;
-                $tabla->save();
-           
-                //print_r($tabla->getErrors());
-
+            
             }
                 return $this->redirect(['index', 'id' => $idemp]);
             
