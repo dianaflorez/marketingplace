@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Contenidos';
 $this->params['breadcrumbs'][] = $this->title;
 
-echo "<h3>Plan Marketing ".$emp->nombre."</h3>";
+echo "<h3>Plan de Marketing ".$emp->nombre."</h3>";
 
 $form = ActiveForm::begin(['id' => 'contact-form']); 
 
@@ -39,24 +39,24 @@ if($activo == "pm1") {
 echo Tabs::widget([
     'items' => [
         [
-            'label' => 'Analisis Situacion Externa',
+            'label' => 'Análisis Situacion Externa',
             'content' => $this->render('pm1',['model' => $pm1]),
             'active' => $sw1
         ],
         [
-            'label' => 'Analisis Situacion Interna',
+            'label' => 'Análisis Situación Interna',
             'content' => $this->render('pm2',['model' => $pm2]),
           //  'headerOptions' => [...],
             'options' => ['id' => 'myveryownID'],
             'active' => $sw2
         ],
         [
-            'label' => 'Diagnostico de la Situacion',
+            'label' => 'Diagnostico de la Situación',
             'content' => $this->render('pm3',['model' => $pm3, 'emp' => $emp]),
             'active' => $sw3 
         ],
         [
-            'label' => 'Desiciones Estrategicas',
+            'label' => 'Desiciones Estratégicas',
             'items' => [
                  [
                     'label' => 'Objetivos de Marketing', 
