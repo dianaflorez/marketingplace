@@ -258,9 +258,10 @@ class PlanaccionController extends Controller
                                             'emp'     => $emp, 
                                         ]);
         
-        $mpdf = new mpdf('c', 'A4-L');
+        $mpdf = new mpdf();
+        $mpdf->addPage('p','Letter');
         $mpdf->WriteHTML($content);
-        $mpdf->Output();
+        $mpdf->Output('plandeaccion.pdf','D');
     }
 
     /**
