@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <h3>
+<?php echo $this->title; ?>
 <?php if($msg){ 
         echo Alert::widget([
             'options' => [
@@ -74,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <br />
 
         <input type="hidden" name="idemp" value="<?= $emp->idemp ?>">
-        <button type="submit" class="btn btn-primary">Generar</button>
+        <button type="submit" class="btn btn-primary">Buscar</button>
     </div>
 <?= Html::endForm() ?>
 </div>
@@ -85,7 +86,6 @@ $this->params['breadcrumbs'][] = $this->title;
         "enableClientValidation" => true,
     ]);
     ?>
-<h3><?php echo $emp->nombre.' ';?> Ventas</h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Fecha</th>
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Estado</th>
         <th>TOTAL</th>
         <th>Tipo</th>
-        <th>Credito</th>
+        <th>Crédito</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
     <?php foreach($model as $row): ?>
