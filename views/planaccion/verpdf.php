@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <?php foreach($acciones as &$acc): ?>
+      <?php if($acc['estado'] != "Anulado"){ ?>
     <tr>
         <td valign="top"><?= $acc['descripcion'] ?></td>
         <td valign="top"><?= $acc['fecini'] ?> </td>
@@ -86,7 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </td>
        
     </tr>
-                <?php endforeach ?>
+    <?php } ?>
+    <?php endforeach ?>
     <tr>
             <td colspan="6" align="right">
                 <b>Total <?= $row->nombre ?>:</b>
