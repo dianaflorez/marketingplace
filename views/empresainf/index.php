@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       <?=Html::img('@web/images/iconos/enviar.png',["height"=>"27px"])?>
                     </a>
                   <?php }else{ ?>
-                    <a class="estado" href="<?= Url::toRoute(["empresainf/logo", 
+                    <a class="estado" href="<?= Url::toRoute(["empresainf/subirarchivo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => $row->idinf,
                                      ]) ?>">
@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
          <br />
          <br />
 
-         <a href="<?= Url::toRoute(["empresainf/logo", 
+         <a href="<?= Url::toRoute(["empresainf/subirarchivo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => 0,
                                      "new"    => 15, 
@@ -163,7 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </a>
                       
                   <?}else{ ?>
-                    <a class="estado" href="<?= Url::toRoute(["empresainf/logo", 
+                    <a class="estado" href="<?= Url::toRoute(["empresainf/subirarchivo", 
                                      "idemp"  => $idemp, 
                                      "doc"    => $row->idinf,
                                      ]) ?>">

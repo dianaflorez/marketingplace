@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?= $msg ?>
-<h3>Subir archivos</h3>
+<h3>Subir Logo </h3>
 
 
 <?php $form = ActiveForm::begin([
