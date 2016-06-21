@@ -92,6 +92,7 @@ $this->params['breadcrumbs'][] = $title;
    <?php $suma = 0; ?>    
            
         <?php foreach($model as $acc): ?>
+            <?php if($acc['estado'] != "Anulado"){ ?>
             <?php if($acc['idpa'] == $pa->idpa){?>
                 <tr>
                     <td><?= $acc['descripcion'] ?></td>
@@ -122,7 +123,8 @@ $this->params['breadcrumbs'][] = $title;
                     </td>
                     <td><?= $acc['estado'] ?></td>
                  </tr>
-            <?php }?>     
+            <?php }?>  
+          <?php } ?>  
         <?php endforeach ?>
         <tr>
             <td colspan="5" align="right">
