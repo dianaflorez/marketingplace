@@ -250,13 +250,14 @@ class EmpresaController extends Controller
             $modelempinf->usumod = Yii::$app->user->identity->idusu;
             $modelempinf->save();
 
+/*
             $modelempinf = new Empresainf;
             $modelempinf->idemp  = $model->idemp;
             $modelempinf->idtipo = 7;  //Mision
             $modelempinf->inf = "Nuestra filosofía...";  
             $modelempinf->usumod = Yii::$app->user->identity->idusu;
             $modelempinf->save();
-
+*/
             $modelempinf = new Empresainf;
             $modelempinf->idemp  = $model->idemp;
             $modelempinf->idtipo = 8;  //Camara de Comercio
