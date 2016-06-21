@@ -190,6 +190,8 @@ class FacturahController extends Controller
     }
     public function actionCreate($idemp)
     {
+      $msg = null;
+
        if(Yii::$app->user->identity->role != 4 &&   
            Yii::$app->user->identity->role !=7)
               $idemp = Yii::$app->user->identity->idemp;
@@ -242,12 +244,12 @@ class FacturahController extends Controller
         $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
         if ($model->load(Yii::$app->request->post()) && 
-            $modelfd->load(Yii::$app->request->post()) 
-
-            &&  $modelcredito->load(Yii::$app->request->post()) 
+            $modelfd->load(Yii::$app->request->post()) &&
+             $modelcredito->load(Yii::$app->request->post()) 
             ) {
-            
-            if($model->save()){
+
+            if($model->idcli){
+              if($model->save()){
                 $modelfd->idfh   = $model->idfh;
                 $modelfd->idemp  = $model->idemp;
                 $modelfd->idpro  = $modelfd->idpro;
@@ -299,7 +301,23 @@ class FacturahController extends Controller
                      //   return $this->redirect(['update', 'id' => $model->idfh]);
 
                 }
-            }
+              } //cierre if model save
+            }else{
+               $msg = "Por favor seleccione el usuario";
+
+               return $this->render('create', [
+                'model'     => $model,
+                'modelfd'   => $modelfd,
+                'modelcredito'   => $modelcredito,
+                'clientes'  => $clientes,
+                'emp'       => $emp,
+                'productos' => $productos,
+                'tipo'      => $tipo,
+                'facturad'  => array(),
+                'data'      => $data,
+                'msg'       => $msg,
+            ]);
+            }  
         } else {
             return $this->render('create', [
                 'model'     => $model,
@@ -311,6 +329,7 @@ class FacturahController extends Controller
                 'tipo'      => $tipo,
                 'facturad'  => array(),
                 'data'      => $data,
+                'msg'       => $msg,
             ]);
         }
     }
@@ -323,6 +342,7 @@ class FacturahController extends Controller
      */
     public function actionUpdate($id)
     {
+      $msg = null;
         $model = $this->findModel($id);
         $model->total       = $model->total;
         $model->fecmod = date('Y.m.d h:i:s');
@@ -415,6 +435,7 @@ class FacturahController extends Controller
                 'facturad'  => $facturad,  
                 'data'      => $data,
                 'cliente'   => $cliente,
+                'msg'       => $msg,
             ]);
         }
     }

@@ -78,7 +78,9 @@ $this->params['breadcrumbs'][] = $title;
     <tr>
         <td><?= substr($row->fecha,0,10) ?></td>
         <td>
+            <?php if($row->idcli0){ ?>
             <?= $row->idcli0->nombre1.' '.$row->idcli0->apellido1 ?>
+            <?php }?>
         </td>
         <td><?= $row->refpago ?></td>
         <td><?= $row->estado ?></td>

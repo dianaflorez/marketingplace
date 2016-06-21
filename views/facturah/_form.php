@@ -12,7 +12,21 @@ use yii\web\JsExpression;
 use yii\bootstrap\Tabs;
 Tabs::widget(); 
 //FIN
+
+use yii\bootstrap\Alert;
 ?>
+
+<h3>
+<?php if($msg){ 
+        echo Alert::widget([
+            'options' => [
+                'class' => 'alert-info',
+            ],
+            'body' => $msg,
+        ]);
+    }
+?>
+</h3>
 
 <div class="facturah-form">
 
@@ -36,7 +50,7 @@ Tabs::widget();
     <input type="hidden" name="cliente_id" id="cliente_id" />
     <?php $client = ""; if(isset($cliente->nombre1)) $client =$cliente->nombre1.' '.$cliente->apellido1; ?>
     ><input type="text"  id="nombre_id" value="<?= $client ?>" readonly />
-    <?= $form->field($model, 'idcli')->hiddenInput(['maxlength' => true])->label(false) ?>
+    <?= $form->field($model, 'idcli')->HiddenInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'refpago')->textInput(['maxlength' => true, 'readonly' => true]) ?>
    
@@ -93,10 +107,9 @@ Tabs::widget();
             ']); 
 
             ?>
-
 <!--Boton para agregar producto -->
                 <div class="form-group">
-                    <?= Html::submitButton($model->isNewRecord ? 'Agregar Producto' : 'Agregar producto a la factura', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
+                    <?= Html::submitButton($model->isNewRecord ? 'Agregar Producto' : 'Agregar producto a la factura', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success' ]) ?>
                 </div>
 
             </td>
