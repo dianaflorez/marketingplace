@@ -72,6 +72,8 @@ $this->params['breadcrumbs'][] = $title;
 
 <br />
 <br />
+
+<div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
@@ -152,6 +154,7 @@ $this->params['breadcrumbs'][] = $title;
             </b>   
     </tr>
 </table>
+</div>
 <?php  //IMPORTANTE Sin esto no funciona el menu del logo 
     Tabs::widget(); 
 ?>

@@ -56,6 +56,8 @@ use yii\bootstrap\Alert;
    
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
 
+<div class="rwd">
+
     <!-- Facturad -->
     <table class="table table-striped  table-bordered table-showPageSummary">
         <tr>
@@ -247,6 +249,7 @@ use yii\bootstrap\Alert;
   <?php } ?>
       </td>
   </table>
+  </div>
 </div>
 
 <script type="text/javascript">
