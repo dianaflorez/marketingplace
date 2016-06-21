@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'inf')->textarea(['rows' => 1])->label('Asunto') ?>
 
-<? $lbl = "Descripcion"; if($model->idtipo >7) $lbl = "link"; ?>
+<?php $lbl = "Descripcion"; if($model->idtipo >7) $lbl = "link"; ?>
     <?= $form->field($model, 'descripcion')->textarea(['rows' => 1])->label($lbl) ?>
 
     <div class="form-group">
