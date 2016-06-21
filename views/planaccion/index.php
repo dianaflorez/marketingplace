@@ -11,7 +11,7 @@ use yii\bootstrap\Tabs;
 use kartik\date\DatePicker;
 
 
-$this->title = $emp->nombre.' - Plan Accion';
+$this->title = $emp->nombre.' - Plan de Acción';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/create", "id" => $idemp]) ?>">Nuevo Plan de Accion</a>
 -->
-<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp]) ?>">Ver Plan de Accion</a>
+<a class="btn btn-info" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp]) ?>">Ver Plan de Acción</a>
 <a class="btn btn-danger" href="<?= Url::toRoute(["planaccion/verpdf", "idemp" => $idemp]) ?>">Ver PDF</a>
 
 <div class="rwd">
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <th>Responsable</th>
         <th>Costo</th>
         <th>Estado</th>
-        <th>Elemento</th>
+        <th>Elementos</th>
         <th class="action-column ">&nbsp;</th>
     </tr>
 
@@ -175,7 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
                               <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Eliminar Accion</h4>
+                                    <h4 class="modal-title">Eliminar Acción</h4>
                               </div>
                               <div class="modal-body">
                                     <p>¿Realmente deseas eliminar esta elemento: <?= $ele->descripcion ?>?</p>
@@ -227,10 +227,10 @@ $this->params['breadcrumbs'][] = $this->title;
                               <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title">Eliminar Accion</h4>
+                                    <h4 class="modal-title">Eliminar Acción</h4>
                               </div>
                               <div class="modal-body">
-                                    <p>¿Realmente deseas eliminar esta accion: <?= $acc['descripcion'] ?>?</p>
+                                    <p>¿Realmente deseas eliminar esta acción: <?= $acc['descripcion'] ?>?</p>
                               </div>
                               <div class="modal-footer">
                               <?= Html::beginForm(Url::toRoute("paaccion/delete"), "POST") ?>
@@ -275,12 +275,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     "idemp" => $row->idemp, 
                                     "pa"    => $row->nombre,
                                 ]) ?>">
-            Agregar Accion <?=$row->nombre ?></a>
+            Agregar Acción <?=$row->nombre ?></a>
       </td>
     </tr>                    
     <?php endforeach ?>
     <tr>
-      <td colspan="5" align="right"><b>TOTAL PLAN ACCION</b> </td>
+      <td colspan="5" align="right"><b>TOTAL PLAN DE ACCIÓN</b> </td>
       <td align="right"><b>
              <?php
                 setlocale(LC_MONETARY, 'en_US.UTF-8');
