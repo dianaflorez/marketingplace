@@ -133,7 +133,7 @@ class PlanaccionController extends Controller
 */
          $model = Planaccion::find()
                 ->where(['planaccion.idemp' => $id ])
-                ->andwhere(['<>','paaccion.estado', 'Anulado'])
+            //    ->andwhere(['<>','paaccion.estado', 'Anulado'])
                 ->joinWith(['paaccions'])
                 ->joinWith(['paaelementos'])
                 ->orderBy('planaccion.orden')

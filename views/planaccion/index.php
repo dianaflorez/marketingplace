@@ -79,6 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <?php foreach($acciones as &$acc): ?>
+
+      <?php if($acc['estado'] != 'Anulado'){ ?>
     <tr>
         <td><? //$acc['orden']; ?>
           <?= Html::beginForm(Url::toRoute("paaccion/updateplantilla"), "POST") ?>
@@ -251,6 +253,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
         </td>
     </tr>
+    <?php } ?>
                 <?php endforeach ?>
   <tr>
             <td colspan="5" align="right">
