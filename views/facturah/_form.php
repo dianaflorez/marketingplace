@@ -20,7 +20,7 @@ use yii\bootstrap\Alert;
 <?php if($msg){ 
         echo Alert::widget([
             'options' => [
-                'class' => 'alert-info',
+                'class' => 'alert-danger',
             ],
             'body' => $msg,
         ]);
@@ -239,7 +239,8 @@ use yii\bootstrap\Alert;
           <input type="hidden" id="abono" name="abono" value="">
         
           <label class="control-label">Crear Cita</label>
-          <input type="checkbox" id="cita" name="cita" value="1">
+          <input type="checkbox" id="cita" name="cita" value="1" 
+          style=" background-position: 0 -21px; width: 16px; height: 16px;">
                          
           <button type="submit" class="btn btn-primary">Guardar Factura</button>
     <?= Html::endForm() ?>

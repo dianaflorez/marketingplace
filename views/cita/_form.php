@@ -36,9 +36,11 @@ use yii\web\JsExpression;
                      ]);
                 ?>
         <input type="hidden" name="cliente_id" id="cliente_id" />
-        <b><input type="text" name="nombre_id" id="nombre_id" style="border-width:0;" readonly />
+         <?php $client = ""; if(isset($cliente->nombre1)) $client =$cliente->nombre1.' '.$cliente->apellido1; ?>
+   
+        <b><input type="text" name="nombre_id" id="nombre_id" value="<?= $client ?>"  style="border-width:0;" readonly />
         </b>
-         <?php echo $form->field($model, 'idcli')->hiddenInput()->label(false);?>
+         <?php echo $form->field($model, 'idcli')->HiddenInput()->label(false);?>
 
 
     <?php

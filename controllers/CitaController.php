@@ -327,15 +327,25 @@ class CitaController extends Controller
         $clientes   = ArrayHelper::map(Cliente::find()
                         ->where(['idemp' => $model->idemp])->all(), 'idcli', 'nombre1');
      
+        $data = Cliente::find()
+                ->where(['idemp' => $idemp])
+                ->select(["CONCAT(nombre1,' ',apellido1) as label", 
+                          "CONCAT(nombre1,' ',apellido1) as value",
+                          'idcli as id'])
+                ->asArray()
+                ->all();
+ 
+        $cliente   = Cliente::findOne(['idcli' =>$model->idcli]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idcita]);
         } else {
             return $this->render('update', [
                 'model'     => $model,
-                'clientes'  => $clientes,
                 'estado'    => $estado,
                 'emp'       => $emp,
+                'data'      => $data,
+                'cliente'   => $cliente,
             ]);
         }
     }
