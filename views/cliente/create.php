@@ -8,7 +8,7 @@ use yii\helpers\Url;
                                 "idemp"  => $emp->idemp,
                                 "cliente"=> $cliente,
                                 ]) ?>">
-	<?php echo "Nueva Cliente ".$tipo.' - '.$emp->nombre; ?>
+	<?php echo "Nuevo Cliente ".$tipo.' - '.$emp->nombre; ?>
 </a>
 </h2>	
 <?php
