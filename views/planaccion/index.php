@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/create", "id" => $idemp]) ?>">Nuevo Plan de Accion</a>
 -->
 <a class="btn btn-info" href="<?= Url::toRoute(["planaccion/viewplan", "id" => $idemp]) ?>">Ver Plan de Acción</a>
-<a class="btn btn-danger" href="<?= Url::toRoute(["planaccion/verpdf", "idemp" => $idemp]) ?>">Ver PDF</a>
+<a class="btn btn-danger" href="<?= Url::toRoute(["planaccion/verpdf", "idemp" => $idemp]) ?>">Descargar PDF</a>
 
 <div class="rwd">
 <table class="table table-striped  table-bordered table-showPageSummary">
