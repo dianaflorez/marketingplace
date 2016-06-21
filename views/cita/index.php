@@ -84,6 +84,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ]);
         ?>
+        
+        <h4>Estado</h4>
+       
+         <select name="estado" class="form-control">
+           <option valut=""></option>
+           <option value="Pendiente">Pendiente</option>
+           <option value="Cumplido">Cumplido</option>
+           <option value="Aplazado">Aplazado</option>
+        </select>
     </div>
     
         </div>

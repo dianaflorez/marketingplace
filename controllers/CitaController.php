@@ -118,20 +118,24 @@ class CitaController extends Controller
         if(Yii::$app->request->post())
         {
           //  $idemp  = Html::encode($_POST["idemp"]);
-            if($_POST["cliente_id"] || $_POST["fecini"]){
+            if($_POST["cliente_id"] || $_POST["fecini"] || $_POST["estado"]){
 
                 $idcli  = null;
                 $fecini = null;
                 $fecfin = null;
+                $estado = null;
 
-                if($_POST["cliente_id"] && $_POST["fecini"] && $_POST["fecfin"]){
+                if($_POST["cliente_id"] && $_POST["fecini"] && 
+                   $_POST["fecfin"] && $_POST["estado"]){
 
                     $idcli   = Html::encode($_POST["cliente_id"]);
                     $fecini  = Html::encode($_POST["fecini"]);
                     $fecfin  = Html::encode($_POST["fecfin"]);
+                    $estado  = Html::encode($_POST["estado"]);
+
                     $table = Cita::find()
                         ->joinWith(['idcli0'])
-                        ->where(['cita.idemp' => $idemp])
+                        ->where(['cita.idemp' => $idemp, 'cita.estado' => $estado])
                         ->andWhere(["=", 'cita.idcli', $idcli])
                         ->andWhere([">=", 'cita.fecha', $fecini])
                         ->andwhere(["<=", 'cita.fecha', $fecfin]);
@@ -161,7 +165,15 @@ class CitaController extends Controller
                         ->joinWith(['idcli0'])
                         ->where(['cita.idemp' => $idemp])
                         ->andWhere([">=", 'cita.fecha', $fecini]);
-            
+                 
+                }elseif($_POST["estado"]){
+                    $estado  = Html::encode($_POST["estado"]);
+                    $msg = "Resultados con estado ".$estado;
+                 
+                    $table = Cita::find()
+                        ->joinWith(['idcli0'])
+                        ->where(['cita.idemp' => $idemp, 'cita.estado' => $estado]);
+           
                 }else{
                     $table = Cita::find()
                         ->joinWith(['idcli0'])
