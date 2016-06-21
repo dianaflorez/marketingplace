@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
                                                               "idemp" => $emp->idemp, 
                                                               "cliente"   => "Esporadico"]) 
-                                                              ?>">Esporadicos</a>
+                                                              ?>">Potenciales</a>
       <?php }else{ ?>
       <a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
                                                               "idemp" => $emp->idemp, 
