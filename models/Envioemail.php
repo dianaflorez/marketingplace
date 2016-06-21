@@ -42,7 +42,7 @@ class Envioemail extends \yii\db\ActiveRecord
             [['fecha'], 'safe'],
             [['email', 'contenido'], 'string'],
             ['email', 'email'],
-            [['asunto', 'estado'], 'string', 'max' => 12],
+            [['asunto', 'estado'], 'string', 'max' => 30],
             [['idcli'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['idcli' => 'idcli']],
             [['idemp'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['idemp' => 'idemp']],
             [['idusu'], 'exist', 'skipOnError' => true, 'targetClass' => Usuario::className(), 'targetAttribute' => ['idusu' => 'idusu']],
