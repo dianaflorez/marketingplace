@@ -239,7 +239,7 @@ class FacturahController extends Controller
         $model->neto        = 0;
         $model->vlriva      = 0;
         $model->total       = $model->total;
-        $tipo = ['En Proceso','Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
+        $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
         if ($model->load(Yii::$app->request->post()) && 
             $modelfd->load(Yii::$app->request->post()) 
@@ -356,7 +356,7 @@ class FacturahController extends Controller
 
         $emp        = Empresa::findOne(['idemp' => $model->idemp]);
         $productos  = ArrayHelper::map(Producto::find()->where(['idemp' => $model->idemp])->all(), 'idpro', 'nombre');
-        $tipo = ['En Proceso'=> 'En Proceso','Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
+        $tipo = ['Pagada'=>'Pagada', 'Credito'=>'Crédito'];  
         
 
         if ($model->load(Yii::$app->request->post()) && 
