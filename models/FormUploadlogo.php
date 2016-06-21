@@ -18,7 +18,7 @@ class FormUploadlogo extends model{
             ['file', 'file', 
              'skipOnEmpty' => false,
              'uploadRequired' => 'No has seleccionado ningún archivo', //Error
-             'maxSize' => 128*128*1, //1 MB
+             'maxSize' => 256*256*1, //1 MB
              'tooBig' => 'El tamaño máximo permitido es 128k', //Error
              'minSize' => 10, //10 Bytes
              'tooSmall' => 'El tamaño mínimo permitido son 10 BYTES', //Error
