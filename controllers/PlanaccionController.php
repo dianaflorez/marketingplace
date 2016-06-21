@@ -195,7 +195,7 @@ class PlanaccionController extends Controller
             $sqldatostri = "SELECT idaccion, idemp, idpa, descripcion, orden, fecini, fecfin,responsable,costo,estado
                 FROM paaccion p 
                 WHERE
-                p.idemp = 1 AND
+                p.idemp = ".$id." AND
                 fecini <= '".$fecfin."' AND
                 fecfin >= '".$fecini."'
                 ORDER BY fecfin, feccre";
