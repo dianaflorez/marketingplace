@@ -102,6 +102,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="pull-right">
         <?= Html::a('Nueva Cita', ['create',"idemp" => $emp->idemp], ['class' => 'btn btn-success']) ?>
     </p>
+
+<div class="rwd">
+
   <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Cliente</th>
@@ -151,7 +154,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </tr>        
     <?php endforeach?>
     </table>    
-
+</div>
 <?= LinkPager::widget([
     "pagination" => $pages,
 ]); ?>

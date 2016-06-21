@@ -86,6 +86,9 @@ $this->params['breadcrumbs'][] = $this->title;
         "enableClientValidation" => true,
     ]);
     ?>
+
+<div class="rwd">
+
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Fecha</th>
@@ -183,3 +186,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endforeach ?>
   
 </table>
+</div>
