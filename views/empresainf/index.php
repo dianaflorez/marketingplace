@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $ctlineas = 1; ?> 
    <?php foreach($model as $row): ?>
 
-    <?php if($ctlineas <= 4){  $ctlineas ++; ?>
+    <?php if($ctlineas <= 3){  $ctlineas ++; ?>
     <div class="panel panel-default">
       <div class="panel-heading"><?= $row->idtipo0->nombre ?></div>
       <div class="panel-body">
