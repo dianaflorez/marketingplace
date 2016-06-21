@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach($model as $row): 
                   $ctlineas ++; 
               
-                if($ctlineas > 4 && $row->inf != "logo" && $row->idtipo != 16){  
+                if($ctlineas > 3 && $row->inf != "logo" && $row->idtipo != 16){  
                   $ctlineas ++; 
                   ?>
                     <div class="cajita">
