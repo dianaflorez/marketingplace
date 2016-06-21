@@ -115,7 +115,7 @@ use yii\bootstrap\Alert;
                 </div>
 
             </td>
-            <td>
+            <td ><div style="width: 120px; background: #300;" ></div>
             <?= $form->field($modelfd, 'valor')->textInput(['maxlength' => true,
           //  'onkeyup'=>"format(this)", 
             'onkeyup'=>'
@@ -194,7 +194,7 @@ use yii\bootstrap\Alert;
             ']); 
             ?>
             
-            <div id="credito" name="credito" style="display: none;">
+            <div id="credito" name="credito" style="display: none; width: 180px;">
            
                 <?= $form->field($modelcredito, 'abono')->textInput(['maxlength' => true, 
                                                                          'value' =>0,
