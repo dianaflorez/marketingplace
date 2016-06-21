@@ -167,6 +167,9 @@ class PlanaccionController extends Controller
         $modelyear = $connection->createCommand($sqlyear);
         $year = $modelyear->queryScalar();
 
+        if(!$mesinicial) $mesinicial = "01";
+        if(!$year) $year = date("Y");
+
         $fecini = $year."-".$mesinicial."-01";
 
         $fecfin = date('Y-m-d', strtotime("{$fecini} + 3 month"));

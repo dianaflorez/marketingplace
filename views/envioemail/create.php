@@ -11,7 +11,7 @@ use yii\bootstrap\Tabs;
 Tabs::widget(); 
 //FIN
 
-$title = $emp->nombre.' - Envio Email';
+$title = $emp->nombre.' - Envio Emai';
 $this->params['breadcrumbs'][] = $title;
 
 ?>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $title;
 	<a href="<?= Url::toRoute(["empresainf/index",  "id" => $emp->idemp]) ?>">
     	<?php echo $emp->nombre." - Envio Email"; ?>
 	</a>
-<? }else{ ?>
+<?php }else{ ?>
 	<a href="<?= Url::toRoute(["cliente/index",  "idemp" => $emp->idemp]) ?>">
     	<?php echo $emp->nombre." - Envio Email"; ?>
 	</a>
