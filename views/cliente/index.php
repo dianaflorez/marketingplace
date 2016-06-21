@@ -14,7 +14,7 @@ Tabs::widget();
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
 
-$this->title = $emp->nombre.' - '.$cliente;
+$this->title = $emp->nombre.' - Cliente '.$cliente;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <h3><?= Html::encode($this->title) ?></h3>
@@ -137,11 +137,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if($cliente == "Institucional") {?>
             <th>Nit</th>
         <?php }elseif($cliente == "Individual"){ ?>
-            <th>Identificacion</th>
+            <th>Identificación</th>
             <th>Nacimiento</th>
         <?php }?>
-        <th>Direccion</th>
-        <th>Telefono</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
         <th>Email</th>
         <?php if($cliente == "Institucional") {?>
             <th>Sitio Web</th>
