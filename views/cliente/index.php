@@ -56,16 +56,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                                               ?>">Individuales</a>
       <?php } ?>
 
-      <?php if($cliente != "Esporadico") { ?>
+      <?php if($cliente != "Potencial") { ?>
       <a class="btn btn-info" href="<?= Url::toRoute(["cliente/index", 
                                                               "idemp" => $emp->idemp, 
-                                                              "cliente"   => "Esporadico"]) 
+                                                              "cliente"   => "Potencial"]) 
                                                               ?>">Potenciales</a>
       <?php }else{ ?>
       <a class="btn btn-warning" href="<?= Url::toRoute(["cliente/index", 
                                                               "idemp" => $emp->idemp, 
-                                                              "cliente"   => "Esporadico"]) 
-                                                              ?>">Esporadicos</a>
+                                                              "cliente"   => "Potencial"]) 
+                                                              ?>">Potenciales</a>
       <?php } ?>
       <a class="btn btn-danger" href="<?= Url::toRoute(["cita/index", 
                                                               "idemp" => $emp->idemp
@@ -121,10 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                             "cliente"   => "Individual"]) 
                                                             ?>">Nuevo Cliente</a>
 
-    <?php }elseif($cliente == "Esporadico") { ?>
+    <?php }elseif($cliente == "Potencial") { ?>
     <a class="btn btn-success" href="<?= Url::toRoute(["cliente/create", 
                                                             "idemp"     => $emp->idemp,
-                                                            "cliente"   => "Esporadico"]) 
+                                                            "cliente"   => "Potencial"]) 
                                                             ?>">Nuevo Cliente</a>
     <?php } ?>
   </div>
@@ -154,7 +154,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if($cliente == "Institucional") {?>
             <td><?= $row->nombre1 ?> </td>
             <td><?= $row->nit ?></td>
-        <?php }elseif($cliente == "Individual" || $cliente == "Esporadico"){ ?>
+        <?php }elseif($cliente == "Individual" || $cliente == "Potencial"){ ?>
             <td><?= $row->nombre1.' '.$row->nombre2.' '.$row->apellido1.' '.$row->apellido2?></td> 
         <?php }
        if($cliente == "Individual"){ ?>

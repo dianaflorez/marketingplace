@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $title;
         <?php if($cliente == "Institucional") {?>
             <td><?= $row->nombre1 ?> </td>
             <td><?= $row->nit ?></td>
-        <?php }elseif($cliente == "Individual" || $cliente == "Esporadico" ){ ?>
+        <?php }elseif($cliente == "Individual" || $cliente == "Potencial" ){ ?>
             <td><?= $row->nombre1.' '.$row->nombre2.' '.$row->apellido1.' '.$row->apellido2?></td> 
         <?php }elseif($cliente == "Todos" ){ ?>
             <td>

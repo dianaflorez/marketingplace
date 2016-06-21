@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $title;
               <option value="Todos">Todos</option>
               <option value="Institucional">Institucional</option>
               <option value="Individual">Individual</option>
-              <option value="Esporadico">Esporádico</option>
+              <option value="Potencial">Potencial</option>
             </select>
     </div>  
     <div class="col-sm-2 col-md-2">

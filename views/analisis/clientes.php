@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $title;
             <select class="form-control" name="tipo" >
               <option value="Institucional">Institucional</option>
               <option value="Individual">Individual</option>
-              <option value="Esporadico">Esporádico</option>
+              <option value="Potencial">Potencial</option>
               <option value="Todos">Todos</option>
               <option value="<?= $cliente ?>" selected="selected"> <?= $cliente ?> </option>
             </select>
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $title;
         <?php if($cliente == "Institucional") {?>
             <td><?= $row->nombre1 ?> </td>
             <td><?= $row->nit ?></td>
-        <?php }elseif($cliente == "Individual" || $cliente == "Esporadico" ){ ?>
+        <?php }elseif($cliente == "Individual" || $cliente == "Potencial" ){ ?>
             <td><?= $row->nombre1.' '.$row->nombre2.' '.$row->apellido1.' '.$row->apellido2?></td> 
         <?php }elseif($cliente == "Todos" ){ ?>
             <td>

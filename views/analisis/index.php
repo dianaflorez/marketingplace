@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <select name="tipo" class="form-control">
               <option value="Institucional">Institucional</option>
               <option value="Individual">Individual</option>
-              <option value="Esporadico">Esporádico</option>
+              <option value="Potencial">Potencial</option>
               <option value="Todos">Todos</option>
             </select>
             <br />
