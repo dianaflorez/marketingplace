@@ -37,7 +37,7 @@ $this->title = 'Empresas';
 
 <?= Html::beginForm(Url::toRoute(["site/empresas"]), "POST") ?>
   <div class="col-sm-2 col-md-2">
-        <label class="control-label">Buscar Cliente</label>
+        <label class="control-label">Buscar Empresas</label>
         <br />
         <?php
         echo AutoComplete::widget([    
@@ -63,7 +63,7 @@ $this->title = 'Empresas';
     </div>
 <?= Html::endForm() ?>
 
-<a class="btn btn-info pull-right" style="margin-right: 27px" href="javascript:history.back(1)">Regresar</a>
+<a class="btn btn-success pull-right" style="margin-right: 27px" href="javascript:history.back(1)">Regresar</a>
 
 <br />
 </div>
@@ -72,7 +72,7 @@ $this->title = 'Empresas';
     <?php foreach($model as $row): ?>
     <div class="col-md-4"> 
       <div class="panel panel-default">
-        <div class="panel-body">
+        <div class="panel-body" style="text-align: center">
           <a href="index.php?r=site%2Fcontact&id=<?=$row->idemp?>">
             <?php 
             foreach($row->infempresas as $log) {

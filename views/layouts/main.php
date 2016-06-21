@@ -109,7 +109,7 @@ AppAsset::register($this);
                               <img class="iconosd" src="images/calendarmenu.png">     
                             </td>
                             <td align="center">
-                                Plan de Accion
+                                Plan de Acción
                             </tr>    
                         </table>   
                     </a>
@@ -123,7 +123,7 @@ AppAsset::register($this);
                               <img class="iconosd" src="images/peoplemenu.png">     
                             </td>
                             <td align="center">
-                                Gestion de Clientes
+                                Gestión de Clientes
 
                             </tr>    
                         </table>   
@@ -154,7 +154,7 @@ AppAsset::register($this);
                               <img class="iconosd" src="images/arrowmenu.png">     
                             </td>
                             <td align="center">
-                                Evaluacion
+                                Evaluación
                             </tr>    
                         </table>   
                     </a>

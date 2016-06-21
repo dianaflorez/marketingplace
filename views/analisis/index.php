@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 ?>
 </h3>
+<h2>Evaluación </h2>
 <div class="row">
    <div class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4 col-md-4">
       <div class="panel panel-default">
@@ -150,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientesproductos"), "POST") ?>
           
-         <h3>Clientes Productos</h3>
+         <h3>Productos por clientes</h3>
          <?php
             echo '<label class="control-label">Fechas</label>';
 
@@ -183,7 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="panel-body">
        <?= Html::beginForm(Url::toRoute("analisis/clientesfrecuencia"), "POST") ?>
           
-         <h3>Frequencia Clientes</h3>
+         <h3>Frecuencia de Clientes</h3>
          <?php
             echo '<label class="control-label">Fechas</label>';
 

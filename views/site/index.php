@@ -8,7 +8,7 @@ $this->title = 'MarketingPlace';
 <br /><br />
     <div class="row">
         <div class="col-xs-offset-1 col-xs-5  col-sm-7  col-md-offset-1 col-md-5 col-md-offset-1 ">
-            <p class="lead">Creemos que con una gestion optima del mercadeo y de tus clientes, tu empresa será mejor <b>¡Acepta el reto!</b>
+            <p class="lead">Creemos que con una gestión optima del mercadeo y de tus clientes, tu empresa será mejor <b>¡Acepta el reto!</b>
             </p>
         </div>
     
@@ -40,12 +40,12 @@ $this->title = 'MarketingPlace';
 
                 <div class="col-xs-5 col-sm-2" align="center">
                         <img class="iconos" src="images/calendar.png"> <br />    
-                        Plan de Accion
+                        Plan de Acción
                 </div>
    
                 <div class="col-xs-5 col-sm-2" align="center">
                         <img class="iconos" src="images/people.png"> <br />    
-                        Gestion de Clientes
+                        Gestión de Clientes
                 </div>
    
                 <div class="col-xs-5 col-sm-2" align="center">
@@ -65,7 +65,7 @@ $this->title = 'MarketingPlace';
             <div class="col-xs-offset-1 col-xs-10 col-sm-10 col-md-offset-1 col-md-10 col-md-offset-1 "
                  align="center">
 
-                <p >Si quieres entrar en contacto con las empresas de Growth marketing y CRM, puedes hacerlo aqui! 
+                <p >Si quieres entrar en contacto con las empresas de Growth marketing y CRM, puedes hacerlo aquí! 
                 </p>
                 <div class="col-xs-offset-3 col-xs-7  col-sm-offset-4 col-sm-4  col-md-offset-5 col-md-3" align="center">
                     <a class="btn btn-block btn-success" href="index.php?r=site%2Fempresas"> Buscar Empresa</a>
