@@ -21,7 +21,7 @@ $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"
 
 $fectri = $dia." ".$meses[$mes-1]." ".$anio." a ".$diafin." ".$meses[$mesfin-1]." ".$aniofin; 
 
-$title = $emp->nombre.' - Plan Accion - trimestre '.$trimestre.' ('.$fectri.') ';
+$title = $emp->nombre.' - Plan de Acción - Trimestre '.$trimestre.' ('.$fectri.') ';
 $this->params['breadcrumbs'][] = $title;
 ?>
 
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $title;
     <?php } ?>    
 </a>
 </h3>   
-
+<br />
 <h3>
 <?php if($msg){ 
         echo Alert::widget([
@@ -72,8 +72,6 @@ $this->params['breadcrumbs'][] = $title;
 
 <br />
 <br />
-
-<h3>Plan de Accion <?php echo ' - '.$emp->nombre;?></h3>
 <table class="table table-striped  table-bordered table-showPageSummary">
     <tr>
         <th>Nombre</th>
