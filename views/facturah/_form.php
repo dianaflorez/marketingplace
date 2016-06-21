@@ -178,7 +178,7 @@ use yii\bootstrap\Alert;
                 
            </td>
            <td colspan="2">
-              
+              <div style="width: 120px; background: #300;" ></div>
               <?php echo $form->field($model, 'tipo')->dropDownList($tipo,
             [ 'onchange'=>'
                   $totalfh = $( "#facturah-total" ).val();
