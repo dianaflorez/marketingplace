@@ -56,7 +56,7 @@ class Planmarketing extends \yii\db\ActiveRecord
             'idemp' => 'Idemp',
             'nombre' => 'Nombre',
             'orden' => 'Orden',
-            'descripcion' => 'Descripcion',
+            'descripcion' => 'Descripción',
             'feccre' => 'Feccre',
             'fecmod' => 'Fecmod',
             'usumod' => 'Usumod',
