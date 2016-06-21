@@ -222,7 +222,7 @@ Tabs::widget();
     <?= Html::beginForm(Url::toRoute("facturah/updateend"), "POST") ?>
           <input type="hidden" name="idfh" value="<?= $model->idfh ?>">
           <input type="hidden" name="idemp" value="<?= $model->idemp ?>">
-          <input type="hidden" name="tipo" id="tipo" value="">
+          <input type="text" name="tipo" id="tipo" value="Pagada">
           <input type="hidden" id="abono" name="abono" value="">
         
           <label class="control-label">Crear Cita</label>

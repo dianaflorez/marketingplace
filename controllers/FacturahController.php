@@ -432,11 +432,10 @@ class FacturahController extends Controller
             $idemp  = Html::encode($_POST["idemp"]);
 
             if(isset($_POST["cita"])){
-              $cita = Html::encode($_POST["idemp"]);
+              $cita = Html::encode($_POST["cita"]);
             }
-
+       
             if($idfh && $tipo){
-            
                 //Facturah
                 $modelfh = Facturah::findOne(['idfh' => $idfh]);
                 $modelfh->tipo     = trim($tipo);
@@ -444,7 +443,7 @@ class FacturahController extends Controller
                 $modelfh->usumod = Yii::$app->user->identity->idusu;
              
                 if($modelfh->save()){ 
-            
+        
                     if($tipo == "Credito"){
                         //Credito
                         $modelcredito = new Faccredito;
