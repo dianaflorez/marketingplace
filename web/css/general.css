@@ -13,7 +13,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 .btninicio{
-	margin: 7px 5px 10px 10px;
+	margin: 7px 5px 10px 40px;
 	padding: 10px;
 }
 .estado{
@@ -150,7 +150,11 @@ background: #f8f8f8;
 }
 
 .iconos{
-	width: 70%;
+	width: 50%;
+}
+
+.iconomodelo{
+	width: 100%;
 }
 
 .logo{
@@ -263,7 +267,7 @@ background: #f8f8f8;
 
 	.btninicio{
 		min-height: 130px;
+		margin: 7px 5px 10px 10px;
 	}
-
 }
 
