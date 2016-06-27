@@ -62,8 +62,8 @@ $this->title = $modelemp->nombre;
                     Ventas
                 </a>    
             </div>
-           <div class="col-xs-10 col-sm-10 btninicio" align="center">
-                    <img class="iconomodelo" src="images/modelomercadeo.jpg"> <br />    
+           <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10" align="center" >
+                   <img class="iconomodelo" src="images/modelomercadeo.jpg"> <br />    
                 
             </div>
 

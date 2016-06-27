@@ -34,9 +34,9 @@ Tabs::widget();
   <div class="row" >
       <div class="well col-xs-offset-1 col-xs-10 col-xs-offset-1 
                   col-sm-offset-1 col-sm-10 col-md-offset-1" align="center">
-          <div class="row" align="center">
+          <div class="row" align="center" style="text-align: center; margin: 0 auto;">
             
-            <div class="col-xs-5 col-sm-offset-3 col-sm-3 btninicio" align="center">
+            <div class="col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=empresainf%2Findex&id=<?=$idemp?>">
                    <img class="iconos" src="images/suitcase.png">  
                     <br />   
@@ -44,7 +44,7 @@ Tabs::widget();
                 </a>    
                 
             </div>
-            <div class="col-xs-offset-3 col-xs-5 col-sm-3 btninicio" align="center">
+            <div class=" col-xs-5 col-sm-3 btninicio" align="center">
                 <a href="index.php?r=pmcontenido%2Findex&id=<?=$idemp?>&activo=pm1">
 
                    <img class="iconos" src="images/location.png" > <br />    
@@ -80,12 +80,10 @@ Tabs::widget();
                 </a>
             </div>
           </div>
-          <div class="col-xs-10 col-sm-10 btninicio" align="center">
-                    <img class="iconomodelo" src="images/modelomercadeo.jpg"> <br />    
-                
-            </div>
+         <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10" align="center" >
+                      <img class="iconomodelo" src="images/modelomercadeo.jpg"> <br />    
+          </div>
 
-       
       </div>
     </div> 
   </div>  
